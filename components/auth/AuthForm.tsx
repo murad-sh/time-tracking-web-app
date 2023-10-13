@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import styles from './AuthForm.module.scss';
+import { signIn } from 'next-auth/react';
 import {
   signUpSchema,
   SignUpSchemaType,
@@ -37,8 +38,21 @@ const AuthForm = ({ action }: FormProps) => {
 
   async function onSubmit(enteredData: AuthSchemaType) {
     if (action === 'Login') {
+      const res = await signIn('credentials', {
+        email: enteredData.email,
+        password: enteredData.password,
+        redirect: false,
+      });
+
+      if (res!.error) {
+        console.log(res!.error);
+        return;
+      }
+
+      router.push('/');
     } else {
       try {
+        console.log(enteredData);
         const result = await createUser(
           enteredData.name,
           enteredData.email,

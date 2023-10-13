@@ -19,6 +19,7 @@ export default async function handler(
   }
 
   try {
+    console.log(req.body);
     const validatedData = signUpSchema.safeParse(req.body);
     if (!validatedData.success) {
       return res.status(400).json({ message: validatedData.error.message });

@@ -2,11 +2,11 @@ export async function createUser(
   name: string,
   email: string,
   password: string,
-  confirmedPassword: string
+  confirmPassword: string
 ) {
   const response = await fetch('/api/auth/sign-up', {
     method: 'POST',
-    body: JSON.stringify({ name, email, password, confirmedPassword }),
+    body: JSON.stringify({ name, email, password, confirmPassword }),
     headers: {
       'Content-Type': 'application/json',
     },
