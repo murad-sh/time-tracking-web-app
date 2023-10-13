@@ -42,7 +42,8 @@ const AuthForm = ({ action }: FormProps) => {
         const result = await createUser(
           enteredData.name,
           enteredData.email,
-          enteredData.password
+          enteredData.password,
+          enteredData.confirmPassword
         );
         router.push('/');
         reset();
