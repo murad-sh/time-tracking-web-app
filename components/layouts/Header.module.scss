@@ -1,0 +1,63 @@
+@import '@/styles/variables';
+
+.header {
+  width: 100%;
+  height: 8.5rem;
+  background-color: $color-background;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 2rem;
+
+  &__logo {
+    font-family: inherit;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: -0.2rem;
+    font-size: 3.5rem;
+    color: $color-text-primary-dark;
+    text-decoration: none;
+    display: block;
+  }
+}
+
+.nav__list {
+  font-size: $nav-font-size;
+  list-style: none;
+  display: flex;
+  align-items: baseline;
+}
+
+.list {
+  &__item {
+    margin: 0 3rem;
+    &--link {
+      text-decoration: none;
+      color: $color-text-primary-dark;
+      font-weight: bold;
+      display: block;
+
+      &:hover {
+        text-decoration: underline $color-primary-dark;
+        // color: $color-primary-dark;
+      }
+    }
+
+    &--btn {
+      font: inherit;
+      text-decoration: none;
+      background-color: transparent;
+      border: 1px solid $color-white;
+      color: $color-primary-dark;
+      font-weight: bold;
+      padding: 1rem 3rem;
+      border-radius: 6px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $color-primary-dark;
+        color: $color-background;
+      }
+    }
+  }
+}
