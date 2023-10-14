@@ -44,12 +44,9 @@ const AuthForm = ({ action }: FormProps) => {
         redirect: false,
       });
 
-      if (res!.error) {
-        console.log(res!.error);
-        return;
+      if (!res?.error) {
+        router.replace('/dashboard');
       }
-
-      router.push('/');
     } else {
       try {
         console.log(enteredData);
@@ -59,9 +56,8 @@ const AuthForm = ({ action }: FormProps) => {
           enteredData.password,
           enteredData.confirmPassword
         );
-        router.push('/');
+        router.replace('/');
         reset();
-        console.log(result);
       } catch (error) {
         console.log(error);
       }
