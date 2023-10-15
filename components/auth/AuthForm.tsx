@@ -32,6 +32,7 @@ const AuthForm = ({ action }: FormProps) => {
     reset,
   } = useForm<AuthSchemaType>({
     resolver: zodResolver(isLogin ? loginSchema : signUpSchema),
+    mode: 'onBlur',
   });
 
   const router = useRouter();

@@ -8,8 +8,8 @@ const Header = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  function logoutHandler() {
-    signOut();
+  async function logoutHandler() {
+    await signOut({ redirect: false });
     router.replace('/');
   }
 
