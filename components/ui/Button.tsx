@@ -7,7 +7,7 @@ interface ButtonProps {
   type: 'link' | 'btn';
   href?: string;
   children?: React.ReactNode;
-  // onClick?: () =>{}
+  onClick?: (event: Event) => void;
 }
 
 const Button = (props: ButtonProps) => {

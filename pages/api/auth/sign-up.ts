@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { connectToDB, findUserByEmail } from '@/lib/db';
+import { connectToDB } from '@/lib/db';
 import User from '@/models/user';
 import { hashPassword } from '@/lib/auth';
 import { signUpSchema } from '@/lib/validation/schemas';
@@ -19,7 +19,6 @@ export default async function handler(
   }
 
   try {
-    console.log(req.body);
     const validatedData = signUpSchema.safeParse(req.body);
     if (!validatedData.success) {
       return res.status(400).json({ message: validatedData.error.message });
@@ -28,7 +27,7 @@ export default async function handler(
     const { name, email, password } = validatedData.data;
 
     await connectToDB();
-    const existingUser = await findUserByEmail(email);
+    const existingUser = await User.findOne({ email });
 
     if (existingUser) {
       return res.status(422).json({ message: 'Email already in use' });

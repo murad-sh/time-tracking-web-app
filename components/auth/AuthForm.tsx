@@ -1,16 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import styles from './AuthForm.module.scss';
-import { signIn } from 'next-auth/react';
 import {
   signUpSchema,
   SignUpSchemaType,
   loginSchema,
   LoginSchemaType,
 } from '@/lib/validation/schemas';
-import { createUser } from '@/utils/user-actions/create-user';
+import { createUser, loginUser } from '@/utils/user-actions';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 type ActionType = 'Login' | 'Sign-up';
@@ -21,6 +20,9 @@ type FormProps = {
 
 const AuthForm = ({ action }: FormProps) => {
   const isLogin = action === 'Login';
+  // ? to figure out how to handle server errors
+  // Todo setError root.server
+
   type AuthSchemaType = typeof isLogin extends true
     ? LoginSchemaType
     : SignUpSchemaType;
@@ -28,40 +30,35 @@ const AuthForm = ({ action }: FormProps) => {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isSubmitting },
     reset,
   } = useForm<AuthSchemaType>({
     resolver: zodResolver(isLogin ? loginSchema : signUpSchema),
+    // ? Experimental
     mode: 'onBlur',
   });
 
   const router = useRouter();
 
   async function onSubmit(enteredData: AuthSchemaType) {
-    if (action === 'Login') {
-      const res = await signIn('credentials', {
-        email: enteredData.email,
-        password: enteredData.password,
-        redirect: false,
-      });
-
-      if (!res?.error) {
+    try {
+      if (action === 'Login') {
+        await loginUser(enteredData.email, enteredData.password, setError);
         router.replace('/dashboard');
-      }
-    } else {
-      try {
-        console.log(enteredData);
-        const result = await createUser(
+      } else {
+        await createUser(
           enteredData.name,
           enteredData.email,
           enteredData.password,
-          enteredData.confirmPassword
+          enteredData.confirmPassword,
+          setError
         );
         router.replace('/');
-        reset();
-      } catch (error) {
-        console.log(error);
       }
+      reset();
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -105,6 +102,7 @@ const AuthForm = ({ action }: FormProps) => {
           <Link href={!isLogin ? '/login' : '/sign-up'}>
             {!isLogin ? 'Login with existing account' : 'Create new account'}
           </Link>
+          {errors.root && <p>{errors.root.message}</p>}
         </div>
       </form>
     </section>

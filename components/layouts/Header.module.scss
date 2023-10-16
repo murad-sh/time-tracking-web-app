@@ -46,17 +46,19 @@
     &--btn {
       font: inherit;
       text-decoration: none;
-      background-color: transparent;
-      border: 1px solid $color-white;
-      color: $color-primary-dark;
+      background-color: $color-primary-dark;
+      border: 1px solid transparent;
+      color: $color-background;
       font-weight: bold;
       padding: 1rem 3rem;
       border-radius: 6px;
       cursor: pointer;
+      transition: all ease-out;
 
       &:hover {
-        background-color: $color-primary-dark;
-        color: $color-background;
+        background-color: $color-background;
+        color: $color-primary-dark;
+        border-color: $color-primary-dark;
       }
     }
   }

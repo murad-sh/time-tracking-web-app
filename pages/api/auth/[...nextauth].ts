@@ -1,10 +1,11 @@
-import NextAuth, { NextAuthOptions } from 'next-auth';
+import NextAuth, { NextAuthOptions, Session } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { loginSchema } from '@/lib/validation/schemas';
-import { connectToDB, findUserByEmail } from '@/lib/db';
+import { connectToDB } from '@/lib/db';
 import { verifyPassword } from '@/lib/auth';
+import User from '@/models/user';
 
-const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
   session: {
     strategy: 'jwt',
   },
@@ -22,7 +23,7 @@ const authOptions: NextAuthOptions = {
           const { email, password } = validatedData.data;
 
           await connectToDB();
-          const user = await findUserByEmail(email);
+          const user = await User.findOne({ email });
 
           if (!user) {
             throw new Error('User not found');
@@ -33,9 +34,8 @@ const authOptions: NextAuthOptions = {
           if (!isPasswordValid) {
             throw new Error('Invalid password');
           }
-
           return {
-            id: user._id,
+            id: user._id.toString(),
             name: user.name,
             email: user.email,
           };
@@ -51,6 +51,22 @@ const authOptions: NextAuthOptions = {
 
   pages: {
     signIn: '/login',
+  },
+
+  callbacks: {
+    jwt: async ({ token, user }) => {
+      user && (token.user = user);
+      return token;
+    },
+    session: async ({ session, token }) => {
+      if (token.user)
+        session.user = token.user as {
+          id: string;
+          email: string;
+          name: string;
+        };
+      return session;
+    },
   },
 };
 
