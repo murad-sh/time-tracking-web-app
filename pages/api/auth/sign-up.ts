@@ -21,7 +21,7 @@ export default async function handler(
   try {
     const validatedData = signUpSchema.safeParse(req.body);
     if (!validatedData.success) {
-      return res.status(400).json({ message: validatedData.error.message });
+      return res.status(422).json({ message: validatedData.error.message });
     }
 
     const { name, email, password } = validatedData.data;

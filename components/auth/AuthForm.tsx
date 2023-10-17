@@ -31,7 +31,7 @@ const AuthForm = ({ action }: FormProps) => {
     handleSubmit,
     setError,
     formState: { errors, isSubmitting },
-    reset,
+    // reset,
   } = useForm<AuthSchemaType>({
     resolver: zodResolver(isLogin ? loginSchema : signUpSchema),
     // ! Experimental, options to test : 'onBlur', 'onChange', 'all'
@@ -45,10 +45,19 @@ const AuthForm = ({ action }: FormProps) => {
         password: enteredData.password,
         redirect: false,
       });
-      if (res?.error) {
+
+      console.log(res);
+
+      if (res?.error && res.status === 401) {
         setError('root.serverError', {
           type: 'server',
           message: 'Login Failed: Unable to verify your login information.',
+        });
+      }
+      if (res?.error && res.status === 500) {
+        setError('root.serverError', {
+          type: 'server',
+          message: 'Internal server-side error.',
         });
       }
     } else {

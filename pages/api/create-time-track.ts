@@ -28,7 +28,7 @@ export default async function handler(
 
     const validatedData = timeTrackSchema.safeParse(req.body);
     if (!validatedData.success) {
-      res.status(400).json({ message: validatedData.error.message });
+      res.status(422).json({ message: validatedData.error.message });
       return;
     }
 

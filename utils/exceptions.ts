@@ -22,7 +22,7 @@ export class ResourceConflictError extends CustomError {
 
 export class ValidationError extends CustomError {
   constructor(message = 'Validation Failed') {
-    super(message, 400);
+    super(message, 422);
     this.name = 'ValidationError';
   }
 }
