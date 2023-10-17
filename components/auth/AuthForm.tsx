@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import styles from './AuthForm.module.scss';
+import { signIn } from 'next-auth/react';
 import {
   signUpSchema,
   SignUpSchemaType,
   loginSchema,
   LoginSchemaType,
 } from '@/lib/validation/schemas';
-import { createUser, loginUser } from '@/utils/user-actions';
+import { createUser } from '@/utils/user-actions';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { ResourceConflictError } from '@/utils/exceptions';
 
 type ActionType = 'Login' | 'Sign-up';
 
@@ -20,8 +21,6 @@ type FormProps = {
 
 const AuthForm = ({ action }: FormProps) => {
   const isLogin = action === 'Login';
-  // ? to figure out how to handle server errors
-  // Todo setError root.server
 
   type AuthSchemaType = typeof isLogin extends true
     ? LoginSchemaType
@@ -35,30 +34,49 @@ const AuthForm = ({ action }: FormProps) => {
     reset,
   } = useForm<AuthSchemaType>({
     resolver: zodResolver(isLogin ? loginSchema : signUpSchema),
-    // ? Experimental
+    // ! Experimental, options to test : 'onBlur', 'onChange', 'all'
     mode: 'onBlur',
   });
 
-  const router = useRouter();
-
   async function onSubmit(enteredData: AuthSchemaType) {
-    try {
-      if (action === 'Login') {
-        await loginUser(enteredData.email, enteredData.password, setError);
-        router.replace('/dashboard');
-      } else {
+    if (action === 'Login') {
+      const res = await signIn('credentials', {
+        email: enteredData.email,
+        password: enteredData.password,
+        redirect: false,
+      });
+      if (res?.error) {
+        setError('root.serverError', {
+          type: 'server',
+          message: 'Login Failed: Unable to verify your login information.',
+        });
+      }
+    } else {
+      try {
         await createUser(
           enteredData.name,
           enteredData.email,
           enteredData.password,
-          enteredData.confirmPassword,
-          setError
+          enteredData.confirmPassword
         );
-        router.replace('/');
+        await signIn('credentials', {
+          email: enteredData.email,
+          password: enteredData.password,
+          redirect: false,
+        });
+      } catch (error) {
+        if (error instanceof ResourceConflictError) {
+          setError('email', {
+            type: 'server',
+            message: error.message,
+          });
+        } else {
+          setError('root.serverError', {
+            type: 'server',
+            message: 'Signing up failed. Please try again',
+          });
+        }
       }
-      reset();
-    } catch (error) {
-      console.error(error);
     }
   }
 
@@ -102,7 +120,7 @@ const AuthForm = ({ action }: FormProps) => {
           <Link href={!isLogin ? '/login' : '/sign-up'}>
             {!isLogin ? 'Login with existing account' : 'Create new account'}
           </Link>
-          {errors.root && <p>{errors.root.message}</p>}
+          {errors.root?.serverError && <p>{errors.root.serverError.message}</p>}
         </div>
       </form>
     </section>

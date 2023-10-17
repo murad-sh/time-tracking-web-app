@@ -15,16 +15,23 @@ export async function connectToDB() {
   return client;
 }
 
-// ! TEMPORARY FUNCTION
 export async function getUserTimeTracks(userId: mongoose.Types.ObjectId) {
   try {
     await connectToDB();
-    const tracks = await TimeTrack.find({ userId: userId }).exec();
+    const tracks = await TimeTrack.find({ userId }).lean();
     if (!tracks.length) {
       return [];
     }
-    return tracks;
+
+    return tracks.map((track) => {
+      return {
+        _id: track._id.toString(),
+        title: track.title,
+        start: track.start.toISOString(),
+        end: track.end.toISOString(),
+      };
+    });
   } catch (error) {
-    console.error('Failed to fetch time tracks:', error);
+    console.log('Failed to fetch time tracks:', error);
   }
 }

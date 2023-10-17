@@ -1,14 +1,10 @@
-import { UseFormSetError } from 'react-hook-form';
-import { LoginSchemaType, SignUpSchemaType } from '@/lib/validation/schemas';
-
-import { signIn } from 'next-auth/react';
+import { ResourceConflictError } from './exceptions';
 
 export async function createUser(
   name: string,
   email: string,
   password: string,
-  confirmPassword: string,
-  setError: UseFormSetError<SignUpSchemaType>
+  confirmPassword: string
 ) {
   const response = await fetch('/api/auth/sign-up', {
     method: 'POST',
@@ -21,34 +17,12 @@ export async function createUser(
   const data = await response.json();
 
   if (!response.ok) {
-    if (response.status === 422) {
-      setError('email', { type: 'server', message: data.message });
-      throw new Error(data.message);
+    if (response.status === 409) {
+      throw new ResourceConflictError(data.message);
     } else {
       throw new Error(data.message || 'Sign-up request failed');
     }
   }
 
   return data;
-}
-
-export async function loginUser(
-  email: string,
-  password: string,
-  setError: UseFormSetError<LoginSchemaType>
-) {
-  const res = await signIn('credentials', {
-    email,
-    password,
-    redirect: false,
-  });
-
-  if (res?.error) {
-    setError('password', {
-      type: 'server',
-      message:
-        'Login Failed: Unable to verify your login information. Please double-check your email and password.',
-    });
-    throw new Error(res.error);
-  }
 }

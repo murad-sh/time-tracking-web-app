@@ -4,8 +4,8 @@ import { GetServerSideProps } from 'next';
 import { ITimeTrack } from '@/models/time-track';
 import { getUserTimeTracks } from '@/lib/db';
 import mongoose from 'mongoose';
-// ! EVERYTHING HERE IS TEMPORARY FOR DEMO PURPOSES ONLY
 
+// ! EVERYTHING HERE IS TEMPORARY FOR DEMO PURPOSES ONLY
 type Props = {
   timeTracks: ITimeTrack[];
 };
@@ -99,8 +99,8 @@ export const getServerSideProps = (async (context) => {
   }
 
   const userId = new mongoose.Types.ObjectId(session.user.id);
-  const data = await getUserTimeTracks(userId);
-  const timeTracks = JSON.parse(JSON.stringify(data));
+  const timeTracks = await getUserTimeTracks(userId);
+
   if (!timeTracks) {
     return { props: { timeTracks: [] } };
   }

@@ -30,7 +30,7 @@ export default async function handler(
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
-      return res.status(422).json({ message: 'Email already in use' });
+      return res.status(409).json({ message: 'Email already in use' });
     }
 
     const hashedPassword = await hashPassword(password);
