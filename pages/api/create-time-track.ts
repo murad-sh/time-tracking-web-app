@@ -33,6 +33,7 @@ export default async function handler(
     }
 
     const { title, start, end } = validatedData.data;
+    console.log(title);
     await connectToDB();
     const user = await User.findOne({ email: session.user.email });
     if (!user) {

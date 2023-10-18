@@ -2,8 +2,8 @@ import { z } from 'zod';
 
 export const signUpSchema = z
   .object({
-    name: z.string().min(2, 'Name must be at least 2 characters long'),
-    email: z.string().email('Invalid email'),
+    name: z.string().trim().min(2, 'Name must be at least 2 characters long'),
+    email: z.string().trim().email('Invalid email'),
     password: z.string().min(8, 'Password must be at least 8 characters long'),
     confirmPassword: z.string(),
   })
@@ -13,12 +13,12 @@ export const signUpSchema = z
   });
 
 export const loginSchema = z.object({
-  email: z.string().email('Invalid email'),
+  email: z.string().trim().email('Invalid email'),
   password: z.string().min(1, 'Password is required'),
 });
 
 export const timeTrackSchema = z.object({
-  title: z.string(),
+  title: z.string().trim().min(1, 'Title is required'),
   start: z.coerce.date(),
   end: z.coerce.date(),
 });
