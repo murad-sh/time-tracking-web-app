@@ -36,6 +36,6 @@ yarn-error.log*
 next-env.d.ts
 
 # test file for experiments
-.test.js
+test.js
 
 /.vscode/

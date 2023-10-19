@@ -1,0 +1,21 @@
+@import '@/styles/variables';
+
+.primary {
+  text-align: center;
+  font-size: 1.6rem;
+  text-decoration: none;
+  background-color: $color-primary-dark;
+  border: 1px solid transparent;
+  color: $color-background;
+  font-weight: 600;
+  padding: 1rem 3rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all ease;
+
+  &:hover {
+    background-color: $color-background;
+    color: $color-primary-dark;
+    border-color: $color-primary-dark;
+  }
+}

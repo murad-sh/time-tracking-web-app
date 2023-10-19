@@ -3,6 +3,7 @@ import Link from 'next/link';
 import styles from './Header.module.scss';
 import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
+import PrimaryButton from '../ui/PrimaryButton';
 
 const Header = () => {
   const { data: session, status } = useSession();
@@ -29,9 +30,7 @@ const Header = () => {
           )}
           {status === 'unauthenticated' && (
             <li className={styles.list__item}>
-              <Link href={'/sign-up'} className={styles['list__item--btn']}>
-                Get Started
-              </Link>
+              <PrimaryButton href={'/sign-up'}>Get Started</PrimaryButton>
             </li>
           )}
           {status === 'authenticated' && (
@@ -48,12 +47,7 @@ const Header = () => {
           )}
           {status === 'authenticated' && (
             <li className={styles.list__item}>
-              <button
-                onClick={logoutHandler}
-                className={styles['list__item--btn']}
-              >
-                Logout
-              </button>
+              <PrimaryButton onClick={logoutHandler}>Logout</PrimaryButton>
             </li>
           )}
         </ul>
