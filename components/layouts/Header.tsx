@@ -4,6 +4,7 @@ import styles from './Header.module.scss';
 import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import PrimaryButton from '../ui/PrimaryButton';
+import SecondaryButton from '../ui/SecondaryButton';
 
 const Header = () => {
   const { data: session, status } = useSession();
@@ -23,9 +24,7 @@ const Header = () => {
         <ul className={styles.nav__list}>
           {status === 'unauthenticated' && (
             <li className={styles.list__item}>
-              <Link href={'/login'} className={styles['list__item--link']}>
-                Login
-              </Link>
+              <SecondaryButton href={'/login'}>Login</SecondaryButton>
             </li>
           )}
           {status === 'unauthenticated' && (
@@ -40,9 +39,7 @@ const Header = () => {
           )}
           {status === 'authenticated' && (
             <li className={styles.list__item}>
-              <Link href={'/dashboard'} className={styles['list__item--link']}>
-                Dashboard
-              </Link>
+              <SecondaryButton href={'/dashboard'}>Dashboard</SecondaryButton>
             </li>
           )}
           {status === 'authenticated' && (

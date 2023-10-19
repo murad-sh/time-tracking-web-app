@@ -12,6 +12,7 @@ import {
 import { createUser } from '@/utils/user-actions';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ResourceConflictError } from '@/utils/exceptions';
+import PrimaryButton from '../ui/PrimaryButton';
 
 type ActionType = 'Login' | 'Sign-up';
 
@@ -35,7 +36,7 @@ const AuthForm = ({ action }: FormProps) => {
   } = useForm<AuthSchemaType>({
     resolver: zodResolver(isLogin ? loginSchema : signUpSchema),
     // ! Experimental, options to test : 'onBlur', 'onChange', 'all'
-    mode: 'onBlur',
+    mode: 'all',
   });
 
   async function onSubmit(enteredData: AuthSchemaType) {
@@ -92,22 +93,37 @@ const AuthForm = ({ action }: FormProps) => {
   return (
     <section className={styles.auth}>
       <h1>{action}</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className={styles['auth-form']}>
         {!isLogin && (
           <div className={styles.control}>
             <label htmlFor="name">Your Name</label>
-            <input {...register('name')} type="text" id="name" />
+            <input
+              {...register('name')}
+              type="text"
+              id="name"
+              placeholder="Full Name"
+            />
             {errors.name && <p>{`${errors.name.message}`}</p>}
           </div>
         )}
         <div className={styles.control}>
           <label htmlFor="email">Your Email</label>
-          <input {...register('email')} type="email" id="email" />
+          <input
+            {...register('email')}
+            type="email"
+            id="email"
+            placeholder="Enter your email address"
+          />
           {errors.email && <p>{`${errors.email.message}`}</p>}
         </div>
         <div className={styles.control}>
           <label htmlFor="password">Your Password</label>
-          <input {...register('password')} type="password" id="password" />
+          <input
+            {...register('password')}
+            type="password"
+            id="password"
+            placeholder="Enter your password"
+          />
           {errors.password && <p>{`${errors.password.message}`}</p>}
         </div>
         {!isLogin && (
@@ -117,6 +133,7 @@ const AuthForm = ({ action }: FormProps) => {
               {...register('confirmPassword')}
               type="password"
               id="confirmPassword"
+              placeholder="Confirm your password"
             />
             {errors.confirmPassword && (
               <p>{`${errors.confirmPassword.message}`}</p>
@@ -124,9 +141,12 @@ const AuthForm = ({ action }: FormProps) => {
           </div>
         )}
         <div className={styles.actions}>
-          <button>{!isLogin ? 'Create Account' : 'Login'}</button>
+          <PrimaryButton>{!isLogin ? 'Create Account' : 'Login'}</PrimaryButton>
 
-          <Link href={!isLogin ? '/login' : '/sign-up'}>
+          <Link
+            className={styles.toggle}
+            href={!isLogin ? '/login' : '/sign-up'}
+          >
             {!isLogin ? 'Login with existing account' : 'Create new account'}
           </Link>
           {errors.root?.serverError && <p>{errors.root.serverError.message}</p>}

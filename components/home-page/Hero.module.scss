@@ -2,7 +2,7 @@
 .hero-container {
   display: flex;
   gap: 6rem;
-  margin: 6rem auto;
+  margin: 7rem auto;
   align-items: center;
 
   &__image {
@@ -23,7 +23,6 @@
       font-size: 5.2rem;
       font-weight: 700;
       color: $color-text-primary-dark;
-      line-height: 6.2rem;
     }
 
     p {

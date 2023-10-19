@@ -26,40 +26,13 @@
   list-style: none;
   display: flex;
   align-items: baseline;
+  gap: 1.5rem;
+  flex: 1;
 }
 
-.list {
-  &__item {
-    margin: 0 3rem;
-    &--link {
-      text-decoration: none;
-      color: $color-text-primary-dark;
-      font-weight: bold;
-      display: block;
-
-      &:hover {
-        text-decoration: underline $color-primary-dark;
-        // color: $color-primary-dark;
-      }
-    }
-
-    &--btn {
-      font: inherit;
-      text-decoration: none;
-      background-color: $color-primary-dark;
-      border: 1px solid transparent;
-      color: $color-background;
-      font-weight: bold;
-      padding: 1rem 3rem;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: all ease-out;
-
-      &:hover {
-        background-color: $color-background;
-        color: $color-primary-dark;
-        border-color: $color-primary-dark;
-      }
-    }
+.list__item {
+  a {
+    font-size: 1.4rem;
+    padding: 0.8rem 1.2rem;
   }
 }

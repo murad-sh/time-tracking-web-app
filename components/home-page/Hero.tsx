@@ -7,14 +7,6 @@ const HeroSection = () => {
   return (
     <section>
       <div className={styles['hero-container']}>
-        {/* <div className={styles['hero-container__image']}>
-          <Image
-            src="/images/hero-main.png"
-            alt="Computer with dashboard"
-            width={1024}
-            height={1024}
-          ></Image>
-        </div> */}
         <div className={styles['hero-container__text']}>
           <div>
             <h1>Enhance Your Time, Elevate Your Life</h1>
