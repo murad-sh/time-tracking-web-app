@@ -3,7 +3,7 @@ import { GetServerSideProps } from 'next';
 import { ITimeTrack } from '@/models/time-track';
 import { getUserTimeTracks } from '@/lib/db';
 import mongoose from 'mongoose';
-import Dashboard from '@/components/dashboard-page/Dashboard';
+import Dashboard from '@/components/dashboard/Dashboard';
 import type { NextPageWithLayout } from '../_app';
 import type { ReactElement } from 'react';
 import DashboardLayout from '@/components/layouts/DashboardLayout';

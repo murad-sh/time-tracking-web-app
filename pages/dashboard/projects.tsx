@@ -1,5 +1,5 @@
 import React from 'react';
-import AddProject from '@/components/dashboard-page/project/AddProject';
+import AddProject from '@/components/dashboard/project/AddProject';
 
 const ProjectsPage = () => {
   return <AddProject />;
