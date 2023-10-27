@@ -6,19 +6,26 @@ interface ButtonProps {
   href?: string;
   children: React.ReactNode;
   onClick?: () => void;
+  className?: string;
 }
 
 function PrimaryButton(props: ButtonProps) {
   if (props.href) {
     return (
-      <Link className={styles.primary} href={props.href}>
+      <Link
+        className={`${styles.primary} ${props.className}`}
+        href={props.href}
+      >
         {props.children}
       </Link>
     );
   }
 
   return (
-    <button className={styles.primary} onClick={props.onClick}>
+    <button
+      className={`${styles.primary} ${props.className}`}
+      onClick={props.onClick}
+    >
       {props.children}
     </button>
   );

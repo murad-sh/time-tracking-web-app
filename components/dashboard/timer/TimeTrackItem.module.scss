@@ -1,0 +1,22 @@
+@import '@/styles/variables';
+
+.track {
+  font-size: 1.6rem;
+  color: $color-text-primary-light;
+  list-style: none;
+  margin: 3rem auto;
+
+  .date {
+    border: 1px solid $color-text-primary-dark;
+    border-radius: 6px;
+    font-weight: 600;
+  }
+
+  .title {
+    font-size: 1.4rem;
+    color: $color-text-primary-dark;
+  }
+
+  .duration {
+  }
+}

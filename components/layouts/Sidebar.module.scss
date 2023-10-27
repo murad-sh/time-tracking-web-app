@@ -1,0 +1,28 @@
+@import '@/styles/variables';
+
+.side-nav {
+  width: 10%;
+  text-align: center;
+
+  // !TEMP
+  // background-color: $color-primary;
+  // color: white;
+  color: $color-primary;
+  font-size: 1.6rem;
+
+  ul {
+    margin-top: 6rem;
+    list-style: none;
+  }
+
+  li {
+    a {
+      text-decoration: none;
+      color: $color-text-primary-dark;
+    }
+  }
+
+  li:not(:last-child) {
+    margin-bottom: 1.5rem;
+  }
+}

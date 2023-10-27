@@ -1,86 +1,28 @@
-import React, { useState, useRef, FormEvent } from 'react';
-import { useSession, getSession } from 'next-auth/react';
+import { getSession } from 'next-auth/react';
 import { GetServerSideProps } from 'next';
 import { ITimeTrack } from '@/models/time-track';
 import { getUserTimeTracks } from '@/lib/db';
 import mongoose from 'mongoose';
+import Dashboard from '@/components/dashboard-page/Dashboard';
+import type { NextPageWithLayout } from '../_app';
+import type { ReactElement } from 'react';
+import DashboardLayout from '@/components/layouts/DashboardLayout';
 
 // ! EVERYTHING HERE IS TEMPORARY FOR DEMO PURPOSES ONLY
-type Props = {
+interface Props {
   timeTracks: ITimeTrack[];
-};
+}
 
-const DashboardPage = (props: Props) => {
-  const { data: session } = useSession();
-  const [btnStop, setBtnStop] = useState(false);
-  const [startTime, setStartTime] = useState<Date>();
-  const titleRef = useRef<HTMLInputElement>(null);
-
-  function startTimer() {
-    setStartTime(new Date());
-    setBtnStop(true);
-  }
-
-  async function sendTrack(event: FormEvent) {
-    event.preventDefault();
-    const endDate = new Date();
-    const session = await getSession();
-    if (!session) {
-      console.error('No session found');
-      return;
-    }
-    const res = await fetch('/api/create-time-track', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        title: titleRef.current!.value,
-        start: startTime,
-        end: endDate,
-      }),
-    });
-
-    if (res.ok) {
-      console.log(res);
-      setBtnStop(false);
-    }
-  }
-
+const DashboardPage: NextPageWithLayout<Props> = (props: Props) => {
   return (
     <section>
-      <h1>{`Welcome back ${session?.user?.name}!`}</h1>
-      <div>
-        <h3>Your latest tracks</h3>
-        {props.timeTracks.length === 0 && <p>No time tracks yet</p>}
-        <ul>
-          {props.timeTracks.map((track) => (
-            <li key={track._id?.toString()}>
-              <p>{track.title}</p>
-              <p>{track.start.toString()}</p>
-              <p>{track.end.toString()}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div>
-        <form onSubmit={sendTrack}>
-          <input
-            name="title"
-            type="text"
-            placeholder="title"
-            ref={titleRef}
-          ></input>
-          {!btnStop && (
-            <button onClick={startTimer} type="button">
-              {'Start'}
-            </button>
-          )}
-          {btnStop && <button type="submit">{'Stop'}</button>}
-        </form>
-      </div>
+      <Dashboard timeTracks={props.timeTracks} />
     </section>
   );
+};
+
+DashboardPage.getLayout = function getLayout(page: ReactElement) {
+  return <DashboardLayout>{page}</DashboardLayout>;
 };
 
 export default DashboardPage;

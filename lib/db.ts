@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 
 import TimeTrack from '@/models/time-track';
+import Project from '@/models/project';
+import Tag from '@/models/tag';
 
 export async function connectToDB() {
   const MONGODB_URI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_CLUSTER_NAME}.mongodb.net/${process.env.MONGO_DB_NAME}?retryWrites=true&w=majority`;
@@ -11,10 +13,12 @@ export async function connectToDB() {
     console.log('DB Connected');
   } catch (error) {
     console.log(error + ' Db connection failed!');
+    throw error;
   }
   return client;
 }
 
+// TODO: Add functionality to be able to get also tags and projects if they are available
 export async function getUserTimeTracks(userId: mongoose.Types.ObjectId) {
   try {
     await connectToDB();
@@ -33,5 +37,43 @@ export async function getUserTimeTracks(userId: mongoose.Types.ObjectId) {
     });
   } catch (error) {
     console.log('Failed to fetch time tracks:', error);
+  }
+}
+
+export async function getUserProjects(userId: mongoose.Types.ObjectId) {
+  try {
+    await connectToDB();
+    const projects = await Project.find({ userId }).lean();
+    if (!projects.length) {
+      return [];
+    }
+
+    return projects.map((project) => {
+      return {
+        _id: project._id.toString(),
+        projectTitle: project.projectTitle,
+      };
+    });
+  } catch (error) {
+    console.log('Failed to fetch projects:', error);
+  }
+}
+
+export async function getUserTags(userId: mongoose.Types.ObjectId) {
+  try {
+    await connectToDB();
+    const tags = await Tag.find({ userId }).lean();
+    if (!tags.length) {
+      return [];
+    }
+
+    return tags.map((tag) => {
+      return {
+        _id: tag._id.toString(),
+        tagName: tag.tagName,
+      };
+    });
+  } catch (error) {
+    console.log('Failed to fetch tags:', error);
   }
 }

@@ -3,6 +3,7 @@
 .header {
   width: 100%;
   height: 8rem;
+  padding: 0 10%;
   background-color: $color-background;
   display: flex;
   justify-content: space-between;
@@ -31,8 +32,17 @@
 }
 
 .list__item {
-  a {
+  a,
+  button {
     font-size: 1.4rem;
     padding: 0.8rem 1.2rem;
   }
+}
+
+.dashboard {
+  top: 0;
+  position: sticky;
+  z-index: 40;
+  border-bottom: 1px solid #e2e8f0;
+  box-shadow: 0 1px 4px rgba($color-black, 0.05);
 }

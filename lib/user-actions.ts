@@ -1,4 +1,4 @@
-import { ResourceConflictError } from './exceptions';
+import { ResourceConflictError } from './utils/exceptions';
 
 export async function createUser(
   name: string,

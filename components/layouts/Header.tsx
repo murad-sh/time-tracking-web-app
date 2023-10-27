@@ -6,8 +6,12 @@ import { useRouter } from 'next/router';
 import PrimaryButton from '../ui/PrimaryButton';
 import SecondaryButton from '../ui/SecondaryButton';
 
-const Header = () => {
-  const { data: session, status } = useSession();
+interface HeaderProps {
+  isDashboard?: boolean;
+}
+
+const Header = (props: HeaderProps) => {
+  const { status } = useSession();
   const router = useRouter();
 
   async function logoutHandler() {
@@ -16,7 +20,9 @@ const Header = () => {
   }
 
   return (
-    <header className={styles.header}>
+    <header
+      className={`${styles.header} ${props.isDashboard && styles.dashboard}`}
+    >
       <Link href="/" className={styles.header__logo}>
         Time Tracker
       </Link>
@@ -30,11 +36,6 @@ const Header = () => {
           {status === 'unauthenticated' && (
             <li className={styles.list__item}>
               <PrimaryButton href={'/sign-up'}>Get Started</PrimaryButton>
-            </li>
-          )}
-          {status === 'authenticated' && (
-            <li>
-              <p>{session.user?.name}</p>
             </li>
           )}
           {status === 'authenticated' && (

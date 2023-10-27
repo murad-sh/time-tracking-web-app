@@ -8,20 +8,22 @@ import {
   SignUpSchemaType,
   loginSchema,
   LoginSchemaType,
-} from '@/lib/validation/schemas';
-import { createUser } from '@/utils/user-actions';
+} from '@/lib/validations/auth';
+import { createUser } from '@/lib/user-actions';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ResourceConflictError } from '@/utils/exceptions';
+import { ResourceConflictError } from '@/lib/utils/exceptions';
 import PrimaryButton from '../ui/PrimaryButton';
+import { useRouter } from 'next/router';
 
 type ActionType = 'Login' | 'Sign-up';
 
-type FormProps = {
+interface FormProps {
   action: ActionType;
-};
+}
 
 const AuthForm = ({ action }: FormProps) => {
   const isLogin = action === 'Login';
+  const router = useRouter();
 
   type AuthSchemaType = typeof isLogin extends true
     ? LoginSchemaType
@@ -32,10 +34,8 @@ const AuthForm = ({ action }: FormProps) => {
     handleSubmit,
     setError,
     formState: { errors, isSubmitting },
-    // reset,
   } = useForm<AuthSchemaType>({
     resolver: zodResolver(isLogin ? loginSchema : signUpSchema),
-    // ! Experimental, options to test : 'onBlur', 'onChange', 'all'
     mode: 'all',
   });
 
@@ -44,10 +44,9 @@ const AuthForm = ({ action }: FormProps) => {
       const res = await signIn('credentials', {
         email: enteredData.email,
         password: enteredData.password,
-        redirect: false,
+        redirect: true,
+        callbackUrl: (router.query?.from as string) || '/dashboard',
       });
-
-      console.log(res);
 
       if (res?.error && res.status === 401) {
         setError('root.serverError', {
@@ -72,7 +71,8 @@ const AuthForm = ({ action }: FormProps) => {
         await signIn('credentials', {
           email: enteredData.email,
           password: enteredData.password,
-          redirect: false,
+          redirect: true,
+          callbackUrl: '/dashboard',
         });
       } catch (error) {
         if (error instanceof ResourceConflictError) {
@@ -92,7 +92,7 @@ const AuthForm = ({ action }: FormProps) => {
 
   return (
     <section className={styles.auth}>
-      <h1>{action}</h1>
+      <h1>{action === 'Login' ? 'Welcome back' : 'Start Tracking Time'}</h1>
       <form onSubmit={handleSubmit(onSubmit)} className={styles['auth-form']}>
         {!isLogin && (
           <div className={styles.control}>
@@ -103,7 +103,9 @@ const AuthForm = ({ action }: FormProps) => {
               id="name"
               placeholder="Full Name"
             />
-            {errors.name && <p>{`${errors.name.message}`}</p>}
+            {errors.name && (
+              <p className={styles['error-msg']}>{`${errors.name.message}`}</p>
+            )}
           </div>
         )}
         <div className={styles.control}>
@@ -114,7 +116,9 @@ const AuthForm = ({ action }: FormProps) => {
             id="email"
             placeholder="Enter your email address"
           />
-          {errors.email && <p>{`${errors.email.message}`}</p>}
+          {errors.email && (
+            <p className={styles['error-msg']}>{`${errors.email.message}`}</p>
+          )}
         </div>
         <div className={styles.control}>
           <label htmlFor="password">Your Password</label>
@@ -124,7 +128,11 @@ const AuthForm = ({ action }: FormProps) => {
             id="password"
             placeholder="Enter your password"
           />
-          {errors.password && <p>{`${errors.password.message}`}</p>}
+          {errors.password && (
+            <p
+              className={styles['error-msg']}
+            >{`${errors.password.message}`}</p>
+          )}
         </div>
         {!isLogin && (
           <div className={styles.control}>
@@ -136,12 +144,16 @@ const AuthForm = ({ action }: FormProps) => {
               placeholder="Confirm your password"
             />
             {errors.confirmPassword && (
-              <p>{`${errors.confirmPassword.message}`}</p>
+              <p
+                className={styles['error-msg']}
+              >{`${errors.confirmPassword.message}`}</p>
             )}
           </div>
         )}
         <div className={styles.actions}>
-          <PrimaryButton>{!isLogin ? 'Create Account' : 'Login'}</PrimaryButton>
+          <PrimaryButton className={isSubmitting ? styles.submitting : ''}>
+            {!isLogin ? 'Create Account' : 'Login'}
+          </PrimaryButton>
 
           <Link
             className={styles.toggle}
@@ -149,7 +161,11 @@ const AuthForm = ({ action }: FormProps) => {
           >
             {!isLogin ? 'Login with existing account' : 'Create new account'}
           </Link>
-          {errors.root?.serverError && <p>{errors.root.serverError.message}</p>}
+          {errors.root?.serverError && (
+            <p className={styles['error-msg']}>
+              {errors.root.serverError.message}
+            </p>
+          )}
         </div>
       </form>
     </section>
