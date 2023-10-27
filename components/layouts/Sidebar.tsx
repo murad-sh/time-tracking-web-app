@@ -5,19 +5,17 @@ import { useRouter } from 'next/router';
 
 const Sidebar = () => {
   const router = useRouter();
-
   // TODO : ACTIVE CLASS SCSS
-  console.log(router.pathname);
+  const activeLink = router.pathname;
 
   return (
     <nav className={styles['side-nav']}>
-      <h1>SIDEBAR</h1>
       <ul>
         <li>
-          <Link href={''}>Timer</Link>
+          <Link href={'/dashboard'}>Timer</Link>
         </li>
         <li>
-          <Link href={''}>Reports</Link>
+          <Link href={'/dashboard/reports'}>Reports</Link>
         </li>
         <li>
           <Link href={'/dashboard/projects'}>Projects</Link>
