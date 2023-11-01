@@ -1,0 +1,38 @@
+@import '@/styles/variables';
+
+.control {
+  & label {
+    display: block;
+    text-align: left;
+    color: $color-text-primary-dark;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+
+  & input {
+    background-color: $color-white;
+    color: $color-text-primary-dark;
+    border-radius: 8px;
+    border: 1.5px solid $color-primary;
+    width: 100%;
+    max-width: 45rem;
+    text-align: left;
+    padding: 1rem;
+
+    &::placeholder {
+      color: $color-text-primary-light;
+    }
+
+    &:focus {
+      outline-style: double;
+      outline-color: $color-primary-light-2;
+    }
+  }
+}
+
+.error {
+  font-size: 1.2rem;
+  color: $color-error;
+  margin-top: 0.8rem;
+  text-align: left;
+}

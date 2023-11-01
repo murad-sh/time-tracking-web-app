@@ -1,19 +1,19 @@
 @import '@/styles/variables';
 
+// !TEMP
 .track {
   font-size: 1.6rem;
-  color: $color-text-primary-light;
   list-style: none;
   margin: 3rem auto;
+  border: 1px solid $color-text-primary-dark;
+  border-radius: 6px;
+  padding: 1rem;
 
   .date {
-    border: 1px solid $color-text-primary-dark;
-    border-radius: 6px;
     font-weight: 600;
   }
 
   .title {
     font-size: 1.4rem;
-    color: $color-text-primary-dark;
   }
 }

@@ -10,7 +10,7 @@ interface LayoutProps {
 const DashboardLayout = ({ children }: LayoutProps) => {
   return (
     <div>
-      <Header isDashboard={true} />
+      <Header isSticky={true} />
       <div className={styles.container}>
         <aside>
           <Sidebar />

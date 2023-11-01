@@ -1,21 +1,28 @@
 import React, { useRef, useState, FormEvent } from 'react';
 import { getSession } from 'next-auth/react';
+import styles from './AddTimeTrack.module.scss';
+import { useForm } from 'react-hook-form';
+import { timeTrackSchema } from '@/lib/validations/time-track';
+import Stopwatch from './Stopwatch';
 
 // TODO: Add validation for tracks and later a way to attach projects and tags
 const AddTimeTrack = () => {
   const [btnStop, setBtnStop] = useState(false);
   const [startTime, setStartTime] = useState<Date>();
   const titleRef = useRef<HTMLInputElement>(null);
+  const [toggle, setToggle] = useState(false);
 
   function startTimer() {
     setStartTime(new Date());
     setBtnStop(true);
+    setToggle(true);
   }
 
   // TODO: move this function to lib folder
   async function sendTrack(event: FormEvent) {
     event.preventDefault();
     const endDate = new Date();
+    setToggle(false);
     const session = await getSession();
     if (!session) {
       console.error('No session found');
@@ -41,6 +48,8 @@ const AddTimeTrack = () => {
 
   return (
     <div>
+      {!toggle && <p>Start recording now!</p>}
+      {toggle && <Stopwatch toggle={toggle} />}
       <form onSubmit={sendTrack}>
         <input
           name="title"

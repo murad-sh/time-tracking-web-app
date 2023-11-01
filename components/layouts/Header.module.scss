@@ -9,20 +9,20 @@
   justify-content: space-between;
   align-items: center;
   font-size: 2rem;
-
-  &__logo {
-    font-family: inherit;
-    text-transform: uppercase;
-    font-weight: 700;
-    letter-spacing: -0.2rem;
-    font-size: 3.3rem;
-    color: $color-text-primary-dark;
-    text-decoration: none;
-    display: block;
-  }
 }
 
-.nav__list {
+.logo {
+  font-family: inherit;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: -0.2rem;
+  font-size: 3.3rem;
+  color: $color-text-primary-dark;
+  text-decoration: none;
+  display: block;
+}
+
+.list {
   font-size: $nav-font-size;
   list-style: none;
   display: flex;
@@ -31,7 +31,7 @@
   flex: 1;
 }
 
-.list__item {
+.item {
   a,
   button {
     font-size: 1.4rem;
@@ -39,10 +39,9 @@
   }
 }
 
-.dashboard {
+.sticky {
   top: 0;
   position: sticky;
   z-index: 40;
-  border-bottom: 1px solid #e2e8f0;
-  box-shadow: 0 1px 4px rgba($color-black, 0.05);
+  border-bottom: 2px solid #e2e8f0;
 }

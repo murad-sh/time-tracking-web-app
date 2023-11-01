@@ -18,7 +18,7 @@
     letter-spacing: -0.4px;
   }
 
-  &-form {
+  .form {
     font-size: 1.3rem;
   }
 }
@@ -78,13 +78,14 @@
     }
   }
 }
+
 .submitting {
   cursor: not-allowed;
   opacity: 0.8;
   pointer-events: none;
 }
 
-.error-msg {
+.error {
   font-size: 1.2rem;
   color: $color-error;
   margin-top: 0.8rem;

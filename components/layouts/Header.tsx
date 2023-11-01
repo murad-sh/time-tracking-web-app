@@ -7,7 +7,7 @@ import PrimaryButton from '../ui/PrimaryButton';
 import SecondaryButton from '../ui/SecondaryButton';
 
 interface HeaderProps {
-  isDashboard?: boolean;
+  isSticky?: boolean;
 }
 
 const Header = (props: HeaderProps) => {
@@ -20,31 +20,29 @@ const Header = (props: HeaderProps) => {
   }
 
   return (
-    <header
-      className={`${styles.header} ${props.isDashboard && styles.dashboard}`}
-    >
-      <Link href="/" className={styles.header__logo}>
+    <header className={`${styles.header} ${props.isSticky && styles.sticky}`}>
+      <Link href="/" className={styles.logo}>
         Time Tracker
       </Link>
       <nav>
-        <ul className={styles.nav__list}>
+        <ul className={styles.list}>
           {status === 'unauthenticated' && (
-            <li className={styles.list__item}>
+            <li className={styles.item}>
               <SecondaryButton href={'/login'}>Login</SecondaryButton>
             </li>
           )}
           {status === 'unauthenticated' && (
-            <li className={styles.list__item}>
+            <li className={styles.item}>
               <PrimaryButton href={'/sign-up'}>Get Started</PrimaryButton>
             </li>
           )}
           {status === 'authenticated' && (
-            <li className={styles.list__item}>
+            <li className={styles.item}>
               <SecondaryButton href={'/dashboard'}>Dashboard</SecondaryButton>
             </li>
           )}
           {status === 'authenticated' && (
-            <li className={styles.list__item}>
+            <li className={styles.item}>
               <PrimaryButton onClick={logoutHandler}>Logout</PrimaryButton>
             </li>
           )}

@@ -1,3 +1,14 @@
 .container {
-  display: flex;
+  width: 100%;
+  // ? NOT FINAL
+  // max-width: 128rem;
+  max-width: 140rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 3.2rem;
+  padding: 0 3.2rem;
+  display: grid;
+  flex-grow: 1;
+  gap: 5rem;
+  grid-template-columns: 19rem 1fr;
 }

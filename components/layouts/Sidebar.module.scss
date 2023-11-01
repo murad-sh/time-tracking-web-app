@@ -1,27 +1,33 @@
 @import '@/styles/variables';
 
 .side-nav {
-  width: 10%;
-
-  // !TEMP
-  // background-color: $color-primary;
-  // color: white;
-  color: $color-primary;
-  font-size: 1.6rem;
-
+  font-size: 1.4rem;
   ul {
-    margin-top: 6rem;
     list-style: none;
   }
 
   li {
     a {
+      display: inline-block;
+      width: 100%;
+      border: 1px solid transparent;
+      padding: 0.8rem 1.2rem;
+      border-radius: 8px;
       text-decoration: none;
       color: $color-text-primary-dark;
+
+      &:hover {
+        background-color: $color-primary;
+        color: $color-white;
+      }
+    }
+    & .active {
+      background-color: $color-primary;
+      color: $color-white;
     }
   }
 
   li:not(:last-child) {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.2rem;
   }
 }

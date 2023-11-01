@@ -40,6 +40,7 @@ export async function getUserTimeTracks(userId: mongoose.Types.ObjectId) {
   }
 }
 
+// TODO Probably will need some refactor after new features
 export async function getUserProjects(userId: mongoose.Types.ObjectId) {
   try {
     await connectToDB();

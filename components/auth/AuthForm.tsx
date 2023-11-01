@@ -93,7 +93,7 @@ const AuthForm = ({ action }: FormProps) => {
   return (
     <section className={styles.auth}>
       <h1>{action === 'Login' ? 'Welcome back' : 'Start Tracking Time'}</h1>
-      <form onSubmit={handleSubmit(onSubmit)} className={styles['auth-form']}>
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
         {!isLogin && (
           <div className={styles.control}>
             <label htmlFor="name">Your Name</label>
@@ -104,7 +104,7 @@ const AuthForm = ({ action }: FormProps) => {
               placeholder="Full Name"
             />
             {errors.name && (
-              <p className={styles['error-msg']}>{`${errors.name.message}`}</p>
+              <p className={styles.error}>{`${errors.name.message}`}</p>
             )}
           </div>
         )}
@@ -117,7 +117,7 @@ const AuthForm = ({ action }: FormProps) => {
             placeholder="Enter your email address"
           />
           {errors.email && (
-            <p className={styles['error-msg']}>{`${errors.email.message}`}</p>
+            <p className={styles.error}>{`${errors.email.message}`}</p>
           )}
         </div>
         <div className={styles.control}>
@@ -129,9 +129,7 @@ const AuthForm = ({ action }: FormProps) => {
             placeholder="Enter your password"
           />
           {errors.password && (
-            <p
-              className={styles['error-msg']}
-            >{`${errors.password.message}`}</p>
+            <p className={styles.error}>{`${errors.password.message}`}</p>
           )}
         </div>
         {!isLogin && (
@@ -145,7 +143,7 @@ const AuthForm = ({ action }: FormProps) => {
             />
             {errors.confirmPassword && (
               <p
-                className={styles['error-msg']}
+                className={styles.error}
               >{`${errors.confirmPassword.message}`}</p>
             )}
           </div>
@@ -162,9 +160,7 @@ const AuthForm = ({ action }: FormProps) => {
             {!isLogin ? 'Login with existing account' : 'Create new account'}
           </Link>
           {errors.root?.serverError && (
-            <p className={styles['error-msg']}>
-              {errors.root.serverError.message}
-            </p>
+            <p className={styles.error}>{errors.root.serverError.message}</p>
           )}
         </div>
       </form>

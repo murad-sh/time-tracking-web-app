@@ -7,9 +7,12 @@ interface ButtonProps {
   children: React.ReactNode;
   onClick?: () => void;
   className?: string;
+  type?: React.ButtonHTMLAttributes<HTMLButtonElement>['type'];
 }
 
 function PrimaryButton(props: ButtonProps) {
+  const buttonType = props.type || 'button';
+
   if (props.href) {
     return (
       <Link
@@ -25,6 +28,7 @@ function PrimaryButton(props: ButtonProps) {
     <button
       className={`${styles.primary} ${props.className}`}
       onClick={props.onClick}
+      type={buttonType}
     >
       {props.children}
     </button>
