@@ -3,9 +3,9 @@ import { ITimeTrack } from '@/models/time-track';
 import styles from './TimeTrackItem.module.scss';
 import { calculateDifference } from '@/lib/utils/calculate';
 
-type Props = {
+interface Props {
   timeTrack: ITimeTrack;
-};
+}
 
 const TimeTrackItem = ({ timeTrack }: Props) => {
   return (

@@ -21,6 +21,7 @@ const TagForm = ({ afterSave }: TagFormProps) => {
     mode: 'all',
   });
 
+  // TODO : Add error handling
   async function onSubmit(enteredTagName: TagSchemaType) {
     await createTag(enteredTagName.tagName);
     afterSave();

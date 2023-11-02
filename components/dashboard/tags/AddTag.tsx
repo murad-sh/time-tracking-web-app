@@ -3,6 +3,9 @@ import Modal from '@/components/ui/Modal';
 import TagForm from './TagForm';
 import PrimaryButton from '@/components/ui/PrimaryButton';
 
+// !TEMP
+import TagList from './TagList';
+
 const AddTag = () => {
   const [open, setOpen] = useState(false);
 
@@ -16,6 +19,7 @@ const AddTag = () => {
           <TagForm afterSave={() => setOpen(false)} />
         </Modal.Content>
       </Modal>
+      <TagList />
     </div>
   );
 };
