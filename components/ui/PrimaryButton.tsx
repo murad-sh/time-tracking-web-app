@@ -10,29 +10,34 @@ interface ButtonProps {
   type?: React.ButtonHTMLAttributes<HTMLButtonElement>['type'];
 }
 
-function PrimaryButton(props: ButtonProps) {
-  const buttonType = props.type || 'button';
+const PrimaryButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  (props, ref) => {
+    const buttonType = props.type || 'button';
 
-  if (props.href) {
+    if (props.href) {
+      return (
+        <Link
+          className={`${styles.primary} ${props.className}`}
+          href={props.href}
+        >
+          {props.children}
+        </Link>
+      );
+    }
+
     return (
-      <Link
+      <button
         className={`${styles.primary} ${props.className}`}
-        href={props.href}
+        onClick={props.onClick}
+        type={buttonType}
+        ref={ref}
       >
         {props.children}
-      </Link>
+      </button>
     );
   }
+);
 
-  return (
-    <button
-      className={`${styles.primary} ${props.className}`}
-      onClick={props.onClick}
-      type={buttonType}
-    >
-      {props.children}
-    </button>
-  );
-}
+PrimaryButton.displayName = 'PrimaryButton';
 
 export default PrimaryButton;

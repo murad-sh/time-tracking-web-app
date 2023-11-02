@@ -14,8 +14,8 @@ interface Props {
 const TagsPage: NextPageWithLayout<Props> = (props: Props) => {
   return (
     <div>
-      {/* <AddTag /> */}
-      <Modal>
+      <AddTag />
+      {/* <Modal>
         <Modal.Button asChild>
           <button>Test</button>
         </Modal.Button>
@@ -27,7 +27,7 @@ const TagsPage: NextPageWithLayout<Props> = (props: Props) => {
             <Modal.Close>Close</Modal.Close>
           </div>
         </Modal.Content>
-      </Modal>
+      </Modal> */}
     </div>
   );
 };

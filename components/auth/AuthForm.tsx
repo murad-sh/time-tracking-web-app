@@ -149,7 +149,10 @@ const AuthForm = ({ action }: FormProps) => {
           </div>
         )}
         <div className={styles.actions}>
-          <PrimaryButton className={isSubmitting ? styles.submitting : ''}>
+          <PrimaryButton
+            className={isSubmitting ? styles.submitting : ''}
+            type="submit"
+          >
             {!isLogin ? 'Create Account' : 'Login'}
           </PrimaryButton>
 
