@@ -26,6 +26,8 @@ export default async function handler(
       return;
     }
 
+    await connectToDB();
+
     if (req.method === 'GET') {
       const projects = await Project.find({ userId: currentUser.id });
       res.status(200).json({ message: 'Success', projects });
@@ -36,7 +38,6 @@ export default async function handler(
         return;
       }
       const { projectTitle } = validatedData.data;
-      await connectToDB();
       const user = await User.findOne({ email: currentUser.email });
       if (!user) {
         res.status(404).json({ message: 'User not found' });

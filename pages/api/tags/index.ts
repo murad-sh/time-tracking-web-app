@@ -26,6 +26,8 @@ export default async function handler(
       return;
     }
 
+    await connectToDB();
+
     if (req.method === 'GET') {
       const tags = await Tag.find({ userId: currentUser.id });
 
@@ -38,7 +40,6 @@ export default async function handler(
       }
 
       const { tagName } = validatedData.data;
-      await connectToDB();
       const user = await User.findOne({ email: currentUser.email });
       if (!user) {
         res.status(404).json({ message: 'User not found' });

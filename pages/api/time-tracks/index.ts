@@ -25,6 +25,7 @@ export default async function handler(
       res.status(401).json({ message: 'Unauthorized' });
       return;
     }
+    await connectToDB();
 
     if (req.method === 'GET') {
       const timeTracks = await TimeTrack.find({ userId: currentUser.id });
@@ -38,7 +39,6 @@ export default async function handler(
       }
 
       const { title, start, end } = validatedData.data;
-      await connectToDB();
       const user = await User.findOne({ email: currentUser.email });
       if (!user) {
         res.status(404).json({ message: 'User not found' });
