@@ -1,35 +1,36 @@
 @import '@/styles/variables';
-.hero-container {
+
+.container {
   display: flex;
   gap: 6rem;
   margin: 7rem auto;
   padding: 0 10%;
   align-items: center;
+}
 
-  &__image {
-    img {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      box-shadow: 0 1rem 4rem rgba($color-black, 0.3);
-    }
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 3.2rem;
+
+  h1 {
+    font-size: 5.2rem;
+    font-weight: 700;
+    color: $color-text-primary-dark;
   }
 
-  &__text {
-    display: flex;
-    flex-direction: column;
-    gap: 3.2rem;
+  p {
+    font-size: 1.8rem;
+    line-height: 2.7rem;
+    color: $color-text-primary-light;
+  }
+}
 
-    h1 {
-      font-size: 5.2rem;
-      font-weight: 700;
-      color: $color-text-primary-dark;
-    }
-
-    p {
-      font-size: 1.8rem;
-      line-height: 2.7rem;
-      color: $color-text-primary-light;
-    }
+.image {
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    box-shadow: 0 1rem 4rem rgba(black, 0.3);
   }
 }

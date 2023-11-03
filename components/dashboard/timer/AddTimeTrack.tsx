@@ -22,7 +22,7 @@ const AddTimeTrack = () => {
   async function sendTrack(event: FormEvent) {
     event.preventDefault();
     const endDate = new Date();
-    setToggle(false);
+    setTimer(false);
     const session = await getSession();
     if (!session) {
       console.error('No session found');
@@ -48,8 +48,7 @@ const AddTimeTrack = () => {
 
   return (
     <div>
-      {!timer && <p>Start recording now!</p>}
-      {timer && <Stopwatch timer={timer} />}
+      <Stopwatch timer={timer} />
       <form onSubmit={sendTrack}>
         <input
           name="title"

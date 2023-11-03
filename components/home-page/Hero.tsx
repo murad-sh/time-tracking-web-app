@@ -6,8 +6,8 @@ import PrimaryButton from '../ui/PrimaryButton';
 const HeroSection = () => {
   return (
     <section>
-      <div className={styles['hero-container']}>
-        <div className={styles['hero-container__text']}>
+      <div className={styles.container}>
+        <div className={styles.text}>
           <div>
             <h1>Enhance Your Time, Elevate Your Life</h1>
           </div>
@@ -23,7 +23,7 @@ const HeroSection = () => {
             </PrimaryButton>
           </div>
         </div>
-        <div className={styles['hero-container__image']}>
+        <div className={styles.image}>
           <Image
             src="/images/hero-main.png"
             alt="Computer with dashboard"

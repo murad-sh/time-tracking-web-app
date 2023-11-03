@@ -93,7 +93,7 @@ const AuthForm = ({ action }: FormProps) => {
   return (
     <section className={styles.auth}>
       <h1>{action === 'Login' ? 'Welcome back' : 'Start Tracking Time'}</h1>
-      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         {!isLogin && (
           <div className={styles.control}>
             <label htmlFor="name">Your Name</label>
@@ -150,7 +150,7 @@ const AuthForm = ({ action }: FormProps) => {
         )}
         <div className={styles.actions}>
           <PrimaryButton
-            className={isSubmitting ? styles.submitting : ''}
+            className={isSubmitting ? styles.disabled : ''}
             type="submit"
           >
             {!isLogin ? 'Create Account' : 'Login'}
