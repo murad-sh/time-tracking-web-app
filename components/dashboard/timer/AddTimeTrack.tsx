@@ -10,12 +10,12 @@ const AddTimeTrack = () => {
   const [btnStop, setBtnStop] = useState(false);
   const [startTime, setStartTime] = useState<Date>();
   const titleRef = useRef<HTMLInputElement>(null);
-  const [toggle, setToggle] = useState(false);
+  const [timer, setTimer] = useState(false);
 
   function startTimer() {
     setStartTime(new Date());
     setBtnStop(true);
-    setToggle(true);
+    setTimer(true);
   }
 
   // TODO: move this function to lib folder
@@ -48,8 +48,8 @@ const AddTimeTrack = () => {
 
   return (
     <div>
-      {!toggle && <p>Start recording now!</p>}
-      {toggle && <Stopwatch toggle={toggle} />}
+      {!timer && <p>Start recording now!</p>}
+      {timer && <Stopwatch timer={timer} />}
       <form onSubmit={sendTrack}>
         <input
           name="title"
