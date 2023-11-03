@@ -6,7 +6,7 @@ const AddProject = () => {
   async function submitHandler(event: FormEvent) {
     event.preventDefault();
     const title = projectTitleRef.current?.value;
-    const res = await fetch('/api/user/create-project', {
+    const res = await fetch('/api/projects', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

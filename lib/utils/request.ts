@@ -21,21 +21,3 @@ export async function postRequest(url: string, body: { [key: string]: any }) {
 
   return data;
 }
-
-export async function getRequest(url: string) {
-  const response = await fetch(url, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(
-      data.message || 'Request failed with status ' + response.status
-    );
-  }
-
-  return data;
-}

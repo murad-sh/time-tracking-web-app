@@ -7,26 +7,24 @@ interface StopwatchProps {
 
 const Stopwatch = ({ toggle }: StopwatchProps) => {
   const [time, setTime] = useState(0);
-  const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    if (toggle && intervalId === null) {
-      const id = setInterval(() => {
+    let intervalId: NodeJS.Timeout;
+    if (toggle) {
+      intervalId = setInterval(() => {
+        console.log('Interval set with ID:', intervalId);
         setTime((prevTime) => prevTime + 1);
       }, 1000);
-      setIntervalId(id);
     }
-    if (!toggle && intervalId !== null) {
-      clearInterval(intervalId);
-      setIntervalId(null);
-      setTime(0);
-    }
+
     return () => {
       if (intervalId) {
+        console.log('interval cleared');
         clearInterval(intervalId);
+        setTime(0);
       }
     };
-  }, [toggle, intervalId]);
+  }, [toggle]);
 
   const [hours, minutes, seconds] = calculateTime(time);
 

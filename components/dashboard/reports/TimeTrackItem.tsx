@@ -1,7 +1,7 @@
 import React from 'react';
 import { ITimeTrack } from '@/models/time-track';
 import styles from './TimeTrackItem.module.scss';
-import { calculateDifference } from '@/lib/utils/calculate';
+import { calculateDuration } from '@/lib/utils/calculate';
 
 interface Props {
   timeTrack: ITimeTrack;
@@ -18,7 +18,7 @@ const TimeTrackItem = ({ timeTrack }: Props) => {
       </div>
       <div className={styles.duration}>
         <span>
-          Duration: {calculateDifference(timeTrack.start, timeTrack.end)}
+          Duration: {calculateDuration(timeTrack.start, timeTrack.end)}
         </span>
       </div>
     </div>

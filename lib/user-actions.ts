@@ -1,4 +1,4 @@
-import { postRequest, getRequest } from './utils/request';
+import { postRequest } from './utils/request';
 
 export function createUser(
   name: string,
@@ -17,5 +17,3 @@ export function createUser(
 export function createTag(tagName: string) {
   return postRequest('/api/user/create-tag', { tagName });
 }
-
-export function getTags() {}

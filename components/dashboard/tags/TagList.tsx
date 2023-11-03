@@ -8,6 +8,7 @@ const TagList = () => {
     fetch(url).then((res) => res.json())
   );
 
+  // !TEMP
   if (error) return <div>failed to load</div>;
   if (isLoading) return <div>loading...</div>;
 

@@ -1,13 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { tagSchema } from '@/lib/validations/tag';
+import { projectSchema } from '@/lib/validations/project';
 import { getCurrentUser } from '@/lib/auth/session';
 import { connectToDB } from '@/lib/db';
 import User from '@/models/user';
-import Tag, { ITag } from '@/models/tag';
+import Project, { IProject } from '@/models/project';
 
 type Data = {
   message: string;
-  tags?: ITag[];
+  projects?: IProject[];
 };
 
 export default async function handler(
@@ -27,24 +27,22 @@ export default async function handler(
     }
 
     if (req.method === 'GET') {
-      const tags = await Tag.find({ userId: currentUser.id });
-
-      res.status(200).json({ message: 'Success', tags });
+      const projects = await Project.find({ userId: currentUser.id });
+      res.status(200).json({ message: 'Success', projects });
     } else if (req.method === 'POST') {
-      const validatedData = tagSchema.safeParse(req.body);
+      const validatedData = projectSchema.safeParse(req.body);
       if (!validatedData.success) {
         res.status(422).json({ message: validatedData.error.message });
         return;
       }
-
-      const { tagName } = validatedData.data;
+      const { projectTitle } = validatedData.data;
       await connectToDB();
       const user = await User.findOne({ email: currentUser.email });
       if (!user) {
         res.status(404).json({ message: 'User not found' });
         return;
       }
-      await user.addTag(tagName);
+      await user.addProject(projectTitle);
       res.status(201).json({ message: 'Tag created' });
     }
   } catch (error) {

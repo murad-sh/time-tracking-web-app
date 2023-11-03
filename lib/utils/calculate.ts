@@ -1,4 +1,4 @@
-export const calculateDifference = (start: Date, end: Date) => {
+export const calculateDuration = (start: Date, end: Date) => {
   const startDate = new Date(start);
   const endDate = new Date(end);
   const diffInMilliseconds = endDate.getTime() - startDate.getTime();

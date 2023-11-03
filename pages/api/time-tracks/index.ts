@@ -1,13 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { tagSchema } from '@/lib/validations/tag';
-import { getCurrentUser } from '@/lib/auth/session';
-import { connectToDB } from '@/lib/db';
+import { timeTrackSchema } from '@/lib/validations/time-track';
 import User from '@/models/user';
-import Tag, { ITag } from '@/models/tag';
+import { connectToDB } from '@/lib/db';
+import { getCurrentUser } from '@/lib/auth/session';
+import TimeTrack, { ITimeTrack } from '@/models/time-track';
 
 type Data = {
   message: string;
-  tags?: ITag[];
+  timeTracks?: ITimeTrack[];
 };
 
 export default async function handler(
@@ -27,25 +27,25 @@ export default async function handler(
     }
 
     if (req.method === 'GET') {
-      const tags = await Tag.find({ userId: currentUser.id });
+      const timeTracks = await TimeTrack.find({ userId: currentUser.id });
 
-      res.status(200).json({ message: 'Success', tags });
+      res.status(200).json({ message: 'Success', timeTracks });
     } else if (req.method === 'POST') {
-      const validatedData = tagSchema.safeParse(req.body);
+      const validatedData = timeTrackSchema.safeParse(req.body);
       if (!validatedData.success) {
         res.status(422).json({ message: validatedData.error.message });
         return;
       }
 
-      const { tagName } = validatedData.data;
+      const { title, start, end } = validatedData.data;
       await connectToDB();
       const user = await User.findOne({ email: currentUser.email });
       if (!user) {
         res.status(404).json({ message: 'User not found' });
         return;
       }
-      await user.addTag(tagName);
-      res.status(201).json({ message: 'Tag created' });
+      await user.addTimeTrack({ title, start, end });
+      res.status(201).json({ message: 'Success' });
     }
   } catch (error) {
     console.error(error);

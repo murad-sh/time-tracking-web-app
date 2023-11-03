@@ -28,7 +28,7 @@ const AddTimeTrack = () => {
       console.error('No session found');
       return;
     }
-    const res = await fetch('/api/user/create-time-track', {
+    const res = await fetch('/api/time-tracks', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
