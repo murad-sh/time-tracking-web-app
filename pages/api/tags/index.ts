@@ -25,7 +25,6 @@ export default async function handler(
       res.status(401).json({ message: 'Unauthorized' });
       return;
     }
-
     await connectToDB();
 
     if (req.method === 'GET') {
@@ -33,6 +32,8 @@ export default async function handler(
 
       res.status(200).json({ message: 'Success', tags });
     } else if (req.method === 'POST') {
+      console.log(req.body);
+
       const validatedData = tagSchema.safeParse(req.body);
       if (!validatedData.success) {
         res.status(422).json({ message: validatedData.error.message });
@@ -45,7 +46,7 @@ export default async function handler(
         res.status(404).json({ message: 'User not found' });
         return;
       }
-      await user.addTag(tagName);
+      await user.addTag({ tagName });
       res.status(201).json({ message: 'Tag created' });
     }
   } catch (error) {

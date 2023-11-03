@@ -3,10 +3,19 @@ import useSWR from 'swr';
 import { ITag } from '@/models/tag';
 import TagItem from './TagItem';
 
+import styles from './TagList.module.scss';
+
 const TagList = () => {
-  const { data, error, isLoading } = useSWR('/api/tags', (url) =>
-    fetch(url).then((res) => res.json())
-  );
+  // TODO : Add proper error handling
+  const fetcher = async (url: string) => {
+    const res = await fetch(url);
+    if (!res.ok) {
+      throw new Error(res.json().toString());
+    }
+    return res.json();
+  };
+
+  const { data, error, isLoading } = useSWR('/api/tags', fetcher);
 
   // !TEMP
   if (error) return <div>failed to load</div>;
@@ -14,9 +23,9 @@ const TagList = () => {
 
   return (
     <div>
-      <ul>
+      <ul className={styles.list}>
         {data.tags.map((tag: ITag) => (
-          <li key={tag._id?.toString()}>
+          <li className={styles.item} key={tag._id?.toString()}>
             <TagItem tagName={tag.tagName}></TagItem>
           </li>
         ))}

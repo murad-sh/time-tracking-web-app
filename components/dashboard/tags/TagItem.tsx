@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './TagItem.module.scss';
 
 interface TagProps {
   tagName: string;
@@ -6,7 +7,7 @@ interface TagProps {
 
 const TagItem = ({ tagName }: TagProps) => {
   return (
-    <div>
+    <div className={styles.tag}>
       <h2>{tagName}</h2>
     </div>
   );

@@ -43,7 +43,7 @@ export default async function handler(
         res.status(404).json({ message: 'User not found' });
         return;
       }
-      await user.addProject(projectTitle);
+      await user.addProject({ projectTitle });
       res.status(201).json({ message: 'Tag created' });
     }
   } catch (error) {

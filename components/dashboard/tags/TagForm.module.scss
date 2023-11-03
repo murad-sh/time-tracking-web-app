@@ -5,6 +5,14 @@
   @include form-input;
 }
 
+.action {
+  margin-top: 2rem;
+  button {
+    width: 100%;
+    padding: 1rem;
+  }
+}
+
 .error {
   @include form-error;
 }

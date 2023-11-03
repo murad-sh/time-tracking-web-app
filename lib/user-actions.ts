@@ -15,5 +15,5 @@ export function createUser(
 }
 
 export function createTag(tagName: string) {
-  return postRequest('/api/user/create-tag', { tagName });
+  return postRequest('/api/tags/', { tagName });
 }

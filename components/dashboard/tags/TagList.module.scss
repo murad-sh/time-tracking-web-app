@@ -1,0 +1,18 @@
+@import '@/styles/variables';
+
+.list {
+  font-size: 1.6rem;
+  list-style: none;
+  color: $color-text-primary-dark;
+
+  li {
+    border: 1px solid $color-text-primary-dark;
+    border-radius: 6px;
+    padding: 1rem;
+    width: 40rem;
+  }
+
+  li:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+}
