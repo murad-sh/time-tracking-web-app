@@ -1,13 +1,13 @@
 import React from 'react';
 import { ITimeTrack } from '@/models/time-track';
-import styles from './Reports.module.scss';
+import styles from './TimeTrackList.module.scss';
 import TimeTrackItem from './TimeTrackItem';
 
 interface Props {
   timeTracks: ITimeTrack[];
 }
 
-const Reports = (props: Props) => {
+const TimeTrackList = (props: Props) => {
   return (
     <div className={styles.content}>
       <h1>Your latest tracks</h1>
@@ -27,4 +27,4 @@ const Reports = (props: Props) => {
   );
 };
 
-export default Reports;
+export default TimeTrackList;

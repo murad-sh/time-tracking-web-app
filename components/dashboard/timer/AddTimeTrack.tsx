@@ -4,6 +4,7 @@ import styles from './AddTimeTrack.module.scss';
 import { useForm } from 'react-hook-form';
 import { timeTrackSchema } from '@/lib/validations/time-track';
 import Stopwatch from './Stopwatch';
+import { toast } from 'sonner';
 
 // TODO: Add validation for tracks and later a way to attach projects and tags
 const AddTimeTrack = () => {
@@ -41,7 +42,10 @@ const AddTimeTrack = () => {
     });
 
     if (res.ok) {
-      console.log(res);
+      toast.success('Successfully added!');
+      setBtnStop(false);
+    } else {
+      toast.error('Failed to add!');
       setBtnStop(false);
     }
   }

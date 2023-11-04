@@ -3,6 +3,8 @@ import Header from './Header';
 import Sidebar from './Sidebar';
 import styles from './DashboardLayout.module.scss';
 
+import { Toaster } from 'sonner';
+
 interface LayoutProps {
   children: React.ReactNode;
 }
@@ -16,6 +18,7 @@ const DashboardLayout = ({ children }: LayoutProps) => {
           <Sidebar />
         </aside>
         <main>{children}</main>
+        <Toaster richColors />
       </div>
     </div>
   );

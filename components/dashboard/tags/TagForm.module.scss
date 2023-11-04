@@ -3,6 +3,7 @@
 
 .control {
   @include form-input;
+  margin-top: 1rem;
 }
 
 .action {

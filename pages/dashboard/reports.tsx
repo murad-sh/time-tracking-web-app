@@ -8,7 +8,7 @@ import type { NextPageWithLayout } from '../_app';
 import type { ReactElement } from 'react';
 import DashboardLayout from '@/components/layouts/DashboardLayout';
 
-import Reports from '@/components/dashboard/reports/Reports';
+import TimeTrackList from '@/components/dashboard/reports/TimeTrackList';
 
 interface Props {
   timeTracks: ITimeTrack[];
@@ -17,7 +17,7 @@ interface Props {
 const ReportsPage: NextPageWithLayout<Props> = (props: Props) => {
   return (
     <section>
-      <Reports timeTracks={props.timeTracks}></Reports>
+      <TimeTrackList timeTracks={props.timeTracks}></TimeTrackList>
     </section>
   );
 };
