@@ -11,9 +11,9 @@ import {
 } from '@/lib/validations/auth';
 import { createUser } from '@/lib/user-actions';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ResourceConflictError } from '@/lib/utils/exceptions';
 import PrimaryButton from '../ui/PrimaryButton';
 import { useRouter } from 'next/router';
+import { AxiosError } from 'axios';
 
 type ActionType = 'Login' | 'Sign-up';
 
@@ -47,18 +47,18 @@ const AuthForm = ({ action }: FormProps) => {
         redirect: true,
         callbackUrl: (router.query?.from as string) || '/dashboard',
       });
-
-      if (res?.error && res.status === 401) {
-        setError('root.serverError', {
-          type: 'server',
-          message: 'Login Failed: Unable to verify your login information.',
-        });
-      }
-      if (res?.error && res.status === 500) {
-        setError('root.serverError', {
-          type: 'server',
-          message: 'Internal server-side error.',
-        });
+      if (res?.error) {
+        if (res.status === 401) {
+          setError('root.serverError', {
+            type: 'server',
+            message: 'Login Failed: Unable to verify your login information.',
+          });
+        } else {
+          setError('root.serverError', {
+            type: 'server',
+            message: 'An error occurred on the server. Please try again.',
+          });
+        }
       }
     } else {
       try {
@@ -75,10 +75,11 @@ const AuthForm = ({ action }: FormProps) => {
           callbackUrl: '/dashboard',
         });
       } catch (error) {
-        if (error instanceof ResourceConflictError) {
+        if (error instanceof AxiosError && error.response?.status === 409) {
+          console.log('error ', error.response.data);
           setError('email', {
             type: 'server',
-            message: error.message,
+            message: error.response.data.message,
           });
         } else {
           setError('root.serverError', {

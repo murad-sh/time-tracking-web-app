@@ -40,13 +40,12 @@ const AddTimeTrack = () => {
         end: endDate,
       }),
     });
+    setBtnStop(false);
 
     if (res.ok) {
       toast.success('Successfully added!');
-      setBtnStop(false);
     } else {
       toast.error('Failed to add!');
-      setBtnStop(false);
     }
   }
 

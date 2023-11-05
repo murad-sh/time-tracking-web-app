@@ -1,19 +1,24 @@
-import { postRequest } from './utils/request';
+import axios from 'axios';
 
-export function createUser(
+const USERS_API = '/api/auth/sign-up';
+const TAGS_API = '/api/tags';
+
+export async function createUser(
   name: string,
   email: string,
   password: string,
   confirmPassword: string
 ) {
-  return postRequest('/api/auth/sign-up', {
+  const response = await axios.post('/api/auth/sign-up', {
     name,
     email,
     password,
     confirmPassword,
   });
+  return response.data;
 }
 
-export function createTag(tagName: string) {
-  return postRequest('/api/tags/', { tagName });
+export async function createTag(tagName: string) {
+  const response = await axios.post('/api/tags/', { tagName });
+  return response.data;
 }
