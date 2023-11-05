@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import styles from './AuthForm.module.scss';
+import styles from './Auth.module.scss';
 import { signIn } from 'next-auth/react';
 import {
   signUpSchema,
@@ -12,6 +12,7 @@ import { createUser } from '@/lib/user-actions';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/router';
 import { AxiosError } from 'axios';
+
 import AuthForm from './AuthForm';
 
 type ActionType = 'Login' | 'Sign-up';

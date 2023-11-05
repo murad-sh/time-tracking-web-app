@@ -1,25 +1,6 @@
 @import '@/styles/variables';
 @import '@/styles/mixins';
 
-.auth {
-  width: 95%;
-  max-width: 40rem;
-  margin: 7rem auto;
-  padding: 1.2rem;
-  text-align: center;
-  font-size: 1.3rem;
-
-  h1 {
-    text-align: center;
-    font-size: 2rem;
-    color: $color-text-primary-dark;
-    margin-bottom: 2.5rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: -0.4px;
-  }
-}
-
 .control {
   margin-bottom: 2.5rem;
   @include form-label;
