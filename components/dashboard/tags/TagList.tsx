@@ -6,6 +6,7 @@ import TagItem from './TagItem';
 import styles from './TagList.module.scss';
 
 const TagList = () => {
+  // TODO : Axios
   // TODO : Add proper error handling
   const fetcher = async (url: string) => {
     const res = await fetch(url);
@@ -23,6 +24,7 @@ const TagList = () => {
 
   return (
     <div>
+      <TagItem.Skeleton />
       <ul className={styles.list}>
         {data.tags.map((tag: ITag) => (
           <li className={styles.item} key={tag._id?.toString()}>

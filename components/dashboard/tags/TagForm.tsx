@@ -6,11 +6,15 @@ import styles from './TagForm.module.scss';
 import PrimaryButton from '@/components/ui/PrimaryButton';
 import { createTag } from '@/lib/user-actions';
 
+import { useSWRConfig } from 'swr';
+import { toast } from 'sonner';
+
 interface TagFormProps {
   afterSave: () => void;
 }
 
 const TagForm = ({ afterSave }: TagFormProps) => {
+  const { mutate } = useSWRConfig();
   const {
     register,
     handleSubmit,
@@ -21,9 +25,14 @@ const TagForm = ({ afterSave }: TagFormProps) => {
     mode: 'all',
   });
 
-  // TODO : Add error handling
   async function onSubmit(enteredTagName: TagSchemaType) {
-    await createTag(enteredTagName.tagName);
+    try {
+      await createTag(enteredTagName.tagName);
+      toast.success('Tag saved successfully');
+    } catch (error) {
+      toast.error('An error occurred. Please try again');
+    }
+    mutate('/api/tags');
     afterSave();
   }
 

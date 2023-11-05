@@ -8,6 +8,7 @@ import styles from './AddTag.module.scss';
 
 const AddTag = () => {
   const [open, setOpen] = useState(false);
+
   return (
     <div>
       <Modal open={open} onOpenChange={setOpen}>
