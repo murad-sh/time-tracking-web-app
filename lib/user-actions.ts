@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-const USERS_API = '/api/auth/sign-up';
-const TAGS_API = '/api/tags';
+export const tagsUrlEndpoint = '/api/tags';
 
 export async function createUser(
   name: string,

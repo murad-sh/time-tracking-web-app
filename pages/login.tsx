@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react';
-import AuthForm from '@/components/auth/AuthForm';
+import Auth from '@/components/auth/Auth';
 
 const LoginPage = () => {
   return (
     <Fragment>
-      <AuthForm action="Login" />
+      <Auth action="Login" />
     </Fragment>
   );
 };
