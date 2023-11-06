@@ -31,7 +31,7 @@ const TagList = () => {
       <ul className={styles.list}>
         {data.tags.map((tag: ITag) => (
           <li className={styles.item} key={tag._id?.toString()}>
-            <TagItem tagName={tag.tagName}></TagItem>
+            <TagItem tag={tag}></TagItem>
           </li>
         ))}
       </ul>
