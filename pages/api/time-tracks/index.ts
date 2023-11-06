@@ -39,7 +39,7 @@ export default async function handler(
       }
 
       const { title, start, end } = validatedData.data;
-      const user = await User.findOne({ email: currentUser.email });
+      const user = await User.findOne({ _id: currentUser.id });
       if (!user) {
         res.status(404).json({ message: 'User not found' });
         return;
