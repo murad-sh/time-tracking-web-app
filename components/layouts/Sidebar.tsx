@@ -3,6 +3,8 @@ import styles from './Sidebar.module.scss';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
+import { TimerIcon, FileTextIcon } from '@radix-ui/react-icons';
+
 const Sidebar = () => {
   const router = useRouter();
   const activeLink = router.pathname;

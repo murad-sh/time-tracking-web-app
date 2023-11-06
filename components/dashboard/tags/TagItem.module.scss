@@ -2,10 +2,37 @@
 
 // Tag Styles
 .tag {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
   h2 {
     font-size: 1.6rem;
     color: $color-text-primary-dark;
+    font-weight: 600;
   }
+}
+
+.delete {
+  font-weight: 600;
+  padding: 0.8rem;
+  border-radius: 8px;
+  background-color: $color-background;
+
+  svg {
+    color: $color-text-primary-dark;
+    // color: $color-primary;
+    height: 1.7rem;
+    width: 1.7rem;
+  }
+  // cursor: pointer;
+  // transition: all ease;
+
+  // &:hover {
+  //   background-color: $color-background;
+  //   color: $color-primary;
+  //   border-color: $color-primary;
+  // }
 }
 
 // Skeleton Styles
@@ -23,6 +50,6 @@
 
 .skeleton {
   height: 2rem;
-  width: 100%;
+  // width: 100%;
   // height: 4rem;
 }

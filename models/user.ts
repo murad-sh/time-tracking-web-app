@@ -55,5 +55,24 @@ userSchema.methods.addTag = async function (tag: ITag) {
   await this.save();
 };
 
+userSchema.methods.deleteTag = async function (tag: ITag) {};
+
+// Method to delete a tag and remove its reference from the user
+// tagSchema.methods.deleteTagAndUpdateUser = async function() {
+//   const tag = this;
+//   try {
+// Delete the tag itself
+//     await tag.remove();
+
+// Remove the tag from the user's tags array
+//     await mongoose.model('User').updateOne(
+//       { _id: tag.userId },
+//       { $pull: { tags: tag._id } }
+//     );
+//   } catch (error) {
+//     throw new Error('Error deleting tag and updating user: ' + error.message);
+//   }
+// };
+
 const User = mongoose.models.User || mongoose.model<IUser>('User', userSchema);
 export default User;

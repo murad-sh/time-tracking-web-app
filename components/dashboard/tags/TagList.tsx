@@ -6,7 +6,7 @@ import TagItem from './TagItem';
 import styles from './TagList.module.scss';
 
 const TagList = () => {
-  // TODO : Axios
+  // TODO : add axios
   // TODO : Add proper error handling
   const fetcher = async (url: string) => {
     const res = await fetch(url);
@@ -18,13 +18,16 @@ const TagList = () => {
 
   const { data, error, isLoading } = useSWR('/api/tags', fetcher);
 
-  // !TEMP
   if (error) return <div>failed to load</div>;
-  if (isLoading) return <div>loading...</div>;
+  if (isLoading)
+    return (
+      <div>
+        <TagItem.Skeleton />
+      </div>
+    );
 
   return (
     <div>
-      <TagItem.Skeleton />
       <ul className={styles.list}>
         {data.tags.map((tag: ITag) => (
           <li className={styles.item} key={tag._id?.toString()}>
