@@ -7,12 +7,11 @@ import Project, { IProject } from '@/models/project';
 
 type Data = {
   message: string;
-  projects?: IProject[];
 };
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse<Data | IProject[]>
 ) {
   if (req.method !== 'GET' && req.method !== 'POST') {
     res.status(405).json({ message: 'Method not allowed' });
@@ -30,7 +29,7 @@ export default async function handler(
 
     if (req.method === 'GET') {
       const projects = await Project.find({ userId: currentUser.id });
-      res.status(200).json({ message: 'Success', projects });
+      res.status(200).json(projects);
     } else if (req.method === 'POST') {
       const validatedData = projectSchema.safeParse(req.body);
       if (!validatedData.success) {

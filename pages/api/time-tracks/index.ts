@@ -7,12 +7,11 @@ import TimeTrack, { ITimeTrack } from '@/models/time-track';
 
 type Data = {
   message: string;
-  timeTracks?: ITimeTrack[];
 };
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse<Data | ITimeTrack[]>
 ) {
   if (req.method !== 'GET' && req.method !== 'POST') {
     res.status(405).json({ message: 'Method not allowed' });
@@ -30,7 +29,7 @@ export default async function handler(
     if (req.method === 'GET') {
       const timeTracks = await TimeTrack.find({ userId: currentUser.id });
 
-      res.status(200).json({ message: 'Success', timeTracks });
+      res.status(200).json(timeTracks);
     } else if (req.method === 'POST') {
       const validatedData = timeTrackSchema.safeParse(req.body);
       if (!validatedData.success) {
@@ -45,7 +44,7 @@ export default async function handler(
         return;
       }
       await user.addTimeTrack({ title, start, end });
-      res.status(201).json({ message: 'Success' });
+      res.status(201).json({ message: 'Time Track added' });
     }
   } catch (error) {
     console.error(error);

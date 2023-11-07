@@ -7,12 +7,11 @@ import Tag, { ITag } from '@/models/tag';
 
 type Data = {
   message: string;
-  tags?: ITag[];
 };
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse<Data | ITag[]>
 ) {
   if (req.method !== 'GET' && req.method !== 'POST') {
     res.status(405).json({ message: 'Method not allowed' });
@@ -30,7 +29,7 @@ export default async function handler(
     if (req.method === 'GET') {
       const tags = await Tag.find({ userId: currentUser.id });
 
-      res.status(200).json({ message: 'Success', tags });
+      res.status(200).json(tags);
     } else if (req.method === 'POST') {
       console.log(req.body);
 
@@ -50,7 +49,6 @@ export default async function handler(
       res.status(201).json({ message: 'Tag created' });
     }
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 }

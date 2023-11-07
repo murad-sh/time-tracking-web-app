@@ -3,7 +3,9 @@ import Header from './Header';
 import Sidebar from './Sidebar';
 import styles from './DashboardLayout.module.scss';
 
+import { SWRConfig } from 'swr';
 import { Toaster } from 'sonner';
+import axios from 'axios';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -17,7 +19,13 @@ const DashboardLayout = ({ children }: LayoutProps) => {
         <aside>
           <Sidebar />
         </aside>
-        <main>{children}</main>
+        <SWRConfig
+          value={{
+            fetcher: (url: string) => axios.get(url).then((res) => res.data),
+          }}
+        >
+          <main>{children}</main>
+        </SWRConfig>
         <Toaster richColors />
       </div>
     </div>

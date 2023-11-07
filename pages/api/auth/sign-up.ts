@@ -42,7 +42,7 @@ export default async function handler(
 
     await user.save();
 
-    return res.status(201).json({ message: 'Created user!' });
+    return res.status(201).json({ message: 'User Created' });
   } catch (error) {
     console.error('Error in API handler:', error);
     return res.status(500).json({ message: 'Internal Server Error' });

@@ -34,8 +34,8 @@ export default async function handler(
       });
 
     await user.deleteTag(tagId);
-    res.status(200).json({ message: 'Tag deleted successfully' });
+    res.status(204).end();
   } catch (error) {
-    res.status(500).json({ message: 'Internal Server Error' });
+    res.status(500).json({ message: 'Internal Server Message' });
   }
 }
