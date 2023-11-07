@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './TagItem.module.scss';
 import { Trash2 } from 'lucide-react';
 import Skeleton from '@/components/ui/Skeleton';
-import PrimaryButton from '@/components/ui/PrimaryButton';
 import axios from 'axios';
 import { ITag } from '@/models/tag';
 import { useSWRConfig } from 'swr';
@@ -39,9 +38,9 @@ const TagItem = ({ tag }: TagProps) => {
       <div>
         <AlertDialog>
           <AlertDialog.Button asChild>
-            <PrimaryButton className={styles.delete}>
+            <button className={styles.delete}>
               <Trash2 />
-            </PrimaryButton>
+            </button>
           </AlertDialog.Button>
           <AlertDialog.Content
             title="Are you sure you want to delete this tag?"
