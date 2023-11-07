@@ -31,8 +31,6 @@
 }
 
 .close {
-  height: 2.5rem;
-  width: 2.5rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -43,6 +41,11 @@
   top: 1rem;
   right: 1rem;
   cursor: pointer;
+
+  svg {
+    height: 1.5rem;
+    width: 1.5rem;
+  }
 }
 
 .close:hover {

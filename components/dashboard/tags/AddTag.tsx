@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import Modal from '@/components/ui/Modal';
 import TagForm from './TagForm';
 import PrimaryButton from '@/components/ui/PrimaryButton';
-import { PlusIcon } from '@radix-ui/react-icons';
+
+import { PlusIcon } from 'lucide-react';
 
 import styles from './AddTag.module.scss';
 

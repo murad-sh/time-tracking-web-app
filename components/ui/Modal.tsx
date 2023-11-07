@@ -1,7 +1,8 @@
 import React from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
-import { Cross1Icon } from '@radix-ui/react-icons';
 import styles from './Modal.module.scss';
+
+import { X } from 'lucide-react';
 
 interface ModalProps {
   children: React.ReactNode;
@@ -34,7 +35,7 @@ function ModalContent({ title, description, children }: ModalContentProps) {
             <Dialog.Title className={styles.title}>{title}</Dialog.Title>
             <Dialog.Close asChild>
               <button className={styles.close} aria-label="Close">
-                <Cross1Icon />
+                <X />
               </button>
             </Dialog.Close>
           </div>
