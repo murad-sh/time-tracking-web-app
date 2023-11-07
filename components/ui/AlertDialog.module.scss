@@ -1,0 +1,60 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.overlay {
+  @include overlay;
+}
+
+.content {
+  @include dialog-content;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.actions {
+  align-self: flex-end;
+  button {
+    font-size: 1.4rem;
+    padding: 0.8rem 1.6rem;
+    border: 1px solid $color-skeleton;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color ease;
+  }
+}
+
+.cancel {
+  color: $color-text-primary-dark;
+  background-color: white;
+
+  &:hover {
+    background-color: #f1f5f9;
+  }
+}
+
+.action {
+  margin-left: 0.8rem;
+  background-color: #dc2626;
+  color: white;
+
+  &:hover {
+    background-color: #9a1b1b;
+  }
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: $color-text-primary-dark;
+}
+
+.description {
+  margin-top: 0.8rem;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: $color-text-primary-light;
+}

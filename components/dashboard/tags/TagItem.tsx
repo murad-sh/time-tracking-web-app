@@ -1,15 +1,13 @@
 import React from 'react';
 import styles from './TagItem.module.scss';
-
 import { Trash2 } from 'lucide-react';
-
 import Skeleton from '@/components/ui/Skeleton';
-
 import PrimaryButton from '@/components/ui/PrimaryButton';
 import axios from 'axios';
 import { ITag } from '@/models/tag';
 import { useSWRConfig } from 'swr';
 import { toast } from 'sonner';
+import AlertDialog from '@/components/ui/AlertDialog';
 
 interface TagProps {
   tag: ITag;
@@ -39,9 +37,19 @@ const TagItem = ({ tag }: TagProps) => {
         <h2>{tag.tagName}</h2>
       </div>
       <div>
-        <PrimaryButton className={styles.delete} onClick={deleteTagHandler}>
-          <Trash2 />
-        </PrimaryButton>
+        <AlertDialog>
+          <AlertDialog.Button asChild>
+            <PrimaryButton className={styles.delete}>
+              <Trash2 />
+            </PrimaryButton>
+          </AlertDialog.Button>
+          <AlertDialog.Content
+            title="Are you sure you want to delete this tag?"
+            description="This action cannot be undone."
+            action="Delete tag"
+            onAction={deleteTagHandler}
+          />
+        </AlertDialog>
       </div>
     </div>
   );
@@ -49,30 +57,14 @@ const TagItem = ({ tag }: TagProps) => {
 
 export default TagItem;
 
-// !TEMP
 TagItem.Skeleton = function TagItemSkeleton() {
-  // ([...Array(5).keys()].map(i =>
-  // {return (<div key={i} className={styles.container}>
-  //   <Skeleton key={i} className={styles.skeleton} />
-  // </div>)});
-
   return (
     <div className={styles.divider}>
-      <div className={styles.container}>
-        <Skeleton className={styles.skeleton} />
-      </div>
-      <div className={styles.container}>
-        <Skeleton className={styles.skeleton} />
-      </div>
-      <div className={styles.container}>
-        <Skeleton className={styles.skeleton} />
-      </div>
-      <div className={styles.container}>
-        <Skeleton className={styles.skeleton} />
-      </div>
-      <div className={styles.container}>
-        <Skeleton className={styles.skeleton} />
-      </div>
+      {[...Array(5)].map((_, i) => (
+        <div key={i} className={styles.container}>
+          <Skeleton className={styles.skeleton} />
+        </div>
+      ))}
     </div>
   );
 };
