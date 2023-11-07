@@ -1,23 +1,26 @@
 import React from 'react';
-import useSWR from 'swr';
 import { ITag } from '@/models/tag';
 import TagItem from './TagItem';
-import { useTags } from '@/hooks/useApiHooks';
-
+import { useTags } from '@/hooks/use-api-hooks';
 import styles from './TagList.module.scss';
 
 const TagList = () => {
-  // TODO : Add proper error ui
-  // const { data, error, isLoading } = useSWR('/api/tags');
   const { tags, isLoading, error } = useTags();
 
+  // TODO : Add proper error ui
   if (error) return <div>failed to load</div>;
+
   if (isLoading)
     return (
       <div>
         <TagItem.Skeleton />
       </div>
     );
+
+  // TODO : Add proper ui
+  if (tags.length === 0) {
+    return <p>No tags created yet</p>;
+  }
 
   return (
     <div>

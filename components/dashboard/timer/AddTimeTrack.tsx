@@ -6,6 +6,9 @@ import { timeTrackSchema } from '@/lib/validations/time-track';
 import Stopwatch from './Stopwatch';
 import { toast } from 'sonner';
 
+//!TEMP
+import Dropdown from '@/components/ui/Dropdown';
+
 // TODO: Add validation for tracks and later a way to attach projects and tags
 const AddTimeTrack = () => {
   const [btnStop, setBtnStop] = useState(false);
@@ -67,6 +70,19 @@ const AddTimeTrack = () => {
         )}
         {btnStop && <button type="submit">{'Stop'}</button>}
       </form>
+      <div>
+        <Dropdown>
+          <Dropdown.Button>open</Dropdown.Button>
+          <Dropdown.Menu>
+            <Dropdown.MenuItem onClick={() => console.log('edit')}>
+              Edit
+            </Dropdown.MenuItem>
+            <Dropdown.MenuItem onSelect={() => console.log('delete')}>
+              Delete
+            </Dropdown.MenuItem>
+          </Dropdown.Menu>
+        </Dropdown>
+      </div>
     </div>
   );
 };

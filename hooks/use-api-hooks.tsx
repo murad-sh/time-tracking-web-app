@@ -19,3 +19,13 @@ export function useTimeTracks() {
     error,
   };
 }
+
+export function useProjects() {
+  const { data, error, isLoading } = useSWR('/api/projects');
+
+  return {
+    projects: data,
+    isLoading,
+    error,
+  };
+}

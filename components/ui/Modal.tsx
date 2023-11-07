@@ -1,7 +1,6 @@
 import React from 'react';
-import * as Dialog from '@radix-ui/react-dialog';
+import * as RadixDialog from '@radix-ui/react-dialog';
 import styles from './Modal.module.scss';
-
 import { X } from 'lucide-react';
 
 interface ModalProps {
@@ -12,9 +11,9 @@ interface ModalProps {
 
 const Modal = ({ children, open, onOpenChange }: ModalProps) => {
   return (
-    <Dialog.Root open={open} onOpenChange={onOpenChange}>
+    <RadixDialog.Root open={open} onOpenChange={onOpenChange}>
       {children}
-    </Dialog.Root>
+    </RadixDialog.Root>
   );
 };
 
@@ -28,29 +27,31 @@ interface ModalContentProps {
 
 function ModalContent({ title, description, children }: ModalContentProps) {
   return (
-    <Dialog.Portal>
-      <Dialog.Overlay className={styles.overlay}>
-        <Dialog.Content className={styles.content}>
+    <RadixDialog.Portal>
+      <RadixDialog.Overlay className={styles.overlay}>
+        <RadixDialog.Content className={styles.content}>
           <div className={styles.container}>
-            <Dialog.Title className={styles.title}>{title}</Dialog.Title>
-            <Dialog.Close asChild>
+            <RadixDialog.Title className={styles.title}>
+              {title}
+            </RadixDialog.Title>
+            <RadixDialog.Close asChild>
               <button className={styles.close} aria-label="Close">
                 <X />
               </button>
-            </Dialog.Close>
+            </RadixDialog.Close>
           </div>
           {description && (
-            <Dialog.Description className={styles.description}>
+            <RadixDialog.Description className={styles.description}>
               {description}
-            </Dialog.Description>
+            </RadixDialog.Description>
           )}
           {children}
-        </Dialog.Content>
-      </Dialog.Overlay>
-    </Dialog.Portal>
+        </RadixDialog.Content>
+      </RadixDialog.Overlay>
+    </RadixDialog.Portal>
   );
 }
 
-Modal.Button = Dialog.Trigger;
+Modal.Button = RadixDialog.Trigger;
 Modal.Content = ModalContent;
-Modal.Close = Dialog.Close;
+Modal.Close = RadixDialog.Close;
