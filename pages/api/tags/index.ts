@@ -33,7 +33,6 @@ export default async function handler(
     if (req.method === 'GET') {
       res.status(200).json(user.tags);
     } else if (req.method === 'POST') {
-      console.log(req.body);
       const validatedData = tagSchema.safeParse(req.body);
       if (!validatedData.success) {
         res.status(422).json({ message: 'Validation error' });

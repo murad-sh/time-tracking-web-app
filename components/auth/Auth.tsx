@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import styles from './Auth.module.scss';
 import { signIn } from 'next-auth/react';
@@ -44,10 +44,11 @@ const Auth = ({ action }: AuthProps) => {
       const res = await signIn('credentials', {
         email: enteredData.email,
         password: enteredData.password,
-        redirect: true,
-        callbackUrl: (router.query?.from as string) || '/dashboard',
+        redirect: false,
       });
-      if (res?.error) {
+      if (res?.ok) {
+        router.push((router.query?.from as string) || '/dashboard');
+      } else if (res?.error) {
         if (res.status === 401) {
           setError('root.serverError', {
             type: 'server',
