@@ -18,7 +18,7 @@ const TagList = () => {
 
   // TODO : Add proper ui
   if (tags.length === 0) {
-    return <p>No tags created yet</p>;
+    return <h2>No Tags Added Yet.</h2>;
   }
 
   return (

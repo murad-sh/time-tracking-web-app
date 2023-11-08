@@ -5,15 +5,16 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import styles from './TagForm.module.scss';
 import PrimaryButton from '@/components/ui/PrimaryButton';
 import { createTag } from '@/lib/user-actions';
-import { useSWRConfig } from 'swr';
 import { toast } from 'sonner';
+import { useTags } from '@/hooks/use-api-hooks';
 
 interface TagFormProps {
   afterSave: () => void;
 }
 
 const TagForm = ({ afterSave }: TagFormProps) => {
-  const { mutate } = useSWRConfig();
+  const { tags, mutate } = useTags();
+
   const {
     register,
     handleSubmit,
@@ -25,13 +26,21 @@ const TagForm = ({ afterSave }: TagFormProps) => {
   });
 
   async function onSubmit(enteredData: TagSchemaType) {
+    const { tag } = enteredData;
+    if (tags?.includes(tag)) {
+      setError('tag', {
+        type: 'manual',
+        message: 'Tag already exists',
+      });
+      return;
+    }
     try {
-      await createTag(enteredData.tag);
+      await createTag(tag);
       toast.success('Tag saved successfully');
+      mutate();
     } catch (error) {
       toast.error('An error occurred. Please try again');
     }
-    mutate('/api/tags');
     afterSave();
   }
 
