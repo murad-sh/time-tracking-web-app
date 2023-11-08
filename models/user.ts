@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 
 import TimeTrack, { ITimeTrack } from './time-track';
 import Project, { IProject } from './project';
-import Tag, { ITag } from './tag';
 
 export interface IUser {
   name: string;
@@ -10,7 +9,7 @@ export interface IUser {
   password: string;
   timeTracks?: mongoose.Schema.Types.ObjectId[];
   projects?: mongoose.Schema.Types.ObjectId[];
-  tags?: mongoose.Schema.Types.ObjectId[];
+  tags?: string[];
 }
 
 const userSchema = new mongoose.Schema<IUser>({
@@ -23,7 +22,7 @@ const userSchema = new mongoose.Schema<IUser>({
   projects: [
     { type: mongoose.Schema.Types.ObjectId, ref: 'Project', required: false },
   ],
-  tags: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tag', required: false }],
+  tags: [{ type: String, required: false }],
 });
 
 userSchema.methods.addTimeTrack = async function (timeTrack: ITimeTrack) {
@@ -45,29 +44,32 @@ userSchema.methods.addProject = async function (project: IProject) {
   await this.save();
 };
 
-userSchema.methods.addTag = async function (tag: ITag) {
-  const newTag = await Tag.create({
-    ...tag,
-    userId: this._id,
-  });
-
-  this.tags.push(newTag._id);
+userSchema.methods.addTag = async function (tag: string) {
+  if (this.tags.includes(tag)) throw new Error(`${tag} already exists`);
+  this.tags.push(tag);
   await this.save();
 };
 
-userSchema.methods.deleteTag = async function (tagId: string) {
-  try {
-    const tag = await Tag.findOne({ _id: tagId, userId: this._id });
-    if (!tag) {
-      throw new Error('Tag not found or not associated with the user.');
-    }
-    this.tags.pull(tagId);
-    await this.save();
-    await Tag.deleteOne({ _id: tagId });
-  } catch (error) {
-    throw error;
-  }
+userSchema.methods.deleteTag = async function (tag: string) {
+  if (!this.tags.includes(tag)) throw new Error(`${tag} does not exists`);
+  this.tags.pull(tag);
+  await this.save();
 };
+
+// !Modify this for project deletion
+// userSchema.methods.deleteTag = async function (tagId: string) {
+//   try {
+//     const tag = await Tag.findOne({ _id: tagId, userId: this._id });
+//     if (!tag) {
+//       throw new Error('Tag not found or not associated with the user.');
+//     }
+//     this.tags.pull(tagId);
+//     await this.save();
+//     await Tag.deleteOne({ _id: tagId });
+//   } catch (error) {
+//     throw error;
+//   }
+// };
 
 const User = mongoose.models.User || mongoose.model<IUser>('User', userSchema);
 export default User;

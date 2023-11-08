@@ -3,20 +3,19 @@ import styles from './TagItem.module.scss';
 import { Trash2 } from 'lucide-react';
 import Skeleton from '@/components/ui/Skeleton';
 import axios from 'axios';
-import { ITag } from '@/models/tag';
 import { useSWRConfig } from 'swr';
 import { toast } from 'sonner';
 import AlertDialog from '@/components/ui/AlertDialog';
 
 interface TagProps {
-  tag: ITag;
+  tag: string;
 }
 
 const TagItem = ({ tag }: TagProps) => {
   const { mutate } = useSWRConfig();
 
   const deleteTag = async () => {
-    const response = await axios.delete('/api/tags/' + tag._id?.toString());
+    const response = await axios.delete('/api/tags/' + tag);
     return response.data;
   };
 
@@ -33,7 +32,7 @@ const TagItem = ({ tag }: TagProps) => {
   return (
     <div className={styles.tag}>
       <div>
-        <h2>{tag.tagName}</h2>
+        <h2>{tag}</h2>
       </div>
       <div>
         <AlertDialog>

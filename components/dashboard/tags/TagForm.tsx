@@ -24,9 +24,9 @@ const TagForm = ({ afterSave }: TagFormProps) => {
     mode: 'all',
   });
 
-  async function onSubmit(enteredTagName: TagSchemaType) {
+  async function onSubmit(enteredData: TagSchemaType) {
     try {
-      await createTag(enteredTagName.tagName);
+      await createTag(enteredData.tag);
       toast.success('Tag saved successfully');
     } catch (error) {
       toast.error('An error occurred. Please try again');
@@ -38,11 +38,9 @@ const TagForm = ({ afterSave }: TagFormProps) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.control}>
-        <input {...register('tagName')} type="text" placeholder="Tag Name" />
+        <input {...register('tag')} type="text" placeholder="Tag Name" />
       </div>
-      {errors.tagName && (
-        <p className={styles.error}>{`${errors.tagName.message}`}</p>
-      )}
+      {errors.tag && <p className={styles.error}>{`${errors.tag.message}`}</p>}
       <div className={styles.action}>
         <PrimaryButton
           type="submit"

@@ -3,7 +3,6 @@ import { tagSchema } from '@/lib/validations/tag';
 import { getCurrentUser } from '@/lib/auth/session';
 import { connectToDB } from '@/lib/db';
 import User from '@/models/user';
-import Tag, { ITag } from '@/models/tag';
 
 type Data = {
   message: string;
@@ -11,7 +10,7 @@ type Data = {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data | ITag[]>
+  res: NextApiResponse<Data | string[]>
 ) {
   if (req.method !== 'GET' && req.method !== 'POST') {
     res.status(405).json({ message: 'Method not allowed' });
@@ -25,27 +24,24 @@ export default async function handler(
       return;
     }
     await connectToDB();
+    const user = await User.findOne({ _id: currentUser.id });
+    if (!user) {
+      res.status(404).json({ message: 'User not found' });
+      return;
+    }
 
     if (req.method === 'GET') {
-      const tags = await Tag.find({ userId: currentUser.id });
-
-      res.status(200).json(tags);
+      res.status(200).json(user.tags);
     } else if (req.method === 'POST') {
       console.log(req.body);
-
       const validatedData = tagSchema.safeParse(req.body);
       if (!validatedData.success) {
-        res.status(422).json({ message: validatedData.error.message });
+        res.status(422).json({ message: 'Validation error' });
         return;
       }
+      const { tag } = validatedData.data;
 
-      const { tagName } = validatedData.data;
-      const user = await User.findOne({ _id: currentUser.id });
-      if (!user) {
-        res.status(404).json({ message: 'User not found' });
-        return;
-      }
-      await user.addTag({ tagName });
+      await user.addTag(tag);
       res.status(201).json({ message: 'Tag created' });
     }
   } catch (error) {
