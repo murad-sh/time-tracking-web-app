@@ -31,7 +31,7 @@ const AuthForm = ({
             placeholder="Full Name"
           />
           {errors.name && (
-            <p className={styles.error}>{`${errors.name.message}`}</p>
+            <span className={styles.error}>{`${errors.name.message}`}</span>
           )}
         </div>
       )}
@@ -44,7 +44,7 @@ const AuthForm = ({
           placeholder="Enter your email address"
         />
         {errors.email && (
-          <p className={styles.error}>{`${errors.email.message}`}</p>
+          <span className={styles.error}>{`${errors.email.message}`}</span>
         )}
       </div>
       <div className={styles.control}>
@@ -56,7 +56,7 @@ const AuthForm = ({
           placeholder="Enter your password"
         />
         {errors.password && (
-          <p className={styles.error}>{`${errors.password.message}`}</p>
+          <span className={styles.error}>{`${errors.password.message}`}</span>
         )}
       </div>
       {!isLogin && (
@@ -69,9 +69,9 @@ const AuthForm = ({
             placeholder="Confirm your password"
           />
           {errors.confirmPassword && (
-            <p
+            <span
               className={styles.error}
-            >{`${errors.confirmPassword.message}`}</p>
+            >{`${errors.confirmPassword.message}`}</span>
           )}
         </div>
       )}
@@ -87,7 +87,9 @@ const AuthForm = ({
           {!isLogin ? 'Login with existing account' : 'Create new account'}
         </Link>
         {errors.root?.serverError && (
-          <p className={styles.error}>{errors.root.serverError.message}</p>
+          <span className={styles.error}>
+            {errors.root.serverError.message}
+          </span>
         )}
       </div>
     </form>

@@ -70,7 +70,7 @@ const AddTimeTrack = () => {
         )}
         {btnStop && <button type="submit">{'Stop'}</button>}
       </form>
-      <div>
+      {/* <div>
         <Dropdown>
           <Dropdown.Button>open</Dropdown.Button>
           <Dropdown.Menu>
@@ -82,7 +82,7 @@ const AddTimeTrack = () => {
             </Dropdown.MenuItem>
           </Dropdown.Menu>
         </Dropdown>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -58,7 +58,9 @@ const TagForm = ({ afterSave }: TagFormProps) => {
           Create
         </PrimaryButton>
         {errors.root?.serverError && (
-          <p className={styles.error}>{errors.root.serverError.message}</p>
+          <span className={styles.error}>
+            {errors.root.serverError.message}
+          </span>
         )}
       </div>
     </form>
