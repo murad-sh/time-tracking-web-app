@@ -18,6 +18,6 @@ export async function createUser(
 }
 
 export async function createTag(tag: string) {
-  const response = await axios.post('/api/tags/', { tag });
+  const response = await axios.post('/api/user/tags/', { tag });
   return response.data;
 }

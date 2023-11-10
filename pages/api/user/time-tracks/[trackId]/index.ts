@@ -25,17 +25,19 @@ export default async function handler(
       res.status(422).json({ message: 'Validation error' });
       return;
     }
-    const tag = validatedTag.data;
+    const { tag } = validatedTag.data;
 
     const { trackId } = req.query;
     await connectToDB();
     const timeTrack = await TimeTrack.findOne({ _id: trackId });
+
     if (!timeTrack || timeTrack.userId.toString() !== currentUser.id) {
       return res.status(404).json({
         message: 'Time Track not found',
       });
     }
-    console.log(timeTrack.tags);
+
+    await timeTrack.addTag(tag);
     res.status(204).end();
   } catch (error) {
     res.status(500).json({ message: 'Internal Server Message' });

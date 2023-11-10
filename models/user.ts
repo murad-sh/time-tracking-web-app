@@ -7,22 +7,22 @@ export interface IUser {
   name: string;
   email: string;
   password: string;
-  timeTracks?: mongoose.Schema.Types.ObjectId[];
-  projects?: mongoose.Schema.Types.ObjectId[];
-  tags?: string[];
+  timeTracks: mongoose.Schema.Types.ObjectId[];
+  projects: mongoose.Schema.Types.ObjectId[];
+  tags: string[];
+  addTimeTrack: (timeTrack: ITimeTrack) => void;
+  addProject: (project: IProject) => void;
+  addTag: (tag: string) => void;
+  deleteTag: (tag: string) => void;
 }
 
 const userSchema = new mongoose.Schema<IUser>({
   name: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
-  timeTracks: [
-    { type: mongoose.Schema.Types.ObjectId, ref: 'TimeTrack', required: false },
-  ],
-  projects: [
-    { type: mongoose.Schema.Types.ObjectId, ref: 'Project', required: false },
-  ],
-  tags: [{ type: String, required: false }],
+  timeTracks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'TimeTrack' }],
+  projects: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Project' }],
+  tags: [{ type: String }],
 });
 
 userSchema.methods.addTimeTrack = async function (timeTrack: ITimeTrack) {
@@ -71,5 +71,6 @@ userSchema.methods.deleteTag = async function (tag: string) {
 //   }
 // };
 
-const User = mongoose.models.User || mongoose.model<IUser>('User', userSchema);
+const User: mongoose.Model<IUser> =
+  mongoose.models.User || mongoose.model<IUser>('User', userSchema);
 export default User;

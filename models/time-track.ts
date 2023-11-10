@@ -2,13 +2,16 @@ import mongoose from 'mongoose';
 import { IProject } from './project';
 
 export interface ITimeTrack {
-  _id?: mongoose.Schema.Types.ObjectId;
+  _id: mongoose.Schema.Types.ObjectId;
   userId: mongoose.Schema.Types.ObjectId;
-  projectId?: mongoose.Schema.Types.ObjectId;
-  tags?: string[];
+  projectId: mongoose.Schema.Types.ObjectId;
+  tags: string[];
   title: string;
   start: Date;
   end: Date;
+  addProjectId: (project: IProject) => void;
+  addTag: (tag: string) => void;
+  removeTag: (tag: string) => void;
 }
 
 const timeTrackSchema = new mongoose.Schema<ITimeTrack>({
@@ -16,15 +19,14 @@ const timeTrackSchema = new mongoose.Schema<ITimeTrack>({
   projectId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Project',
-    required: false,
   },
-  tags: [{ type: String, required: false }],
+  tags: [{ type: String }],
   title: { type: String, required: true },
   start: { type: Date, required: true },
   end: { type: Date, required: true },
 });
 
-timeTrackSchema.methods.addProjectId = async function (project: IProject) {
+timeTrackSchema.methods.addProject = async function (project: IProject) {
   this.projectId = project._id;
   await this.save();
 };

@@ -32,17 +32,17 @@ const AddTimeTrack = () => {
     setTimer(false);
 
     try {
-      await axios.post('/api/time-tracks/', {
+      await axios.post('/api/user/time-tracks/', {
         title: titleRef.current!.value,
         start: startTime,
         end: endDate,
       });
 
-      setBtnStop(false);
       toast.success('Successfully added!');
     } catch (error) {
       toast.error('Failed to add!');
     }
+    setBtnStop(false);
   }
 
   return (

@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 export interface IProject {
-  _id?: mongoose.Schema.Types.ObjectId;
+  _id: mongoose.Schema.Types.ObjectId;
   userId: mongoose.Schema.Types.ObjectId;
   projectTitle: string;
 }

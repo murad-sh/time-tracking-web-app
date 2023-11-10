@@ -3,16 +3,16 @@ import styles from './TagItem.module.scss';
 import { Trash2 } from 'lucide-react';
 import Skeleton from '@/components/ui/Skeleton';
 import axios from 'axios';
-import { useSWRConfig } from 'swr';
 import { toast } from 'sonner';
 import AlertDialog from '@/components/ui/AlertDialog';
+import { useTags } from '@/hooks/use-api-hooks';
 
 interface TagProps {
   tag: string;
 }
 
 const TagItem = ({ tag }: TagProps) => {
-  const { mutate } = useSWRConfig();
+  const { mutate } = useTags();
 
   const deleteTag = async () => {
     const response = await axios.delete('/api/user/tags/' + tag);
@@ -22,7 +22,7 @@ const TagItem = ({ tag }: TagProps) => {
   const deleteTagHandler = async () => {
     try {
       await deleteTag();
-      mutate('/api/tags');
+      mutate();
       toast.success('Tag deleted successfully');
     } catch (error) {
       toast.error('An error occurred');
