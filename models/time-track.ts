@@ -18,12 +18,7 @@ const timeTrackSchema = new mongoose.Schema<ITimeTrack>({
     ref: 'Project',
     required: false,
   },
-  tags: [
-    {
-      type: String,
-      required: false,
-    },
-  ],
+  tags: [{ type: String, required: false }],
   title: { type: String, required: true },
   start: { type: Date, required: true },
   end: { type: Date, required: true },
@@ -34,7 +29,7 @@ timeTrackSchema.methods.addProjectId = async function (project: IProject) {
   await this.save();
 };
 
-timeTrackSchema.methods.addTagId = async function (tag: string) {
+timeTrackSchema.methods.addTag = async function (tag: string) {
   if (this.tags.includes(tag)) throw new Error(`${tag} already exists`);
   this.tags.push(tag);
   await this.save();

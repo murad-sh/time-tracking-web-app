@@ -1,7 +1,7 @@
 import useSWR from 'swr';
 
 export function useTags() {
-  const { data, error, isLoading, mutate } = useSWR('/api/tags');
+  const { data, error, isLoading, mutate } = useSWR('/api/user/tags');
 
   return {
     tags: data,
@@ -12,7 +12,7 @@ export function useTags() {
 }
 
 export function useTimeTracks() {
-  const { data, error, isLoading, mutate } = useSWR('/api/time-tracks');
+  const { data, error, isLoading, mutate } = useSWR('/api/user/time-tracks');
 
   return {
     timeTracks: data,
@@ -23,7 +23,7 @@ export function useTimeTracks() {
 }
 
 export function useProjects() {
-  const { data, error, isLoading, mutate } = useSWR('/api/projects');
+  const { data, error, isLoading, mutate } = useSWR('/api/user/projects');
 
   return {
     projects: data,

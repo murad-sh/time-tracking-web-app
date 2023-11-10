@@ -6,8 +6,11 @@ import { timeTrackSchema } from '@/lib/validations/time-track';
 import Stopwatch from './Stopwatch';
 import { toast } from 'sonner';
 
+// !TEST ALL
+import { Play, PlayCircle, Pause, PauseCircle } from 'lucide-react';
 //!TEMP
 import Dropdown from '@/components/ui/Dropdown';
+import axios from 'axios';
 
 // TODO: Add validation for tracks and later a way to attach projects and tags
 const AddTimeTrack = () => {
@@ -27,27 +30,17 @@ const AddTimeTrack = () => {
     event.preventDefault();
     const endDate = new Date();
     setTimer(false);
-    const session = await getSession();
-    if (!session) {
-      console.error('No session found');
-      return;
-    }
-    const res = await fetch('/api/time-tracks', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
+
+    try {
+      await axios.post('/api/time-tracks/', {
         title: titleRef.current!.value,
         start: startTime,
         end: endDate,
-      }),
-    });
-    setBtnStop(false);
+      });
 
-    if (res.ok) {
+      setBtnStop(false);
       toast.success('Successfully added!');
-    } else {
+    } catch (error) {
       toast.error('Failed to add!');
     }
   }
@@ -65,10 +58,18 @@ const AddTimeTrack = () => {
 
         {!btnStop && (
           <button onClick={startTimer} type="button">
-            {'Start'}
+            <span>
+              <Play />
+            </span>
           </button>
         )}
-        {btnStop && <button type="submit">{'Stop'}</button>}
+        {btnStop && (
+          <button type="submit">
+            <span>
+              <Pause />
+            </span>
+          </button>
+        )}
       </form>
       {/* <div>
         <Dropdown>

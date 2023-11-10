@@ -2,8 +2,7 @@ import React from 'react';
 import styles from './Sidebar.module.scss';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-
-import { TimerIcon, FileTextIcon } from '@radix-ui/react-icons';
+import { Timer, Clock, BarChart3, PieChart, FileText, Tag } from 'lucide-react';
 
 const Sidebar = () => {
   const router = useRouter();
@@ -17,7 +16,12 @@ const Sidebar = () => {
             className={activeLink === '/dashboard' ? styles.active : ''}
             href={'/dashboard'}
           >
-            Timer
+            <span className={styles.nav}>
+              <span className={styles.icon}>
+                <Clock />
+              </span>
+              <span>Timer</span>
+            </span>
           </Link>
         </li>
         <li>
@@ -25,7 +29,13 @@ const Sidebar = () => {
             className={activeLink === '/dashboard/reports' ? styles.active : ''}
             href={'/dashboard/reports'}
           >
-            Reports
+            <span className={styles.nav}>
+              <span className={styles.icon}>
+                {/* <PieChart /> */}
+                {<BarChart3 />}
+              </span>
+              <span>Reports</span>
+            </span>
           </Link>
         </li>
         <li>
@@ -35,7 +45,12 @@ const Sidebar = () => {
             }
             href={'/dashboard/projects'}
           >
-            Projects
+            <span className={styles.nav}>
+              <span className={styles.logo}>
+                <FileText />
+              </span>
+              <span>Projects</span>
+            </span>
           </Link>
         </li>
         <li>
@@ -43,7 +58,12 @@ const Sidebar = () => {
             className={activeLink === '/dashboard/tags' ? styles.active : ''}
             href={'/dashboard/tags'}
           >
-            Tags
+            <span className={styles.nav}>
+              <span className={styles.logo}>
+                <Tag />
+              </span>
+              <span>Tags</span>
+            </span>
           </Link>
         </li>
       </ul>

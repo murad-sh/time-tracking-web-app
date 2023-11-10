@@ -15,7 +15,7 @@ const TagItem = ({ tag }: TagProps) => {
   const { mutate } = useSWRConfig();
 
   const deleteTag = async () => {
-    const response = await axios.delete('/api/tags/' + tag);
+    const response = await axios.delete('/api/user/tags/' + tag);
     return response.data;
   };
 

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import * as RadixDropdownMenu from '@radix-ui/react-dropdown-menu';
 
+import styles from './Dropdown.module.scss';
+
 const Dropdown = ({ children }: { children: React.ReactNode }) => {
   const [open, setOpen] = useState(false);
 
@@ -16,7 +18,9 @@ export default Dropdown;
 function DropdownMenu({ children }: { children: React.ReactNode }) {
   return (
     <RadixDropdownMenu.Portal>
-      <RadixDropdownMenu.Content>{children}</RadixDropdownMenu.Content>
+      <RadixDropdownMenu.Content className={styles.content}>
+        {children}
+      </RadixDropdownMenu.Content>
     </RadixDropdownMenu.Portal>
   );
 }
