@@ -19,16 +19,17 @@ export default async function handler(
     const currentUser = await getCurrentUser(req, res);
     if (!currentUser) {
       res.status(401).json({ message: 'Unauthorized' });
+      return;
     }
     await connectToDB();
-    const user = await User.findOne({ _id: currentUser?.id });
+    const user = await User.findById(currentUser.id);
     if (!user)
       return res.status(404).json({
         message: 'User not found',
       });
 
     const { tagName } = req.query;
-    await user.deleteTag(tagName);
+    await user.deleteTag(tagName as string);
     res.status(204).end();
   } catch (error) {
     res.status(500).json({ message: 'Internal Server Message' });

@@ -24,7 +24,7 @@ export default async function handler(
       return;
     }
     await connectToDB();
-    const user = await User.findOne({ _id: currentUser.id });
+    const user = await User.findById(currentUser.id);
     if (!user) {
       res.status(404).json({ message: 'User not found' });
       return;

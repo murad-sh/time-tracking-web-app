@@ -37,12 +37,12 @@ export default async function handler(
         return;
       }
       const { projectTitle } = validatedData.data;
-      const user = await User.findOne({ _id: currentUser.id });
+      const user = await User.findById(currentUser.id);
       if (!user) {
         res.status(404).json({ message: 'User not found' });
         return;
       }
-      await user.addProject({ projectTitle });
+      await user.addProject({ projectTitle } as IProject);
       res.status(201).json({ message: 'Tag created' });
     }
   } catch (error) {

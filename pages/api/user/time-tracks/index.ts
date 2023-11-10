@@ -38,12 +38,12 @@ export default async function handler(
       }
 
       const { title, start, end } = validatedData.data;
-      const user = await User.findOne({ _id: currentUser.id });
+      const user = await User.findById(currentUser.id);
       if (!user) {
         res.status(404).json({ message: 'User not found' });
         return;
       }
-      await user.addTimeTrack({ title, start, end });
+      await user.addTimeTrack({ title, start, end } as ITimeTrack);
       res.status(201).json({ message: 'Time Track added' });
     }
   } catch (error) {
