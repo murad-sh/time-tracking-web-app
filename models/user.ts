@@ -10,10 +10,10 @@ export interface IUser {
   timeTracks: mongoose.Schema.Types.ObjectId[];
   projects: mongoose.Schema.Types.ObjectId[];
   tags: string[];
-  addTimeTrack: (timeTrack: ITimeTrack) => void;
-  addProject: (project: IProject) => void;
-  addTag: (tag: string) => void;
-  deleteTag: (tag: string) => void;
+  addTimeTrack: (timeTrack: ITimeTrack) => Promise<void>;
+  addProject: (project: IProject) => Promise<void>;
+  addTag: (tag: string) => Promise<void>;
+  deleteTag: (tag: string) => Promise<void>;
 }
 
 const userSchema = new mongoose.Schema<IUser>({

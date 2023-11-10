@@ -9,9 +9,10 @@ export interface ITimeTrack {
   title: string;
   start: Date;
   end: Date;
-  addProjectId: (project: IProject) => void;
-  addTag: (tag: string) => void;
-  removeTag: (tag: string) => void;
+  addProject: (projectId: string) => Promise<void>;
+  addTag: (tag: string) => Promise<void>;
+  removeTag: (tag: string) => Promise<void>;
+  updateTitle: (title: string) => Promise<void>;
 }
 
 const timeTrackSchema = new mongoose.Schema<ITimeTrack>({
@@ -26,14 +27,19 @@ const timeTrackSchema = new mongoose.Schema<ITimeTrack>({
   end: { type: Date, required: true },
 });
 
-timeTrackSchema.methods.addProject = async function (project: IProject) {
-  this.projectId = project._id;
+timeTrackSchema.methods.addProject = async function (projectId: string) {
+  this.projectId = projectId;
   await this.save();
 };
 
 timeTrackSchema.methods.addTag = async function (tag: string) {
   if (this.tags.includes(tag)) throw new Error(`${tag} already exists`);
   this.tags.push(tag);
+  await this.save();
+};
+
+timeTrackSchema.methods.updateTitle = async function (title: string) {
+  this.title = title;
   await this.save();
 };
 

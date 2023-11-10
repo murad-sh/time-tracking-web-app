@@ -1,8 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getCurrentUser } from '@/lib/auth/session';
 import { connectToDB } from '@/lib/db';
-import TimeTrack, { ITimeTrack } from '@/models/time-track';
-import { tagSchema } from '@/lib/validations/tag';
+import TimeTrack from '@/models/time-track';
+import { timeTrackUpdateSchema } from '@/lib/validations/time-track';
+import Project from '@/models/project';
 
 export default async function handler(
   req: NextApiRequest,
@@ -18,26 +19,37 @@ export default async function handler(
       });
     }
 
-    // !For now api is only available for adding tags
-    // TODO : Add also the check to add projects
-    const validatedTag = tagSchema.safeParse(req.body);
+    const validatedTag = timeTrackUpdateSchema.safeParse(req.body);
     if (!validatedTag.success) {
       res.status(422).json({ message: 'Validation error' });
       return;
     }
-    const { tag } = validatedTag.data;
+    const { tag, projectId, title } = validatedTag.data;
 
     const { trackId } = req.query;
     await connectToDB();
-    const timeTrack = await TimeTrack.findOne({ _id: trackId });
+    const timeTrack = await TimeTrack.findById(trackId);
 
     if (!timeTrack || timeTrack.userId.toString() !== currentUser.id) {
       return res.status(404).json({
         message: 'Time Track not found',
       });
     }
-
-    await timeTrack.addTag(tag);
+    if (title) {
+      await timeTrack.updateTitle(title);
+    }
+    if (projectId) {
+      const project = await Project.findById(projectId);
+      if (!project || project.userId.toString() !== currentUser.id) {
+        return res.status(404).json({
+          message: 'Project not found',
+        });
+      }
+      await timeTrack.addProject(project.id);
+    }
+    if (tag) {
+      await timeTrack.addTag(tag);
+    }
     res.status(204).end();
   } catch (error) {
     res.status(500).json({ message: 'Internal Server Message' });
