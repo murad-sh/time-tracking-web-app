@@ -1,0 +1,39 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+// Dropdown menu operations
+.separator {
+  height: 1px;
+  background-color: $color-skeleton;
+}
+
+.operation {
+  cursor: pointer;
+  border: 1px solid $color-skeleton;
+  color: $color-text-primary-dark;
+  padding: 1rem;
+  background-color: $color-background;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    background-color: $color-skeleton;
+  }
+
+  svg {
+    height: 1.7rem;
+    width: 1.7rem;
+  }
+}
+
+.edit {
+  @include dropdown-menu-item;
+  color: $color-text-primary-dark;
+}
+
+.delete {
+  @include dropdown-menu-item;
+  color: $color-error;
+}

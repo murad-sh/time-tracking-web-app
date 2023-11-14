@@ -29,6 +29,7 @@ const HeroSection = () => {
             alt="Computer with dashboard"
             width={1024}
             height={1024}
+            priority
           ></Image>
         </div>
       </div>

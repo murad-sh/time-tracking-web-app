@@ -15,10 +15,17 @@ const Dropdown = ({ children }: { children: React.ReactNode }) => {
 
 export default Dropdown;
 
-function DropdownMenu({ children }: { children: React.ReactNode }) {
+function DropdownMenu({
+  children,
+  className,
+  ...props
+}: RadixDropdownMenu.MenuContentProps) {
   return (
     <RadixDropdownMenu.Portal>
-      <RadixDropdownMenu.Content className={styles.content}>
+      <RadixDropdownMenu.Content
+        className={`${styles.content} ${className}`}
+        {...props}
+      >
         {children}
       </RadixDropdownMenu.Content>
     </RadixDropdownMenu.Portal>
@@ -28,3 +35,4 @@ function DropdownMenu({ children }: { children: React.ReactNode }) {
 Dropdown.Button = RadixDropdownMenu.Trigger;
 Dropdown.Menu = DropdownMenu;
 Dropdown.MenuItem = RadixDropdownMenu.Item;
+Dropdown.Separator = RadixDropdownMenu.Separator;

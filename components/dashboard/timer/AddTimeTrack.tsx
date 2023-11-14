@@ -5,12 +5,14 @@ import { useForm } from 'react-hook-form';
 import { timeTrackSchema } from '@/lib/validations/time-track';
 import Stopwatch from './Stopwatch';
 import { toast } from 'sonner';
+import axios from 'axios';
 
 // !TEST ALL
 import { Play, PlayCircle, Pause, PauseCircle } from 'lucide-react';
+
 //!TEMP
 import Dropdown from '@/components/ui/Dropdown';
-import axios from 'axios';
+import Select from '@/components/ui/Select';
 
 // TODO: Add validation for tracks and later a way to attach projects and tags
 const AddTimeTrack = () => {
@@ -19,13 +21,15 @@ const AddTimeTrack = () => {
   const titleRef = useRef<HTMLInputElement>(null);
   const [timer, setTimer] = useState(false);
 
+  //!temp
+  const [value, setValue] = useState('');
+
   function startTimer() {
     setStartTime(new Date());
     setBtnStop(true);
     setTimer(true);
   }
 
-  // TODO: move this function to lib folder
   async function sendTrack(event: FormEvent) {
     event.preventDefault();
     const endDate = new Date();
@@ -45,6 +49,7 @@ const AddTimeTrack = () => {
     setBtnStop(false);
   }
 
+  console.log(value);
   return (
     <div>
       <Stopwatch timer={timer} />
@@ -75,14 +80,25 @@ const AddTimeTrack = () => {
         <Dropdown>
           <Dropdown.Button>open</Dropdown.Button>
           <Dropdown.Menu>
-            <Dropdown.MenuItem onClick={() => console.log('edit')}>
-              Edit
+            <Dropdown.MenuItem asChild>
+              <button className={styles.edit}>Edit</button>
             </Dropdown.MenuItem>
-            <Dropdown.MenuItem onSelect={() => console.log('delete')}>
-              Delete
+            <Dropdown.Separator className={styles.separator} />
+            <Dropdown.MenuItem asChild>
+              <button className={styles.delete}>Delete</button>
             </Dropdown.MenuItem>
           </Dropdown.Menu>
         </Dropdown>
+      </div> */}
+      {/* <div>
+        <Select value={value} setValue={setValue}>
+          <Select.Button>Add Tag</Select.Button>
+          <Select.Content>
+            <Select.Item value="active">Active</Select.Item>
+            <Select.Item value="work">Work</Select.Item>
+            <Select.Item value="personal">Personal</Select.Item>
+          </Select.Content>
+        </Select>
       </div> */}
     </div>
   );

@@ -25,24 +25,25 @@
     cursor: pointer;
     transition: background-color ease;
   }
-}
+  & .cancel {
+    color: $color-text-primary-dark;
+    background-color: white;
 
-.cancel {
-  color: $color-text-primary-dark;
-  background-color: white;
-
-  &:hover {
-    background-color: #f1f5f9;
+    &:hover {
+      background-color: #f1f5f9;
+    }
   }
-}
 
-.action {
-  margin-left: 0.8rem;
-  background-color: #dc2626;
-  color: white;
+  & .action {
+    border-color: $color-skeleton;
+    margin-left: 0.8rem;
+    background-color: #dc2626;
+    color: white;
+    border-color: transparent;
 
-  &:hover {
-    background-color: #9a1b1b;
+    &:hover {
+      background-color: #9a1b1b;
+    }
   }
 }
 

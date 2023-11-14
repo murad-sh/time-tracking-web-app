@@ -4,10 +4,16 @@ import styles from './AlertDialog.module.scss';
 
 interface AlertDialogProps {
   children: React.ReactNode;
+  open?: boolean;
+  setOpen?(value: boolean): void;
 }
 
-const AlertDialog = ({ children }: AlertDialogProps) => {
-  return <RadixAlertDialog.Root>{children}</RadixAlertDialog.Root>;
+const AlertDialog = ({ children, open, setOpen }: AlertDialogProps) => {
+  return (
+    <RadixAlertDialog.Root open={open} onOpenChange={setOpen}>
+      {children}
+    </RadixAlertDialog.Root>
+  );
 };
 
 export default AlertDialog;

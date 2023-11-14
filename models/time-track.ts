@@ -5,7 +5,7 @@ export interface ITimeTrack {
   _id: mongoose.Schema.Types.ObjectId;
   userId: mongoose.Schema.Types.ObjectId;
   projectId: mongoose.Schema.Types.ObjectId;
-  tags: string[];
+  tag: string;
   title: string;
   start: Date;
   end: Date;
@@ -21,7 +21,7 @@ const timeTrackSchema = new mongoose.Schema<ITimeTrack>({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Project',
   },
-  tags: [{ type: String }],
+  tag: { type: String },
   title: { type: String, required: true },
   start: { type: Date, required: true },
   end: { type: Date, required: true },
@@ -33,8 +33,7 @@ timeTrackSchema.methods.addProject = async function (projectId: string) {
 };
 
 timeTrackSchema.methods.addTag = async function (tag: string) {
-  if (this.tags.includes(tag)) throw new Error(`${tag} already exists`);
-  this.tags.push(tag);
+  this.tag = tag;
   await this.save();
 };
 

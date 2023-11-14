@@ -1,0 +1,17 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.separator {
+  height: 1px;
+  background-color: $color-skeleton;
+}
+
+.edit {
+  @include dropdown-menu-item;
+  color: $color-text-primary-dark;
+}
+
+.delete {
+  @include dropdown-menu-item;
+  color: $color-error;
+}
