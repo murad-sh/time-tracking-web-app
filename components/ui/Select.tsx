@@ -2,35 +2,29 @@ import React, { useState } from 'react';
 import * as RadixSelect from '@radix-ui/react-select';
 import styles from './Select.module.scss';
 
-const Select = ({
-  children,
-  value,
-  setValue,
-}: {
-  children: React.ReactNode;
-  value: string;
-  setValue: (value: string) => void;
-}) => {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <RadixSelect.Root
-      open={open}
-      onOpenChange={setOpen}
-      value={value}
-      onValueChange={setValue}
-    >
-      {children}
-    </RadixSelect.Root>
-  );
+const Select = ({ children, ...props }: RadixSelect.SelectProps) => {
+  return <RadixSelect.Root {...props}>{children}</RadixSelect.Root>;
 };
 
 export default Select;
 
-function SelectContent({ children }: { children: React.ReactNode }) {
+function SelectContent({
+  children,
+  className,
+  ...props
+}: RadixSelect.SelectContentProps) {
   return (
     <RadixSelect.Portal>
-      <RadixSelect.SelectContent>{children}</RadixSelect.SelectContent>
+      <RadixSelect.SelectContent
+        className={`${styles.content} ${className}}`}
+        {...props}
+      >
+        <RadixSelect.SelectViewport>
+          <RadixSelect.ScrollUpButton />
+          {children}
+          <RadixSelect.ScrollDownButton />
+        </RadixSelect.SelectViewport>
+      </RadixSelect.SelectContent>
     </RadixSelect.Portal>
   );
 }

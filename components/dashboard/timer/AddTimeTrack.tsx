@@ -6,13 +6,11 @@ import { timeTrackSchema } from '@/lib/validations/time-track';
 import Stopwatch from './Stopwatch';
 import { toast } from 'sonner';
 import axios from 'axios';
+import { Tag } from 'lucide-react';
 
 // !TEST ALL
 import { Play, PlayCircle, Pause, PauseCircle } from 'lucide-react';
-
-//!TEMP
-import Dropdown from '@/components/ui/Dropdown';
-import Select from '@/components/ui/Select';
+import TagSelect from './TagSelect';
 
 // TODO: Add validation for tracks and later a way to attach projects and tags
 const AddTimeTrack = () => {
@@ -20,9 +18,7 @@ const AddTimeTrack = () => {
   const [startTime, setStartTime] = useState<Date>();
   const titleRef = useRef<HTMLInputElement>(null);
   const [timer, setTimer] = useState(false);
-
-  //!temp
-  const [value, setValue] = useState('');
+  const [tag, setTag] = useState('');
 
   function startTimer() {
     setStartTime(new Date());
@@ -49,7 +45,6 @@ const AddTimeTrack = () => {
     setBtnStop(false);
   }
 
-  console.log(value);
   return (
     <div>
       <Stopwatch timer={timer} />
@@ -76,30 +71,9 @@ const AddTimeTrack = () => {
           </button>
         )}
       </form>
-      {/* <div>
-        <Dropdown>
-          <Dropdown.Button>open</Dropdown.Button>
-          <Dropdown.Menu>
-            <Dropdown.MenuItem asChild>
-              <button className={styles.edit}>Edit</button>
-            </Dropdown.MenuItem>
-            <Dropdown.Separator className={styles.separator} />
-            <Dropdown.MenuItem asChild>
-              <button className={styles.delete}>Delete</button>
-            </Dropdown.MenuItem>
-          </Dropdown.Menu>
-        </Dropdown>
-      </div> */}
-      {/* <div>
-        <Select value={value} setValue={setValue}>
-          <Select.Button>Add Tag</Select.Button>
-          <Select.Content>
-            <Select.Item value="active">Active</Select.Item>
-            <Select.Item value="work">Work</Select.Item>
-            <Select.Item value="personal">Personal</Select.Item>
-          </Select.Content>
-        </Select>
-      </div> */}
+      <div>
+        <TagSelect tag={tag} setTag={setTag} />
+      </div>
     </div>
   );
 };
