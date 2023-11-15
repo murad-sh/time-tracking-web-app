@@ -1,6 +1,6 @@
 @import '@/styles/variables';
 
-.side-nav {
+.sidebar {
   font-size: $nav-font-size;
   ul {
     list-style: none;
@@ -22,14 +22,15 @@
         color: white;
       }
     }
+
     & .active {
       background-color: $color-primary;
       color: white;
     }
-  }
 
-  li:not(:last-child) {
-    margin-bottom: 1.2rem;
+    &:not(:last-child) {
+      margin-bottom: 1.2rem;
+    }
   }
 }
 
@@ -38,16 +39,10 @@
   align-items: center;
   justify-content: left;
   gap: 0.8rem;
+  font-weight: 500;
 
-  // .icon {
-  //   // height: 1.3rem;
-  //   // width: 1.3rem;
-  //   text-align: center;
-  //   svg {
-  //     // height: 1.3rem;
-  //     // width: 1.3rem;
-  //     width: 60%;
-  //     height: 60%;
-  //   }
-  // }
+  svg {
+    height: 1.6rem;
+    width: 1.6rem;
+  }
 }
