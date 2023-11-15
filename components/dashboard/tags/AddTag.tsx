@@ -15,8 +15,8 @@ const AddTag = () => {
       <Modal open={open} onOpenChange={setOpen}>
         <Modal.Button asChild>
           <PrimaryButton className={styles.modal__btn}>
-            {<PlusIcon />}
-            <span>New tag</span>
+            <PlusIcon />
+            New tag
           </PrimaryButton>
         </Modal.Button>
         <Modal.Content title="Add new tag">
