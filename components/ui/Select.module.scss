@@ -1,0 +1,23 @@
+@import '@/styles/variables';
+@import '@/styles/mixins';
+
+.content {
+  @include menu-content;
+}
+
+.item {
+  @include dropdown-menu-item;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-weight: 500;
+
+  .item__icon {
+    display: flex;
+    align-items: center;
+    svg {
+      height: 2rem;
+      width: 2rem;
+    }
+  }
+}

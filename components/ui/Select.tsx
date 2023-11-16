@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import * as RadixSelect from '@radix-ui/react-select';
 import styles from './Select.module.scss';
+
+import { Check } from 'lucide-react';
 
 const Select = ({ children, ...props }: RadixSelect.SelectProps) => {
   return <RadixSelect.Root {...props}>{children}</RadixSelect.Root>;
@@ -20,15 +22,32 @@ function SelectContent({
         {...props}
       >
         <RadixSelect.SelectViewport>
-          <RadixSelect.ScrollUpButton />
-          {children}
-          <RadixSelect.ScrollDownButton />
+          <RadixSelect.Group>{children}</RadixSelect.Group>
         </RadixSelect.SelectViewport>
       </RadixSelect.SelectContent>
     </RadixSelect.Portal>
   );
 }
 
+const SelectItem = React.forwardRef<
+  React.ElementRef<typeof RadixSelect.Item>,
+  React.ComponentPropsWithoutRef<typeof RadixSelect.Item>
+>(({ children, className, ...props }, forwardedRef) => (
+  <RadixSelect.Item
+    className={`${styles.item} ${className}`}
+    ref={forwardedRef}
+    {...props}
+  >
+    <RadixSelect.ItemText>{children}</RadixSelect.ItemText>
+    <RadixSelect.ItemIndicator className={styles.item__icon}>
+      <Check />
+    </RadixSelect.ItemIndicator>
+  </RadixSelect.Item>
+));
+
+SelectItem.displayName = RadixSelect.Item.displayName;
+
 Select.Button = RadixSelect.Trigger;
 Select.Content = SelectContent;
-Select.Item = RadixSelect.Item;
+Select.Value = RadixSelect.Value;
+Select.Item = SelectItem;
