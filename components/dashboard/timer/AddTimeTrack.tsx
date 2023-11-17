@@ -11,6 +11,7 @@ import { Tag } from 'lucide-react';
 // !TEST ALL
 import { Play, PlayCircle, Pause, PauseCircle } from 'lucide-react';
 import TagSelect from './TagSelect';
+import { ITimeTrack } from '@/models/time-track';
 
 // TODO: Add validation for tracks and later a way to attach projects and tags
 const AddTimeTrack = () => {
@@ -30,19 +31,28 @@ const AddTimeTrack = () => {
     event.preventDefault();
     const endDate = new Date();
     setTimer(false);
+    let requestData: any = {
+      title: titleRef.current!.value,
+      start: startTime,
+      end: endDate,
+    };
 
+    if (tag) {
+      requestData = { ...requestData, tag: tag };
+    }
+
+    const validatedData = timeTrackSchema.safeParse(requestData);
+
+    if (!validatedData.success) throw new Error(validatedData.error.message);
     try {
-      await axios.post('/api/user/time-tracks/', {
-        title: titleRef.current!.value,
-        start: startTime,
-        end: endDate,
-      });
+      await axios.post('/api/user/time-tracks/', validatedData.data);
 
       toast.success('Successfully added!');
     } catch (error) {
       toast.error('Failed to add!');
     }
     setBtnStop(false);
+    setTag('');
   }
 
   return (

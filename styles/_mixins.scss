@@ -92,3 +92,8 @@
   background-color: $color-background;
   box-shadow: 0 4px 6px rgba(black, 0.1);
 }
+
+@mixin menu-separator {
+  height: 1px;
+  background-color: $color-skeleton;
+}

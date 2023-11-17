@@ -3,51 +3,44 @@ import Select from '@/components/ui/Select';
 import { useTags } from '@/hooks/use-api-hooks';
 import { TagIcon } from 'lucide-react';
 
+import styles from './TagSelect.module.scss';
+
 interface TagSelectProps {
   tag: string;
   setTag: (tag: string) => void;
 }
 
 const TagSelect = ({ tag, setTag }: TagSelectProps) => {
-  const [open, setOpen] = useState(false);
   const { tags } = useTags();
 
-  const resetSelectedTag = () => {
-    setTag('');
-    setOpen(false);
-  };
-
-  const changeTag = (tag: string) => {
-    if (tag === '__NO_TAG__') {
-      resetSelectedTag();
-      return;
-    }
-    setTag(tag);
+  const selectTag = (selectedTag: string) => {
+    setTag(selectedTag.trim());
   };
 
   return (
-    <Select
-      value={tag}
-      onValueChange={changeTag}
-      open={open}
-      onOpenChange={setOpen}
-    >
+    <Select value={tag} onValueChange={selectTag}>
       <Select.Button asChild>
-        <button>
-          {tag || (
-            <span>
-              <TagIcon />
-              Add Tag
-            </span>
-          )}
+        <button className={styles.tagButton}>
+          <TagIcon />
+          {tag || 'Select Tag'}
         </button>
       </Select.Button>
       <Select.Content position="popper" sideOffset={5}>
-        {tag && <Select.Item value="__NO_TAG__">No tags</Select.Item>}
+        {tags && tags.length === 0 ? (
+          <Select.Label>No tags</Select.Label>
+        ) : (
+          <Select.Label>Choose tag</Select.Label>
+        )}
+        {tag && (
+          <>
+            <Select.Item value=" ">No Tag</Select.Item>
+            <Select.Separator className={styles.separator} />
+          </>
+        )}
         {tags &&
-          tags.map((tag: string) => (
-            <Select.Item key={tag} value={tag}>
-              {tag}
+          tags.map((tagItem: string) => (
+            <Select.Item key={tagItem} value={tagItem}>
+              {tagItem}
             </Select.Item>
           ))}
       </Select.Content>

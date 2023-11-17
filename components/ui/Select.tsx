@@ -2,7 +2,7 @@ import React from 'react';
 import * as RadixSelect from '@radix-ui/react-select';
 import styles from './Select.module.scss';
 
-import { Check } from 'lucide-react';
+import { CheckIcon } from 'lucide-react';
 
 const Select = ({ children, ...props }: RadixSelect.SelectProps) => {
   return <RadixSelect.Root {...props}>{children}</RadixSelect.Root>;
@@ -40,7 +40,7 @@ const SelectItem = React.forwardRef<
   >
     <RadixSelect.ItemText>{children}</RadixSelect.ItemText>
     <RadixSelect.ItemIndicator className={styles.item__icon}>
-      <Check />
+      <CheckIcon />
     </RadixSelect.ItemIndicator>
   </RadixSelect.Item>
 ));
@@ -51,3 +51,5 @@ Select.Button = RadixSelect.Trigger;
 Select.Content = SelectContent;
 Select.Value = RadixSelect.Value;
 Select.Item = SelectItem;
+Select.Label = RadixSelect.Label;
+Select.Separator = RadixSelect.Separator;

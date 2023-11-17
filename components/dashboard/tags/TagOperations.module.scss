@@ -3,8 +3,7 @@
 
 // Dropdown menu operations
 .separator {
-  height: 1px;
-  background-color: $color-skeleton;
+  @include menu-separator;
 }
 
 .operation {

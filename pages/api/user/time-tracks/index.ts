@@ -37,13 +37,13 @@ export default async function handler(
         return;
       }
 
-      const { title, start, end } = validatedData.data;
+      const { title, start, end, tag } = validatedData.data;
       const user = await User.findById(currentUser.id);
       if (!user) {
         res.status(404).json({ message: 'User not found' });
         return;
       }
-      await user.addTimeTrack({ title, start, end } as ITimeTrack);
+      await user.addTimeTrack({ title, start, end, tag } as ITimeTrack);
       res.status(201).json({ message: 'Time Track added' });
     }
   } catch (error) {

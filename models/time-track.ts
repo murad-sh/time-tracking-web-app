@@ -4,8 +4,8 @@ import { IProject } from './project';
 export interface ITimeTrack {
   _id: mongoose.Schema.Types.ObjectId;
   userId: mongoose.Schema.Types.ObjectId;
-  projectId: mongoose.Schema.Types.ObjectId;
-  tag: string;
+  projectId?: mongoose.Schema.Types.ObjectId;
+  tag?: string;
   title: string;
   start: Date;
   end: Date;
