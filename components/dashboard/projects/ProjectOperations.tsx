@@ -2,24 +2,24 @@ import React, { useState } from 'react';
 import Dropdown from '@/components/ui/Dropdown';
 import AlertDialog from '@/components/ui/AlertDialog';
 import { MoreVertical } from 'lucide-react';
-import { useTags } from '@/hooks/use-api-hooks';
+import { useProjects } from '@/hooks/use-api-hooks';
 import axios from 'axios';
 import { toast } from 'sonner';
 
 import styles from '../Operations.module.scss';
 
-const TagOperations = ({ tag }: { tag: string }) => {
+const ProjectOperations = ({ projectId }: { projectId: string }) => {
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
-  const { mutate } = useTags();
+  const { mutate } = useProjects();
 
-  const deleteTag = async () => {
-    const response = await axios.delete('/api/user/tags/' + tag);
+  const deleteProject = async () => {
+    const response = await axios.delete('/api/user/projects/' + projectId);
     return response.data;
   };
 
-  const deleteTagHandler = async () => {
+  const deleteProjectHandler = async () => {
     try {
-      await deleteTag();
+      await deleteProject();
       mutate();
       toast.success('Tag deleted successfully');
     } catch (error) {
@@ -49,14 +49,14 @@ const TagOperations = ({ tag }: { tag: string }) => {
       </Dropdown>
       <AlertDialog open={showDeleteAlert} setOpen={setShowDeleteAlert}>
         <AlertDialog.Content
-          title="Are you sure you want to delete this tag?"
+          title="Are you sure you want to delete this project?"
           description="This action cannot be undone."
-          action="Delete tag"
-          onAction={deleteTagHandler}
+          action="Delete project"
+          onAction={deleteProjectHandler}
         />
       </AlertDialog>
     </div>
   );
 };
 
-export default TagOperations;
+export default ProjectOperations;

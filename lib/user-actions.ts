@@ -1,3 +1,4 @@
+import { IProject } from '@/models/project';
 import axios from 'axios';
 
 export const tagsUrlEndpoint = '/api/tags';
@@ -19,5 +20,12 @@ export async function createUser(
 
 export async function createTag(tag: string) {
   const response = await axios.post('/api/user/tags/', { tag });
+  return response.data;
+}
+
+export async function createProject(project: IProject) {
+  const response = await axios.post('/api/user/projects', {
+    projectTitle: project.projectTitle,
+  });
   return response.data;
 }

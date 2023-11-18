@@ -2,11 +2,11 @@ import React from 'react';
 import { tagSchema, TagSchemaType } from '@/lib/validations/tag';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import styles from './TagForm.module.scss';
 import PrimaryButton from '@/components/ui/PrimaryButton';
 import { createTag } from '@/lib/user-actions';
 import { toast } from 'sonner';
 import { useTags } from '@/hooks/use-api-hooks';
+import styles from '../Form.module.scss';
 
 interface TagFormProps {
   afterSave: () => void;

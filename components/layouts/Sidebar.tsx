@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './Sidebar.module.scss';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Clock, BarChart3, FileText, Tag } from 'lucide-react';
+import { ClockIcon, BarChart3Icon, FileTextIcon, TagIcon } from 'lucide-react';
 
 const Sidebar = () => {
   const router = useRouter();
@@ -17,7 +17,7 @@ const Sidebar = () => {
             href={'/dashboard'}
           >
             <span className={styles.nav}>
-              <Clock />
+              <ClockIcon />
               Timer
             </span>
           </Link>
@@ -28,7 +28,7 @@ const Sidebar = () => {
             href={'/dashboard/reports'}
           >
             <span className={styles.nav}>
-              <BarChart3 />
+              <BarChart3Icon />
               Reports
             </span>
           </Link>
@@ -41,7 +41,7 @@ const Sidebar = () => {
             href={'/dashboard/projects'}
           >
             <span className={styles.nav}>
-              <FileText />
+              <FileTextIcon />
               Projects
             </span>
           </Link>
@@ -52,7 +52,7 @@ const Sidebar = () => {
             href={'/dashboard/tags'}
           >
             <span className={styles.nav}>
-              <Tag />
+              <TagIcon />
               Tags
             </span>
           </Link>

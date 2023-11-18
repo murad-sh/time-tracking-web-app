@@ -1,0 +1,17 @@
+@import '@/styles/variables';
+
+.list {
+  font-size: 1.6rem;
+  list-style: none;
+  color: $color-text-primary-dark;
+
+  border-radius: 0.6rem;
+  border: 1px solid $color-skeleton;
+  & > * + * {
+    border-top: 1px solid $color-skeleton;
+  }
+
+  li {
+    padding: 1.5rem;
+  }
+}

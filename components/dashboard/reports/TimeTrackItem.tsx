@@ -16,9 +16,13 @@ const TimeTrackItem = ({ timeTrack }: Props) => {
       <div className={styles.title}>
         <span>Title: {timeTrack.title}</span>
       </div>
+      <div>
+        <span>Tag: {timeTrack.tag}</span>
+      </div>
       <div className={styles.duration}>
         <span>
-          Duration: {calculateDuration(timeTrack.start, timeTrack.end)}
+          Duration:
+          {calculateDuration(timeTrack.start, timeTrack.end)}
         </span>
       </div>
     </div>

@@ -32,6 +32,7 @@ export async function getUserTimeTracks(userId: mongoose.Types.ObjectId) {
         title: track.title,
         start: track.start.toISOString(),
         end: track.end.toISOString(),
+        tag: track.tag || 'none',
       };
     });
   } catch (error) {

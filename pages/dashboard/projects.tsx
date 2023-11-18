@@ -1,19 +1,13 @@
 import React from 'react';
-import AddProject from '@/components/dashboard/projects/AddProject';
+import ProjectBoard from '@/components/dashboard/projects/ProjectBoard';
 import DashboardLayout from '@/components/layouts/DashboardLayout';
 import type { NextPageWithLayout } from '../_app';
 import type { ReactElement } from 'react';
-import { getUserProjects } from '@/lib/db';
-import { IProject } from '@/models/project';
 
-interface Props {
-  projects: IProject[];
-}
-
-const ProjectsPage: NextPageWithLayout<Props> = (props: Props) => {
+const ProjectsPage: NextPageWithLayout = () => {
   return (
     <section>
-      <AddProject />
+      <ProjectBoard />
     </section>
   );
 };

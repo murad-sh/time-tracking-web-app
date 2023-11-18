@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Select from '@/components/ui/Select';
 import { useTags } from '@/hooks/use-api-hooks';
 import { TagIcon } from 'lucide-react';

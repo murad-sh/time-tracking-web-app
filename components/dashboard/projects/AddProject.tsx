@@ -1,35 +1,28 @@
-import React, { FormEvent, useRef } from 'react';
+import React, { useState } from 'react';
+import Modal from '@/components/ui/Modal';
+import ProjectForm from './ProjectForm';
+import PrimaryButton from '@/components/ui/PrimaryButton';
+
+import { PlusIcon } from 'lucide-react';
+
+import styles from './AddProject.module.scss';
 
 const AddProject = () => {
-  const projectTitleRef = useRef<HTMLInputElement>(null);
-
-  async function submitHandler(event: FormEvent) {
-    event.preventDefault();
-    const title = projectTitleRef.current?.value;
-    const res = await fetch('/api/projects', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: title,
-      }),
-    });
-  }
+  const [open, setOpen] = useState(false);
 
   return (
     <div>
-      <h1>AddProject</h1>
-      <form onSubmit={submitHandler}>
-        <label htmlFor="project"></label>
-        <input
-          id="project"
-          type="text"
-          placeholder="Project Name"
-          ref={projectTitleRef}
-        />
-        <button type="submit">Submit</button>
-      </form>
+      <Modal open={open} onOpenChange={setOpen}>
+        <Modal.Button asChild>
+          <PrimaryButton className={styles.modal__btn}>
+            <PlusIcon />
+            New project
+          </PrimaryButton>
+        </Modal.Button>
+        <Modal.Content title="Add new project">
+          <ProjectForm afterSave={() => setOpen(false)} />
+        </Modal.Content>
+      </Modal>
     </div>
   );
 };

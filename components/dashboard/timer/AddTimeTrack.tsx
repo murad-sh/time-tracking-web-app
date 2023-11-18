@@ -1,25 +1,22 @@
 import React, { useRef, useState, FormEvent } from 'react';
-import { getSession } from 'next-auth/react';
-import styles from './AddTimeTrack.module.scss';
-import { useForm } from 'react-hook-form';
 import { timeTrackSchema } from '@/lib/validations/time-track';
 import Stopwatch from './Stopwatch';
 import { toast } from 'sonner';
 import axios from 'axios';
-import { Tag } from 'lucide-react';
+import TagSelect from './TagSelect';
 
+import styles from './AddTimeTrack.module.scss';
 // !TEST ALL
 import { Play, PlayCircle, Pause, PauseCircle } from 'lucide-react';
-import TagSelect from './TagSelect';
-import { ITimeTrack } from '@/models/time-track';
+import ProjectSelect from './ProjectSelect';
 
-// TODO: Add validation for tracks and later a way to attach projects and tags
 const AddTimeTrack = () => {
   const [btnStop, setBtnStop] = useState(false);
   const [startTime, setStartTime] = useState<Date>();
   const titleRef = useRef<HTMLInputElement>(null);
   const [timer, setTimer] = useState(false);
   const [tag, setTag] = useState('');
+  const [project, setProject] = useState('');
 
   function startTimer() {
     setStartTime(new Date());
@@ -27,6 +24,7 @@ const AddTimeTrack = () => {
     setTimer(true);
   }
 
+  // !REFACTOR THIS
   async function sendTrack(event: FormEvent) {
     event.preventDefault();
     const endDate = new Date();
@@ -40,9 +38,10 @@ const AddTimeTrack = () => {
     if (tag) {
       requestData = { ...requestData, tag: tag };
     }
-
+    if (project) {
+      requestData = { ...requestData, projectId: project };
+    }
     const validatedData = timeTrackSchema.safeParse(requestData);
-
     if (!validatedData.success) throw new Error(validatedData.error.message);
     try {
       await axios.post('/api/user/time-tracks/', validatedData.data);
@@ -53,6 +52,8 @@ const AddTimeTrack = () => {
     }
     setBtnStop(false);
     setTag('');
+    setProject('');
+    titleRef.current!.value = '';
   }
 
   return (
@@ -83,6 +84,7 @@ const AddTimeTrack = () => {
       </form>
       <div>
         <TagSelect tag={tag} setTag={setTag} />
+        <ProjectSelect projectId={project} setProjectId={setProject} />
       </div>
     </div>
   );
