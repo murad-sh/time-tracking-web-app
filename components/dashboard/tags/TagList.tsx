@@ -1,7 +1,7 @@
 import React from 'react';
 import TagItem from './TagItem';
 import { useTags } from '@/hooks/use-api-hooks';
-import styles from './TagList.module.scss';
+import styles from '../SharedStyles.module.scss';
 
 const TagList = () => {
   const { tags, isLoading, error } = useTags();

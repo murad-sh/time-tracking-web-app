@@ -1,8 +1,8 @@
 import React from 'react';
 import ProjectItem from './ProjectItem';
 import { useProjects } from '@/hooks/use-api-hooks';
-import styles from './ProjectList.module.scss';
 import { IProject } from '@/models/project';
+import styles from '../SharedStyles.module.scss';
 
 const ProjectList = () => {
   const { projects, isLoading, error } = useProjects();

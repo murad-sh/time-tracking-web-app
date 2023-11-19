@@ -6,7 +6,7 @@ import PrimaryButton from '@/components/ui/PrimaryButton';
 import { createProject } from '@/lib/user-actions';
 import { toast } from 'sonner';
 import { useProjects } from '@/hooks/use-api-hooks';
-import styles from '../Form.module.scss';
+import styles from '../SharedStyles.module.scss';
 
 interface ProjectFormProps {
   afterSave: () => void;

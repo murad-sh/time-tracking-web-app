@@ -6,7 +6,7 @@ import { useTags } from '@/hooks/use-api-hooks';
 import axios from 'axios';
 import { toast } from 'sonner';
 
-import styles from '../Operations.module.scss';
+import styles from '../SharedStyles.module.scss';
 
 const TagOperations = ({ tag }: { tag: string }) => {
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
@@ -27,7 +27,7 @@ const TagOperations = ({ tag }: { tag: string }) => {
     }
   };
   return (
-    <div>
+    <>
       <Dropdown>
         <Dropdown.Button className={styles.operation}>
           <MoreVertical />
@@ -55,7 +55,7 @@ const TagOperations = ({ tag }: { tag: string }) => {
           onAction={deleteTagHandler}
         />
       </AlertDialog>
-    </div>
+    </>
   );
 };
 

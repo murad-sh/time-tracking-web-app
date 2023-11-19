@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import Modal from '@/components/ui/Modal';
-import TagForm from './TagForm';
+import TagForm from './tags/TagForm';
+import ProjectForm from './projects/ProjectForm';
 import PrimaryButton from '@/components/ui/PrimaryButton';
-
 import { PlusIcon } from 'lucide-react';
+import styles from './AddItem.module.scss';
 
-import styles from './AddTag.module.scss';
-
-const AddTag = () => {
+const AddItem = ({ itemType }: { itemType: 'tag' | 'project' }) => {
   const [open, setOpen] = useState(false);
+
+  const closeModal = () => setOpen(false);
 
   return (
     <div>
@@ -16,15 +17,19 @@ const AddTag = () => {
         <Modal.Button asChild>
           <PrimaryButton className={styles.modal__btn}>
             <PlusIcon />
-            New tag
+            {itemType === 'tag' ? 'New tag' : 'New project'}
           </PrimaryButton>
         </Modal.Button>
         <Modal.Content title="Add new tag">
-          <TagForm afterSave={() => setOpen(false)} />
+          {itemType === 'tag' ? (
+            <TagForm afterSave={closeModal} />
+          ) : (
+            <ProjectForm afterSave={closeModal} />
+          )}
         </Modal.Content>
       </Modal>
     </div>
   );
 };
 
-export default AddTag;
+export default AddItem;

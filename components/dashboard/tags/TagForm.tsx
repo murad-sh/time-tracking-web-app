@@ -6,7 +6,7 @@ import PrimaryButton from '@/components/ui/PrimaryButton';
 import { createTag } from '@/lib/user-actions';
 import { toast } from 'sonner';
 import { useTags } from '@/hooks/use-api-hooks';
-import styles from '../Form.module.scss';
+import styles from '../SharedStyles.module.scss';
 
 interface TagFormProps {
   afterSave: () => void;

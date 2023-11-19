@@ -1,8 +1,7 @@
 import React from 'react';
-import styles from './TagBoard.module.scss';
-
-import AddTag from './AddTag';
 import TagList from './TagList';
+import AddItem from '../AddItem';
+import styles from './TagBoard.module.scss';
 
 const TagBoard = () => {
   return (
@@ -13,7 +12,7 @@ const TagBoard = () => {
           <p>Create and manage tags.</p>
         </div>
         <div>
-          <AddTag />
+          <AddItem itemType="tag" />
         </div>
       </div>
       <div>

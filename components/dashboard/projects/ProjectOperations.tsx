@@ -6,7 +6,7 @@ import { useProjects } from '@/hooks/use-api-hooks';
 import axios from 'axios';
 import { toast } from 'sonner';
 
-import styles from '../Operations.module.scss';
+import styles from '../SharedStyles.module.scss';
 
 const ProjectOperations = ({ projectId }: { projectId: string }) => {
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);

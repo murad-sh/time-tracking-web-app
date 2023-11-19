@@ -1,8 +1,7 @@
 import React from 'react';
-import styles from './ProjectBoard.module.scss';
-
-import AddProject from './AddProject';
+import AddItem from '../AddItem';
 import ProjectList from './ProjectList';
+import styles from './ProjectBoard.module.scss';
 
 const ProjectBoard = () => {
   return (
@@ -13,7 +12,7 @@ const ProjectBoard = () => {
           <p>Create and manage projects.</p>
         </div>
         <div>
-          <AddProject />
+          <AddItem itemType="project" />
         </div>
       </div>
       <div>
