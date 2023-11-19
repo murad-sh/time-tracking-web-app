@@ -13,6 +13,7 @@ export interface IUser {
   addTimeTrack: (timeTrack: ITimeTrack) => Promise<void>;
   deleteTimeTrack: (trackId: string) => Promise<void>;
   addProject: (project: IProject) => Promise<void>;
+  deleteProject: (projectId: string) => Promise<void>;
   addTag: (tag: string) => Promise<void>;
   deleteTag: (tag: string) => Promise<void>;
 }
@@ -67,20 +68,23 @@ userSchema.methods.deleteTag = async function (tag: string) {
   await this.save();
 };
 
-// !Modify this for project deletion
-// userSchema.methods.deleteTag = async function (tagId: string) {
-//   try {
-//     const tag = await Tag.findOne({ _id: tagId, userId: this._id });
-//     if (!tag) {
-//       throw new Error('Tag not found or not associated with the user.');
-//     }
-//     this.tags.pull(tagId);
-//     await this.save();
-//     await Tag.deleteOne({ _id: tagId });
-//   } catch (error) {
-//     throw error;
-//   }
-// };
+userSchema.methods.deleteProject = async function (projectId: string) {
+  try {
+    const project = await Project.findOne({ _id: projectId, userId: this._id });
+    if (!project) {
+      throw new Error('Project not found or not associated with the user.');
+    }
+    this.projects.pull(projectId);
+    await this.save();
+    await Project.deleteOne({ _id: projectId });
+    await TimeTrack.updateMany(
+      { projectId: projectId },
+      { $unset: { projectId: '' } }
+    );
+  } catch (error) {
+    throw error;
+  }
+};
 
 const User: mongoose.Model<IUser> =
   mongoose.models.User || mongoose.model<IUser>('User', userSchema);
