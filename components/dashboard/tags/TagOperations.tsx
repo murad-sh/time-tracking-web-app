@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Dropdown from '@/components/ui/Dropdown';
 import AlertDialog from '@/components/ui/AlertDialog';
+import Modal from '@/components/ui/Modal';
+import TagForm from './TagForm';
 import { MoreVertical } from 'lucide-react';
 import { useTags } from '@/hooks/use-api-hooks';
 import axios from 'axios';
@@ -10,6 +12,7 @@ import styles from '../SharedStyles.module.scss';
 
 const TagOperations = ({ tag }: { tag: string }) => {
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const { mutate } = useTags();
 
   const deleteTag = async () => {
@@ -34,7 +37,12 @@ const TagOperations = ({ tag }: { tag: string }) => {
         </Dropdown.Button>
         <Dropdown.Menu sideOffset={5} align="end">
           <Dropdown.MenuItem asChild>
-            <button className={styles.edit}>Edit</button>
+            <button
+              className={styles.edit}
+              onClick={() => setShowEditModal(true)}
+            >
+              Edit
+            </button>
           </Dropdown.MenuItem>
           <Dropdown.Separator className={styles.separator} />
           <Dropdown.MenuItem asChild>
@@ -55,6 +63,15 @@ const TagOperations = ({ tag }: { tag: string }) => {
           onAction={deleteTagHandler}
         />
       </AlertDialog>
+      <Modal open={showEditModal} onOpenChange={setShowEditModal}>
+        <Modal.Content title="Edit tag">
+          <TagForm
+            operationType="edit"
+            initialTag={tag}
+            afterSave={() => setShowEditModal(false)}
+          />
+        </Modal.Content>
+      </Modal>
     </>
   );
 };

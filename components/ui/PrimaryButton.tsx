@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { HtmlHTMLAttributes } from 'react';
 import Link from 'next/link';
 import styles from './PrimaryButton.module.scss';
 
@@ -8,6 +8,7 @@ interface ButtonProps {
   onClick?: () => void;
   className?: string;
   type?: React.ButtonHTMLAttributes<HTMLButtonElement>['type'];
+  disabled?: React.ButtonHTMLAttributes<HTMLButtonElement>['disabled'];
 }
 
 const PrimaryButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -31,6 +32,7 @@ const PrimaryButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
         onClick={props.onClick}
         type={buttonType}
         ref={ref}
+        disabled={props.disabled}
       >
         {props.children}
       </button>

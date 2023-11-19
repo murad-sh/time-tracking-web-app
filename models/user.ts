@@ -78,7 +78,7 @@ userSchema.methods.addTag = async function (tag: string) {
 };
 
 userSchema.methods.updateTag = async function (tag: string, newTag: string) {
-  if (this.tags.includes(tag)) throw new Error('Tag already exists');
+  if (!this.tags.includes(tag)) throw new Error('Tag does not exists');
   if (this.tags.includes(newTag)) throw new Error('New tag already exists');
   const tagIndex = this.tags.indexOf(tag);
   this.tags[tagIndex] = newTag;

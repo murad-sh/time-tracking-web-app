@@ -42,6 +42,7 @@ export default async function handler(
       }
       const { tag: newTagName } = validatedData.data;
       await user.updateTag(tagName as string, newTagName);
+      res.status(204).end();
     }
   } catch (error) {
     res.status(500).json({ message: 'Internal Server Message' });
