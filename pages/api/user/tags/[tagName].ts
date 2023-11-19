@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { getCurrentUser } from '@/lib/auth/session';
 import { connectToDB } from '@/lib/db';
 import User from '@/models/user';
+import { tagSchema } from '@/lib/validations/tag';
 
 type Data = {
   message: string;
@@ -11,7 +12,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  if (req.method !== 'DELETE') {
+  if (req.method !== 'DELETE' && req.method !== 'PATCH') {
     return res.status(405).json({ message: 'Method not allowed' });
   }
 
@@ -29,8 +30,19 @@ export default async function handler(
       });
 
     const { tagName } = req.query;
-    await user.deleteTag(tagName as string);
-    res.status(204).end();
+
+    if (req.method === 'DELETE') {
+      await user.deleteTag(tagName as string);
+      res.status(204).end();
+    } else {
+      const validatedData = tagSchema.safeParse(req.body);
+      if (!validatedData.success) {
+        res.status(422).json({ message: 'Validation error' });
+        return;
+      }
+      const { tag: newTagName } = validatedData.data;
+      await user.updateTag(tagName as string, newTagName);
+    }
   } catch (error) {
     res.status(500).json({ message: 'Internal Server Message' });
   }

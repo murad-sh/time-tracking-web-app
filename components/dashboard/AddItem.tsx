@@ -22,7 +22,7 @@ const AddItem = ({ itemType }: { itemType: 'tag' | 'project' }) => {
         </Modal.Button>
         <Modal.Content title="Add new tag">
           {itemType === 'tag' ? (
-            <TagForm afterSave={closeModal} />
+            <TagForm operationType="create" afterSave={closeModal} />
           ) : (
             <ProjectForm afterSave={closeModal} />
           )}

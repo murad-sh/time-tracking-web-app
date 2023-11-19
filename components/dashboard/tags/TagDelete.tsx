@@ -3,60 +3,41 @@ import { tagSchema, TagSchemaType } from '@/lib/validations/tag';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import PrimaryButton from '@/components/ui/PrimaryButton';
-import { createTag, editTag } from '@/lib/user-actions';
+import { createTag } from '@/lib/user-actions';
 import { toast } from 'sonner';
 import { useTags } from '@/hooks/use-api-hooks';
 import styles from '../SharedStyles.module.scss';
 
-interface TagFormProps {
+interface TagDeleteProps {
   afterSave: () => void;
-  operationType: 'create' | 'edit';
-  initialTag?: string;
 }
 
-const TagForm = ({ afterSave, operationType, initialTag }: TagFormProps) => {
+const TagDelete = ({ afterSave }: TagDeleteProps) => {
   const { tags, mutate } = useTags();
 
   const {
     register,
     handleSubmit,
     setError,
-    reset,
     formState: { errors, isSubmitting },
   } = useForm<TagSchemaType>({
     resolver: zodResolver(tagSchema),
     mode: 'all',
-    defaultValues: operationType === 'edit' ? { tag: initialTag } : { tag: '' },
   });
 
   async function onSubmit(enteredData: TagSchemaType) {
     const { tag } = enteredData;
-    if (operationType === 'edit' && tag === initialTag) {
-      afterSave();
-      return;
-    }
-    if (
-      (operationType === 'create' ||
-        (operationType === 'edit' && tag !== initialTag)) &&
-      tags?.includes(tag)
-    ) {
+    if (tags?.includes(tag)) {
       setError('tag', {
         type: 'manual',
         message: 'Tag already exists',
       });
       return;
     }
-
     try {
-      if (operationType === 'create') {
-        await createTag(tag);
-        toast.success('Tag created successfully');
-      } else if (operationType === 'edit') {
-        await editTag(initialTag as string, tag);
-        toast.success('Tag updated successfully');
-      }
+      await createTag(tag);
+      toast.success('Tag saved successfully');
       mutate();
-      reset();
     } catch (error) {
       toast.error('An error occurred. Please try again');
     }
@@ -74,7 +55,7 @@ const TagForm = ({ afterSave, operationType, initialTag }: TagFormProps) => {
           type="submit"
           className={isSubmitting ? styles.submitting : ''}
         >
-          {operationType === 'create' ? 'Create' : 'Update'}
+          Create
         </PrimaryButton>
         {errors.root?.serverError && (
           <span className={styles.error}>
@@ -86,4 +67,4 @@ const TagForm = ({ afterSave, operationType, initialTag }: TagFormProps) => {
   );
 };
 
-export default TagForm;
+export default TagDelete;

@@ -11,7 +11,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  if (req.method !== 'DELETE') {
+  if (req.method !== 'DELETE' && req.method !== 'PATCH') {
     return res.status(405).json({ message: 'Method not allowed' });
   }
 
@@ -29,8 +29,12 @@ export default async function handler(
       });
 
     const { projectId } = req.query;
-    await user.deleteProject(projectId as string);
-    res.status(204).end();
+    if (req.method === 'DELETE') {
+      await user.deleteProject(projectId as string);
+      res.status(204).end();
+    } else {
+      // TODO: Add EDIT functionality
+    }
   } catch (error) {
     res.status(500).json({ message: 'Internal Server Message' });
   }

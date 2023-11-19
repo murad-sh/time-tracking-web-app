@@ -15,6 +15,7 @@ export interface IUser {
   addProject: (project: IProject) => Promise<void>;
   deleteProject: (projectId: string) => Promise<void>;
   addTag: (tag: string) => Promise<void>;
+  updateTag: (tag: string, newTag: string) => Promise<void>;
   deleteTag: (tag: string) => Promise<void>;
 }
 
@@ -56,34 +57,40 @@ userSchema.methods.addProject = async function (project: IProject) {
   await this.save();
 };
 
+userSchema.methods.deleteProject = async function (projectId: string) {
+  const project = await Project.findOne({ _id: projectId, userId: this._id });
+  if (!project) {
+    throw new Error('Project not found or not associated with the user.');
+  }
+  this.projects.pull(projectId);
+  await this.save();
+  await Project.deleteOne({ _id: projectId });
+  await TimeTrack.updateMany(
+    { projectId: projectId },
+    { $unset: { projectId: '' } }
+  );
+};
+
 userSchema.methods.addTag = async function (tag: string) {
-  if (this.tags.includes(tag)) throw new Error(`${tag} already exists`);
+  if (this.tags.includes(tag)) throw new Error('Tag already exists');
   this.tags.push(tag);
   await this.save();
+};
+
+userSchema.methods.updateTag = async function (tag: string, newTag: string) {
+  if (this.tags.includes(tag)) throw new Error('Tag already exists');
+  if (this.tags.includes(newTag)) throw new Error('New tag already exists');
+  const tagIndex = this.tags.indexOf(tag);
+  this.tags[tagIndex] = newTag;
+  await this.save();
+  await TimeTrack.updateMany({ tag: tag }, { $set: { tag: newTag } });
 };
 
 userSchema.methods.deleteTag = async function (tag: string) {
   if (!this.tags.includes(tag)) throw new Error(`${tag} does not exists`);
   this.tags.pull(tag);
   await this.save();
-};
-
-userSchema.methods.deleteProject = async function (projectId: string) {
-  try {
-    const project = await Project.findOne({ _id: projectId, userId: this._id });
-    if (!project) {
-      throw new Error('Project not found or not associated with the user.');
-    }
-    this.projects.pull(projectId);
-    await this.save();
-    await Project.deleteOne({ _id: projectId });
-    await TimeTrack.updateMany(
-      { projectId: projectId },
-      { $unset: { projectId: '' } }
-    );
-  } catch (error) {
-    throw error;
-  }
+  await TimeTrack.updateMany({ tag: tag }, { $unset: { tag: '' } });
 };
 
 const User: mongoose.Model<IUser> =
