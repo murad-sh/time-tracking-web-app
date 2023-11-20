@@ -3,7 +3,7 @@ import Select from '@/components/ui/Select';
 import { useTags } from '@/hooks/use-api-hooks';
 import { TagIcon } from 'lucide-react';
 
-import styles from './TagSelect.module.scss';
+import styles from './ItemSelect.module.scss';
 
 interface TagSelectProps {
   tag: string;

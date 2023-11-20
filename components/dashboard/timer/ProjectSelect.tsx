@@ -4,7 +4,7 @@ import { useProjects } from '@/hooks/use-api-hooks';
 import { FileTextIcon } from 'lucide-react';
 import { IProject } from '@/models/project';
 
-import styles from './TagSelect.module.scss';
+import styles from './ItemSelect.module.scss';
 
 interface ProjectSelectProps {
   projectId: string;
@@ -18,12 +18,16 @@ const ProjectSelect = ({ projectId, setProjectId }: ProjectSelectProps) => {
     setProjectId(selectedProject.trim());
   };
 
+  const getSelectedProject = (projectId: string) =>
+    projects.find((project: IProject) => project._id!.toString() === projectId)!
+      .projectTitle;
+
   return (
     <Select value={projectId} onValueChange={selectProject}>
       <Select.Button asChild>
         <button className={styles.tagButton}>
           <FileTextIcon />
-          {projectId || 'Select Tag'}
+          {projectId ? getSelectedProject(projectId) : 'Select Project'}
         </button>
       </Select.Button>
       <Select.Content position="popper" sideOffset={5}>
@@ -41,8 +45,8 @@ const ProjectSelect = ({ projectId, setProjectId }: ProjectSelectProps) => {
         {projects &&
           projects.map((project: IProject) => (
             <Select.Item
-              key={project._id.toString()}
-              value={project._id.toString()}
+              key={project._id!.toString()}
+              value={project._id!.toString()}
             >
               {project.projectTitle}
             </Select.Item>
