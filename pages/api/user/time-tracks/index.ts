@@ -27,8 +27,18 @@ export default async function handler(
     await connectToDB();
 
     if (req.method === 'GET') {
-      const timeTracks = await TimeTrack.find({ userId: currentUser.id });
+      const { startDate, endDate } = req.query;
+      let query: Record<string, any> = { userId: currentUser.id };
 
+      if (startDate && endDate) {
+        query = {
+          ...query,
+          start: { $gte: new Date(startDate as string) },
+          end: { $lte: new Date(endDate as string) },
+        };
+      }
+
+      const timeTracks = await TimeTrack.find(query);
       res.status(200).json(timeTracks);
     } else if (req.method === 'POST') {
       const validatedData = timeTrackSchema.safeParse(req.body);

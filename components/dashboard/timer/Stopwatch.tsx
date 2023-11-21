@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { calculateTime } from '@/lib/utils/calculate';
+import { secondsToHMS } from '@/lib/utils/date';
 
 interface StopwatchProps {
   timer: boolean;
@@ -24,7 +24,7 @@ const Stopwatch = ({ timer }: StopwatchProps) => {
     };
   }, [timer]);
 
-  const [hours, minutes, seconds] = calculateTime(time);
+  const [hours, minutes, seconds] = secondsToHMS(time);
 
   return (
     <div>

@@ -17,6 +17,7 @@
     "@radix-ui/react-tooltip": "^1.0.7",
     "axios": "^1.6.0",
     "bcrypt": "^5.1.1",
+    "date-fns": "^2.30.0",
     "lucide-react": "^0.292.0",
     "mongodb": "^6.1.0",
     "mongoose": "^7.6.1",
@@ -25,6 +26,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.47.0",
+    "recharts": "^2.10.1",
     "sonner": "^1.1.0",
     "swr": "^2.2.4",
     "zod": "^3.22.4"

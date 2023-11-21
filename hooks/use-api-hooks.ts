@@ -11,8 +11,12 @@ export function useTags() {
   };
 }
 
-export function useTimeTracks() {
-  const { data, error, isLoading, mutate } = useSWR('/api/user/time-tracks');
+export function useTimeTracks(startDate?: string, endDate?: string) {
+  let apiUrl = '/api/user/time-tracks';
+  if (startDate && endDate) {
+    apiUrl += `?startDate=${startDate}&endDate=${endDate}`;
+  }
+  const { data, error, isLoading, mutate } = useSWR(apiUrl);
 
   return {
     timeTracks: data,

@@ -10,14 +10,18 @@ import DashboardLayout from '@/components/layouts/DashboardLayout';
 
 import TimeTrackList from '@/components/dashboard/reports/TimeTrackList';
 
+// !TEMP
+import WeeklyChart from '@/components/dashboard/reports/WeeklyChart';
+
 interface Props {
   timeTracks: ITimeTrack[];
 }
 
-const ReportsPage: NextPageWithLayout<Props> = (props: Props) => {
+const ReportsPage: NextPageWithLayout = () => {
   return (
     <section>
-      <TimeTrackList timeTracks={props.timeTracks}></TimeTrackList>
+      {/* <TimeTrackList timeTracks={props.timeTracks}></TimeTrackList> */}
+      <WeeklyChart />
     </section>
   );
 };
@@ -28,26 +32,26 @@ ReportsPage.getLayout = function getLayout(page: ReactElement) {
 
 export default ReportsPage;
 
-export const getServerSideProps = (async (context) => {
-  const session = await getSession({ req: context.req });
+// export const getServerSideProps = (async (context) => {
+//   const session = await getSession({ req: context.req });
 
-  if (!session) {
-    return {
-      redirect: {
-        destination: '/auth/login',
-        permanent: false,
-      },
-    };
-  }
+//   if (!session) {
+//     return {
+//       redirect: {
+//         destination: '/auth/login',
+//         permanent: false,
+//       },
+//     };
+//   }
 
-  const userId = new mongoose.Types.ObjectId(session.user.id);
-  const timeTracks = await getUserTimeTracks(userId);
+//   const userId = new mongoose.Types.ObjectId(session.user.id);
+//   const timeTracks = await getUserTimeTracks(userId);
 
-  if (!timeTracks) {
-    return { props: { timeTracks: [] } };
-  }
+//   if (!timeTracks) {
+//     return { props: { timeTracks: [] } };
+//   }
 
-  return {
-    props: { timeTracks },
-  };
-}) satisfies GetServerSideProps;
+//   return {
+//     props: { timeTracks },
+//   };
+// }) satisfies GetServerSideProps;

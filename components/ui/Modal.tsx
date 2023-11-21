@@ -1,7 +1,7 @@
 import React from 'react';
 import * as RadixDialog from '@radix-ui/react-dialog';
 import styles from './Modal.module.scss';
-import { X } from 'lucide-react';
+import { XIcon } from 'lucide-react';
 
 interface ModalProps {
   children: React.ReactNode;
@@ -36,7 +36,7 @@ function ModalContent({ title, description, children }: ModalContentProps) {
             </RadixDialog.Title>
             <RadixDialog.Close asChild>
               <button className={styles.close} aria-label="Close">
-                <X />
+                <XIcon />
               </button>
             </RadixDialog.Close>
           </div>
