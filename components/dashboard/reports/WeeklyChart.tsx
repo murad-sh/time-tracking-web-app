@@ -1,14 +1,18 @@
 import React from 'react';
 import { useTimeTracks } from '@/hooks/use-api-hooks';
 import { BarChart, XAxis, YAxis, Bar, Tooltip, TooltipProps } from 'recharts';
-import { calculateWeekRange, calculateWeekly } from '@/lib/utils/date';
+import {
+  calculateWeekRange,
+  calculateWeekly,
+  WeeklyDataType,
+} from '@/lib/utils/date';
 import CustomBarTooltip from './charts/CustomBarTooltip';
 
 const WeeklyChart = () => {
   const { startDate, endDate } = calculateWeekRange();
   const { timeTracks } = useTimeTracks(startDate, endDate);
 
-  let data: any[] = [];
+  let data: WeeklyDataType[] = [];
   if (timeTracks && timeTracks.length !== 0) {
     data = calculateWeekly(timeTracks);
   }

@@ -60,9 +60,13 @@ export const calculateWeekly = (timeTracks: ITimeTrack[]) => {
   }));
 };
 
-export const calculateTotalWeekly = (
-  weekData: { day: string; duration: number; date: string }[]
-): number => {
+export type WeeklyDataType = {
+  day: string;
+  duration: number;
+  date: string;
+};
+
+export const calculateTotalWeekly = (weekData: WeeklyDataType[]): number => {
   return weekData.reduce((total, dayData) => total + dayData.duration, 0);
 };
 
