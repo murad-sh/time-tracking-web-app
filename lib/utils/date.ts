@@ -6,40 +6,35 @@ import {
   addWeeks,
   subWeeks,
   differenceInSeconds,
+  addDays,
 } from 'date-fns';
 
-type WeekRangeOptions = {
-  direction: 'prev' | 'next';
-  range: number;
+export const calcWeekRange = (weekOffset = 0) => {
+  let date = new Date();
+  date = addWeeks(date, weekOffset);
+  const startDate = startOfWeek(date, { weekStartsOn: 1 }).toLocaleDateString();
+  const endDate = endOfWeek(date, { weekStartsOn: 1 }).toLocaleDateString();
+  return { startDate, endDate };
 };
 
-export function calculateWeekRange(options?: WeekRangeOptions) {
-  let date = new Date();
-  if (options) {
-    if (options.direction === 'prev') {
-      date = subWeeks(date, options.range);
-    } else {
-      date = addWeeks(date, options.range);
-    }
-  }
-  const startDate = startOfWeek(date, { weekStartsOn: 1 }).toISOString();
-  const endDate = endOfWeek(date, { weekStartsOn: 1 }).toISOString();
-  return {
-    startDate,
-    endDate,
-  };
-}
-
-export const calculateWeekly = (timeTracks: ITimeTrack[]) => {
-  const initialData: Record<string, { duration: number; date: string }> = {
-    Monday: { duration: 0, date: '' },
-    Tuesday: { duration: 0, date: '' },
-    Wednesday: { duration: 0, date: '' },
-    Thursday: { duration: 0, date: '' },
-    Friday: { duration: 0, date: '' },
-    Saturday: { duration: 0, date: '' },
-    Sunday: { duration: 0, date: '' },
-  };
+export const calculateWeekly = (start: string, timeTracks: ITimeTrack[]) => {
+  const weekStart = new Date(start);
+  const daysOfWeek = [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday',
+  ];
+  const initialData: Record<string, { duration: number; date: string }> = {};
+  daysOfWeek.forEach((day, index) => {
+    initialData[day] = {
+      duration: 0,
+      date: format(addDays(weekStart, index), 'MMMM d, yyyy'),
+    };
+  });
 
   timeTracks.forEach((track) => {
     const start = new Date(track.start);
@@ -47,16 +42,14 @@ export const calculateWeekly = (timeTracks: ITimeTrack[]) => {
     const dayOfWeek = format(start, 'EEEE');
     const durationInSeconds = differenceInSeconds(end, start);
 
-    if (initialData.hasOwnProperty(dayOfWeek)) {
+    if (dayOfWeek in initialData) {
       initialData[dayOfWeek].duration += durationInSeconds;
-      initialData[dayOfWeek].date = format(start, 'yyyy-MM-dd');
     }
   });
 
-  return Object.entries(initialData).map(([day, { duration, date }]) => ({
+  return daysOfWeek.map((day) => ({
     day,
-    duration,
-    date,
+    ...initialData[day],
   }));
 };
 
@@ -71,22 +64,19 @@ export const calculateTotalWeekly = (weekData: WeeklyDataType[]): number => {
 };
 
 export const secondsToHMS = (timeInSeconds: number) => {
-  const seconds = (timeInSeconds % 60).toString().padStart(2, '0');
-  const minutes = (Math.floor(timeInSeconds / 60) % 60)
-    .toString()
-    .padStart(2, '0');
-  const hours = Math.floor(timeInSeconds / 3600)
-    .toString()
-    .padStart(2, '0');
+  const seconds = timeInSeconds % 60;
+  const minutes = Math.floor(timeInSeconds / 60) % 60;
+  const hours = Math.floor(timeInSeconds / 3600);
+
   return [hours, minutes, seconds];
 };
 
 export const secondsToTimeStr = (timeInSeconds: number) => {
-  const [hours, minutes, seconds] = secondsToHMS(timeInSeconds);
-  return hours + ':' + minutes + ':' + seconds;
+  const hms = secondsToHMS(timeInSeconds);
+  return hms.map((val) => val.toString().padStart(2, '0')).join(':');
 };
 
-export function formatDate(input: string | number): string {
+export const formatDate = (input: string | number): string => {
   const date = new Date(input);
   return format(date, 'MMMM d, yyyy');
-}
+};

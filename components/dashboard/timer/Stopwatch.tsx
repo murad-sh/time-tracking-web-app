@@ -31,7 +31,9 @@ const Stopwatch = ({ timer }: StopwatchProps) => {
       {time === 0 ? (
         <h1>Start recording now!</h1>
       ) : (
-        <h1>{`${hours}:${minutes}:${seconds}`}</h1>
+        <h1>{`${hours.toString().padStart(2, '0')}:${minutes
+          .toString()
+          .padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`}</h1>
       )}
     </div>
   );

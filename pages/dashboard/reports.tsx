@@ -11,7 +11,7 @@ import DashboardLayout from '@/components/layouts/DashboardLayout';
 import TimeTrackList from '@/components/dashboard/reports/TimeTrackList';
 
 // !TEMP
-import WeeklyChart from '@/components/dashboard/reports/WeeklyChart';
+import Weekly from '@/components/dashboard/reports/Weekly';
 
 interface Props {
   timeTracks: ITimeTrack[];
@@ -21,7 +21,16 @@ const ReportsPage: NextPageWithLayout = () => {
   return (
     <section>
       {/* <TimeTrackList timeTracks={props.timeTracks}></TimeTrackList> */}
-      <WeeklyChart />
+      {/*  !TEMP */}
+      <div
+        style={{
+          width: '70rem',
+          border: '1px solid black',
+          padding: '2rem',
+        }}
+      >
+        <Weekly />
+      </div>
     </section>
   );
 };

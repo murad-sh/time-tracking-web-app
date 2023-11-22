@@ -1,6 +1,7 @@
 import React from 'react';
 import { secondsToTimeStr } from '@/lib/utils/date';
 import { TooltipProps } from 'recharts';
+import styles from './CustomTooltip.module.scss';
 
 const CustomBarTooltip = ({
   active,
@@ -10,18 +11,11 @@ const CustomBarTooltip = ({
     const formattedDuration = secondsToTimeStr(payload[0].value as number);
     const date = payload[0].payload.date;
     return (
-      <div
-        className="custom-tooltip"
-        style={{
-          backgroundColor: 'white',
-          padding: '10px',
-          border: '1px solid #ccc',
-        }}
-      >
-        <p>Date: {date}</p>
+      <div className={styles.tooltip}>
         <p>
-          {payload[0].name}: {formattedDuration}
+          <b>{date}</b>
         </p>
+        <p>Total: {formattedDuration}</p>
       </div>
     );
   }
