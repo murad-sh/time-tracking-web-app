@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import WeeklyChart from './WeeklyChart';
+import WeeklyData from './WeeklyData';
 import Link from 'next/link';
 import { calcWeekRange } from '@/lib/utils/date';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
@@ -34,7 +34,7 @@ const Weekly = () => {
       </div>
       <div>
         <h2>Weekly Chart</h2>
-        <WeeklyChart />
+        <WeeklyData />
       </div>
     </div>
   );

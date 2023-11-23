@@ -4,7 +4,6 @@ import {
   endOfWeek,
   format,
   addWeeks,
-  subWeeks,
   differenceInSeconds,
   addDays,
 } from 'date-fns';
@@ -59,8 +58,13 @@ export type WeeklyDataType = {
   date: string;
 };
 
-export const calculateTotalWeekly = (weekData: WeeklyDataType[]): number => {
+export const calculateTotal = (weekData: WeeklyDataType[]): number => {
   return weekData.reduce((total, dayData) => total + dayData.duration, 0);
+};
+
+export const calculateTotalWeekly = (weekData: WeeklyDataType[]) => {
+  const total = calculateTotal(weekData);
+  return secondsToTimeStr(total);
 };
 
 export const secondsToHMS = (timeInSeconds: number) => {

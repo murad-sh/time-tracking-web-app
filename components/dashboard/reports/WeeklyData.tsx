@@ -1,21 +1,13 @@
 import React from 'react';
 import { useTimeTracks } from '@/hooks/use-api-hooks';
 import {
-  BarChart,
-  XAxis,
-  Bar,
-  Tooltip,
-  ResponsiveContainer,
-  LabelList,
-} from 'recharts';
-import {
   calculateWeekly,
   calcWeekRange,
-  secondsToTimeStr,
   WeeklyDataType,
+  calculateTotalWeekly,
 } from '@/lib/utils/date';
-import CustomBarTooltip from './charts/CustomBarTooltip';
 import { useSearchParams } from 'next/navigation';
+import WeeklyBarChart from './charts/WeeklyBarChart';
 
 const WeeklyChart = () => {
   const { startDate: currentStart, endDate: currentEnd } = calcWeekRange();
@@ -45,40 +37,13 @@ const WeeklyChart = () => {
     return <div>No data for this week</div>;
 
   weekly = calculateWeekly(start, timeTracks);
+  const totalWeekly = calculateTotalWeekly(weekly);
 
   return (
-    <ResponsiveContainer width="100%" height={400}>
-      <BarChart
-        data={weekly}
-        margin={{ top: 50, right: 30, left: 20, bottom: 5 }}
-      >
-        <XAxis
-          dataKey="day"
-          stroke="#667085"
-          fontSize={14}
-          tickLine={false}
-          axisLine={false}
-        />
-
-        <Tooltip
-          content={<CustomBarTooltip />}
-          cursor={{ fill: '#e2e8f0' }}
-          offset={-50}
-        />
-        <Bar dataKey="duration" fill="#7823b9" radius={[5, 5, 0, 0]}>
-          <LabelList
-            dataKey="duration"
-            position="top"
-            fontSize={12}
-            fill="#201a2d"
-            formatter={(val: number) => {
-              if (!val) return '';
-              return secondsToTimeStr(val);
-            }}
-          />
-        </Bar>
-      </BarChart>
-    </ResponsiveContainer>
+    <div>
+      <p>Total time this week: {totalWeekly}</p>
+      <WeeklyBarChart weekly={weekly} />
+    </div>
   );
 };
 

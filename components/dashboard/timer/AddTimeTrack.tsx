@@ -85,8 +85,9 @@ const AddTimeTrack = () => {
       </form>
       <div>
         <TagSelect tag={tag} setTag={setTag} />
-        <ProjectSelect projectId={project} setProjectId={setProject} />
+        <ProjectSelect projectId={project} setProjectId={setProject} />\
       </div>
+      {/* <SendDummyDataButton /> */}
     </div>
   );
 };
