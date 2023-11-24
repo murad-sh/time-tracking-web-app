@@ -6,6 +6,8 @@ import {
   addWeeks,
   differenceInSeconds,
   addDays,
+  startOfDay,
+  endOfDay,
 } from 'date-fns';
 
 export const calcWeekRange = (weekOffset = 0) => {
@@ -92,6 +94,15 @@ export const calculateTotalWeekly = (weekData: WeeklyDataType[]) => {
   return secondsToTimeStr(total);
 };
 
+export const calculateTotalDaily = (timeTracks: ITimeTrack[]) => {
+  const total = timeTracks.reduce(
+    (total, track) =>
+      total + differenceInSeconds(new Date(track.end), new Date(track.start)),
+    0
+  );
+  return secondsToTimeStr(total);
+};
+
 export const secondsToHMS = (timeInSeconds: number) => {
   const seconds = timeInSeconds % 60;
   const minutes = Math.floor(timeInSeconds / 60) % 60;
@@ -132,4 +143,15 @@ export const organizeTracksByDay = (
     day,
     records: dayMap[day],
   }));
+};
+
+export const getTodayStartEnd = () => {
+  const now = new Date();
+  const startOfToday = startOfDay(now);
+  const endOfToday = endOfDay(now);
+
+  return {
+    start: startOfToday,
+    end: endOfToday,
+  };
 };

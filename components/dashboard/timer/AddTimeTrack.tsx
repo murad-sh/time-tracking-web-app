@@ -12,6 +12,7 @@ import { Play, PlayCircle, Pause, PauseCircle } from 'lucide-react';
 import ProjectSelect from './ProjectSelect';
 import SendDummyDataButton from './DummyDataTest';
 import { ITimeTrack } from '@/models/time-track';
+import CurrentTracks from './CurrentTracks';
 
 const AddTimeTrack = () => {
   const [btnStop, setBtnStop] = useState(false);
@@ -114,6 +115,9 @@ const AddTimeTrack = () => {
         <ProjectSelect projectId={project} setProjectId={setProject} />
       </div>
       {/* <SendDummyDataButton /> */}
+      <div>
+        <CurrentTracks />
+      </div>
     </div>
   );
 };
