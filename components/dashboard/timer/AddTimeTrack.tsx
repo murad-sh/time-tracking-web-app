@@ -1,61 +1,87 @@
 import React, { useRef, useState, FormEvent } from 'react';
-import { timeTrackSchema } from '@/lib/validations/time-track';
 import Stopwatch from './Stopwatch';
 import { toast } from 'sonner';
-import axios from 'axios';
 import TagSelect from './TagSelect';
+import { sendTimeTrack, TimeTrackRecording } from '@/lib/utils/api-actions';
+
+import { isSameDay, endOfDay, startOfDay, differenceInHours } from 'date-fns';
 
 import styles from './AddTimeTrack.module.scss';
 // !TEST ALL
 import { Play, PlayCircle, Pause, PauseCircle } from 'lucide-react';
 import ProjectSelect from './ProjectSelect';
 import SendDummyDataButton from './DummyDataTest';
+import { ITimeTrack } from '@/models/time-track';
 
 const AddTimeTrack = () => {
   const [btnStop, setBtnStop] = useState(false);
-  const [startTime, setStartTime] = useState<Date>();
+  const [startTime, setStartTime] = useState<Date | null>(null);
   const titleRef = useRef<HTMLInputElement>(null);
   const [timer, setTimer] = useState(false);
   const [tag, setTag] = useState('');
   const [project, setProject] = useState('');
+  const MAX_DURATION = 48;
 
-  function startTimer() {
+  const startTimer = () => {
     setStartTime(new Date());
     setBtnStop(true);
     setTimer(true);
-  }
+  };
 
-  // !REFACTOR THIS
-  async function sendTrack(event: FormEvent) {
-    event.preventDefault();
-    const endDate = new Date();
-    setTimer(false);
-    let requestData: any = {
+  const createTimeTrack = (startDate: Date, endDate: Date) => {
+    let requestData: TimeTrackRecording = {
       title: titleRef.current!.value,
-      start: startTime,
+      start: startDate,
       end: endDate,
     };
-
     if (tag) {
       requestData = { ...requestData, tag: tag };
     }
     if (project) {
       requestData = { ...requestData, projectId: project };
     }
-    const validatedData = timeTrackSchema.safeParse(requestData);
-    if (!validatedData.success) throw new Error(validatedData.error.message);
-    try {
-      await axios.post('/api/user/time-tracks/', validatedData.data);
+    return requestData;
+  };
 
-      toast.success('Successfully added!');
-    } catch (error) {
-      toast.error('Failed to add!');
+  async function sendTrack(event: FormEvent) {
+    event.preventDefault();
+    let startDate = startTime || new Date();
+    const endDate = new Date();
+    setTimer(false);
+    if (differenceInHours(endDate, startDate) > MAX_DURATION) {
+      toast.error(
+        `Recording failed: The maximum allowed duration of ${MAX_DURATION} hours has been exceeded.`
+      );
+      resetForm();
+      return;
     }
+    let tracks: TimeTrackRecording[] = [];
+    if (!isSameDay(startDate, endDate)) {
+      const end = endOfDay(startDate);
+      tracks.push(createTimeTrack(startDate, end));
+      startDate = startOfDay(end);
+    }
+    tracks.push(createTimeTrack(startDate, endDate));
+    try {
+      for (const track of tracks) {
+        await sendTimeTrack(track);
+      }
+      toast.success('Time track recorded successfully!');
+    } catch (error) {
+      toast.error(
+        'Oops! There was a problem recording the time track. Please try again.'
+      );
+    }
+    resetForm();
+  }
+
+  const resetForm = () => {
     setBtnStop(false);
     setTag('');
     setProject('');
+    setStartTime(null);
     titleRef.current!.value = '';
-  }
+  };
 
   return (
     <div>
@@ -85,7 +111,7 @@ const AddTimeTrack = () => {
       </form>
       <div>
         <TagSelect tag={tag} setTag={setTag} />
-        <ProjectSelect projectId={project} setProjectId={setProject} />\
+        <ProjectSelect projectId={project} setProjectId={setProject} />
       </div>
       {/* <SendDummyDataButton /> */}
     </div>
