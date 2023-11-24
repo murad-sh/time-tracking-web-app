@@ -24,7 +24,7 @@ const WeeklyBarChart = ({ weekly }: { weekly: WeeklyDataType[] }) => {
     if (hours > 0) return `${hours}h`;
     if (minutes > 0) return `${minutes}m`;
     if (!hours && !minutes && seconds > 0) return '30s';
-    return '0';
+    return '';
   };
 
   const formatLabel = (val: number) => {
