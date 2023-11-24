@@ -11,20 +11,20 @@ interface Props {
 const TimeTrackItem = ({ timeTrack }: Props) => {
   return (
     <div className={styles.track}>
-      <div className={styles.date}>
-        <span>Date: {new Date(timeTrack.start).toLocaleDateString()}</span>
-      </div>
       <div className={styles.title}>
         <span>Title: {timeTrack.title}</span>
       </div>
       <div>
-        <span>Tag: {timeTrack.tag}</span>
+        <span>Tag: {timeTrack.tag || 'No tag'}</span>
       </div>
       <div className={styles.duration}>
         <span>
           Duration:
           {secondsToTimeStr(
-            differenceInSeconds(timeTrack.start, timeTrack.end)
+            differenceInSeconds(
+              new Date(timeTrack.end),
+              new Date(timeTrack.start)
+            )
           )}
         </span>
       </div>

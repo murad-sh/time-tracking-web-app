@@ -3,24 +3,28 @@ import { secondsToTimeStr } from '@/lib/utils/date';
 import { TooltipProps } from 'recharts';
 import styles from './CustomTooltip.module.scss';
 
-const CustomBarTooltip = ({
+interface CustomProps {
+  chartType: 'bar' | 'pie';
+}
+const CustomTooltip = ({
   active,
   payload,
-}: TooltipProps<number, string>) => {
+  chartType,
+}: TooltipProps<number, string> & CustomProps) => {
   if (active && payload && payload.length) {
     const formattedDuration = secondsToTimeStr(payload[0].value as number);
     const date = payload[0].payload.date;
+    const tag = payload[0].payload.name;
     return (
       <div className={styles.tooltip}>
         <p>
-          <b>{date}</b>
+          <b>{chartType === 'bar' ? date : tag}</b>
         </p>
         <p>Total: {formattedDuration}</p>
       </div>
     );
   }
-
   return null;
 };
 
-export default CustomBarTooltip;
+export default CustomTooltip;

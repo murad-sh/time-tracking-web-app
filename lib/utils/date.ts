@@ -52,6 +52,31 @@ export const calculateWeekly = (start: string, timeTracks: ITimeTrack[]) => {
   }));
 };
 
+type TagTimeType = {
+  [key: string]: {
+    name: string;
+    total: number;
+  };
+};
+
+export const calculateTagUsage = (timeTracks: ITimeTrack[]) => {
+  let tagTime: TagTimeType = {};
+
+  timeTracks.forEach((track) => {
+    const tag = track.tag || 'No Tag';
+    if (!tagTime[tag]) {
+      tagTime[tag] = { name: tag, total: 0 };
+    }
+    tagTime[tag].total += differenceInSeconds(
+      new Date(track.end),
+      new Date(track.start)
+    );
+  });
+
+  const tagTimeArray = Object.values(tagTime);
+  return tagTimeArray;
+};
+
 export type WeeklyDataType = {
   day: string;
   duration: number;
@@ -83,4 +108,28 @@ export const secondsToTimeStr = (timeInSeconds: number) => {
 export const formatDate = (input: string | number): string => {
   const date = new Date(input);
   return format(date, 'MMMM d, yyyy');
+};
+
+export type DailyTracksType = {
+  day: string;
+  records: ITimeTrack[];
+};
+
+export const organizeTracksByDay = (
+  timeTracks: ITimeTrack[]
+): DailyTracksType[] => {
+  const dayMap: Record<string, ITimeTrack[]> = {};
+
+  timeTracks.forEach((track) => {
+    const dayOfWeek = format(new Date(track.start), 'EEEE');
+    if (!dayMap[dayOfWeek]) {
+      dayMap[dayOfWeek] = [];
+    }
+    dayMap[dayOfWeek].push(track);
+  });
+
+  return Object.keys(dayMap).map((day) => ({
+    day,
+    records: dayMap[day],
+  }));
 };

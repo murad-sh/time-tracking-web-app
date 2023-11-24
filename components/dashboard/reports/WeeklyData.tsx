@@ -3,11 +3,14 @@ import { useTimeTracks } from '@/hooks/use-api-hooks';
 import {
   calculateWeekly,
   calcWeekRange,
-  WeeklyDataType,
   calculateTotalWeekly,
+  calculateTagUsage,
+  organizeTracksByDay,
 } from '@/lib/utils/date';
 import { useSearchParams } from 'next/navigation';
 import WeeklyBarChart from './charts/WeeklyBarChart';
+import WeeklyPieChart from './charts/WeeklyPieChart';
+import TimeTrackList from './TimeTrackList';
 
 const WeeklyChart = () => {
   const { startDate: currentStart, endDate: currentEnd } = calcWeekRange();
@@ -20,7 +23,6 @@ const WeeklyChart = () => {
     isLoading,
     error: apiFetchError,
   } = useTimeTracks(start, end);
-  let weekly: WeeklyDataType[] = [];
 
   // TODO: Add skeleton for loading state
   if (isLoading) {
@@ -36,13 +38,24 @@ const WeeklyChart = () => {
   if (timeTracks && timeTracks.length === 0)
     return <div>No data for this week</div>;
 
-  weekly = calculateWeekly(start, timeTracks);
+  const weekly = calculateWeekly(start, timeTracks);
   const totalWeekly = calculateTotalWeekly(weekly);
+  const tagUsage = calculateTagUsage(timeTracks);
+  const dailyTracks = organizeTracksByDay(timeTracks);
 
   return (
     <div>
-      <p>Total time this week: {totalWeekly}</p>
-      <WeeklyBarChart weekly={weekly} />
+      <div>
+        <p>Total time this week: {totalWeekly}</p>
+        <WeeklyBarChart weekly={weekly} />
+      </div>
+      <div>
+        <h2>Tag usage :</h2>
+        <WeeklyPieChart tagUsage={tagUsage} />
+      </div>
+      <div>
+        <TimeTrackList dailyTracks={dailyTracks} />
+      </div>
     </div>
   );
 };

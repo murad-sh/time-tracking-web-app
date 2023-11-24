@@ -14,7 +14,7 @@ import {
   WeeklyDataType,
   secondsToHMS,
 } from '@/lib/utils/date';
-import CustomBarTooltip from './CustomBarTooltip';
+import CustomTooltip from './CustomTooltip';
 
 const WeeklyBarChart = ({ weekly }: { weekly: WeeklyDataType[] }) => {
   const strokeColor = '#667085';
@@ -56,7 +56,7 @@ const WeeklyBarChart = ({ weekly }: { weekly: WeeklyDataType[] }) => {
           tickFormatter={formatYAxis}
         />
         <Tooltip
-          content={<CustomBarTooltip />}
+          content={<CustomTooltip chartType="bar" />}
           cursor={{ fill: '#e2e8f0' }}
           offset={-50}
         />

@@ -1,28 +1,27 @@
 import React from 'react';
-import { ITimeTrack } from '@/models/time-track';
+import { DailyTracksType } from '@/lib/utils/date';
 import styles from './TimeTrackList.module.scss';
 import TimeTrackItem from './TimeTrackItem';
 
-interface Props {
-  timeTracks: ITimeTrack[];
+interface TimeTrackListProps {
+  dailyTracks: DailyTracksType[];
 }
 
-const TimeTrackList = (props: Props) => {
+const TimeTrackList = ({ dailyTracks }: TimeTrackListProps) => {
   return (
     <div className={styles.content}>
-      <h1>Your latest tracks</h1>
-      {props.timeTracks.length === 0 && <p>No time tracks yet</p>}
-      {props.timeTracks.length > 0 && (
-        <div>
+      {dailyTracks.map((dayInfo, index) => (
+        <div key={index}>
+          <h3>{dayInfo.day}</h3>
           <ul>
-            {props.timeTracks.map((track) => (
-              <li key={track._id?.toString()}>
-                <TimeTrackItem timeTrack={track} />
+            {dayInfo.records.map((timeTrack) => (
+              <li key={timeTrack._id.toString()}>
+                <TimeTrackItem timeTrack={timeTrack} />
               </li>
             ))}
           </ul>
         </div>
-      )}
+      ))}
     </div>
   );
 };
