@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { projectSchema } from '@/lib/validations/project';
 import { getCurrentUser } from '@/lib/auth/session';
-import { connectToDB } from '@/lib/db';
+import { connectToDB } from '@/lib/utils/db';
 import User from '@/models/user';
 import Project, { IProject } from '@/models/project';
 

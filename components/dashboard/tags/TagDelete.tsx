@@ -3,7 +3,7 @@ import { tagSchema, TagSchemaType } from '@/lib/validations/tag';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import PrimaryButton from '@/components/ui/PrimaryButton';
-import { createTag } from '@/lib/user-actions';
+import { createTag } from '@/lib/utils/api-actions';
 import { toast } from 'sonner';
 import { useTags } from '@/hooks/use-api-hooks';
 import styles from '../SharedStyles.module.scss';

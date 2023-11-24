@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { connectToDB } from '@/lib/db';
+import { connectToDB } from '@/lib/utils/db';
 import User from '@/models/user';
-import { hashPassword } from '@/lib/hash';
+import { hashPassword } from '@/lib/utils/hash';
 import { signUpSchema } from '@/lib/validations/auth';
 
 type Data = {

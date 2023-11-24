@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getCurrentUser } from '@/lib/auth/session';
-import { connectToDB } from '@/lib/db';
+import { connectToDB } from '@/lib/utils/db';
 import TimeTrack from '@/models/time-track';
 import { timeTrackUpdateSchema } from '@/lib/validations/time-track';
 import Project from '@/models/project';

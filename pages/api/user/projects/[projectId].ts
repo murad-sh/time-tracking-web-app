@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getCurrentUser } from '@/lib/auth/session';
-import { connectToDB } from '@/lib/db';
+import { connectToDB } from '@/lib/utils/db';
 import User from '@/models/user';
 
 type Data = {

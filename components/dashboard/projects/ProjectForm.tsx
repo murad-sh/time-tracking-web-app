@@ -3,7 +3,7 @@ import { projectSchema, ProjectSchemaType } from '@/lib/validations/project';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import PrimaryButton from '@/components/ui/PrimaryButton';
-import { createProject } from '@/lib/user-actions';
+import { createProject } from '@/lib/utils/api-actions';
 import { toast } from 'sonner';
 import { useProjects } from '@/hooks/use-api-hooks';
 import styles from '../SharedStyles.module.scss';
