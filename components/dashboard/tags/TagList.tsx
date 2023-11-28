@@ -9,28 +9,21 @@ const TagList = () => {
   // TODO : Add proper error ui
   if (error) return <div>failed to load</div>;
 
-  if (isLoading)
-    return (
-      <div>
-        <TagItem.Skeleton />
-      </div>
-    );
+  if (isLoading) return <TagItem.Skeleton />;
 
-  // TODO : Add proper ui
+  // TODO : Add ui for no tags cases
   if (tags.length === 0) {
     return <h2>No Tags Added Yet.</h2>;
   }
 
   return (
-    <div>
-      <ul className={styles.list}>
-        {tags.map((tag: string) => (
-          <li className={styles.item} key={tag}>
-            <TagItem tag={tag}></TagItem>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <ul className={styles.list}>
+      {tags.map((tag: string) => (
+        <li className={styles.item} key={tag}>
+          <TagItem tag={tag}></TagItem>
+        </li>
+      ))}
+    </ul>
   );
 };
 

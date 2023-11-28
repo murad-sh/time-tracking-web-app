@@ -10,12 +10,7 @@ const ProjectList = () => {
   // TODO : Add proper error ui
   if (error) return <div>failed to load</div>;
 
-  if (isLoading)
-    return (
-      <div>
-        <ProjectItem.Skeleton />
-      </div>
-    );
+  if (isLoading) return <ProjectItem.Skeleton />;
 
   // TODO : Add proper ui
   if (projects.length === 0) {

@@ -48,7 +48,7 @@ export default async function handler(
       }
       if (projectId) {
         const project = await Project.findById(projectId);
-        if (!project || project.userId.toString() !== currentUser.id) {
+        if (!project || project.userId!.toString() !== currentUser.id) {
           return res.status(404).json({
             message: 'Project not found',
           });
