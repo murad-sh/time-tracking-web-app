@@ -24,7 +24,7 @@ const Stopwatch = ({ timer }: StopwatchProps) => {
     };
   }, [timer]);
 
-  const [hours, minutes, seconds] = secondsToHMS(time);
+  const { hours, minutes, seconds } = secondsToHMS(time);
 
   return (
     <div>

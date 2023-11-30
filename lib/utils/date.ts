@@ -85,16 +85,16 @@ export type WeeklyDataType = {
   date: string;
 };
 
-export const calculateTotal = (weekData: WeeklyDataType[]): number => {
+export const calculateTotalWeekly = (weekData: WeeklyDataType[]): number => {
   return weekData.reduce((total, dayData) => total + dayData.duration, 0);
 };
 
-export const calculateTotalWeekly = (weekData: WeeklyDataType[]) => {
-  const total = calculateTotal(weekData);
+export const getTotalWeekly = (weekData: WeeklyDataType[]) => {
+  const total = calculateTotalWeekly(weekData);
   return secondsToTimeStr(total);
 };
 
-export const calculateTotalDaily = (timeTracks: ITimeTrack[]) => {
+export const calculateTotalDuration = (timeTracks: ITimeTrack[]) => {
   const total = timeTracks.reduce(
     (total, track) =>
       total + differenceInSeconds(new Date(track.end), new Date(track.start)),
@@ -108,12 +108,14 @@ export const secondsToHMS = (timeInSeconds: number) => {
   const minutes = Math.floor(timeInSeconds / 60) % 60;
   const hours = Math.floor(timeInSeconds / 3600);
 
-  return [hours, minutes, seconds];
+  return { hours, minutes, seconds };
 };
 
 export const secondsToTimeStr = (timeInSeconds: number) => {
-  const hms = secondsToHMS(timeInSeconds);
-  return hms.map((val) => val.toString().padStart(2, '0')).join(':');
+  const { hours, minutes, seconds } = secondsToHMS(timeInSeconds);
+  return [hours, minutes, seconds]
+    .map((val) => val.toString().padStart(2, '0'))
+    .join(':');
 };
 
 export const formatDate = (input: string | number): string => {

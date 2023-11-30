@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTimeTracks } from '@/hooks/use-api-hooks';
-import { getTodayStartEnd, calculateTotalDaily } from '@/lib/utils/date';
+import { getTodayStartEnd, calculateTotalDuration } from '@/lib/utils/date';
 
 const CurrentTracks = () => {
   const { start, end } = getTodayStartEnd();
@@ -17,7 +17,7 @@ const CurrentTracks = () => {
     return <div>Error...</div>;
   }
 
-  const totalDaily = calculateTotalDaily(timeTracks);
+  const totalDaily = calculateTotalDuration(timeTracks);
 
   return <div>Total for today : {totalDaily}</div>;
 };

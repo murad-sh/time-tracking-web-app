@@ -20,7 +20,7 @@ const WeeklyBarChart = ({ weekly }: { weekly: WeeklyDataType[] }) => {
   const strokeColor = '#667085';
 
   const formatYAxis = (val: number) => {
-    const [hours, minutes, seconds] = secondsToHMS(val);
+    const { hours, minutes, seconds } = secondsToHMS(val);
     if (hours > 0) return `${hours}h`;
     if (minutes > 0) return `${minutes}m`;
     if (!hours && !minutes && seconds > 0) return '30s';

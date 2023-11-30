@@ -3,9 +3,9 @@ import { useTimeTracks } from '@/hooks/use-api-hooks';
 import {
   calculateWeekly,
   calcWeekRange,
-  calculateTotalWeekly,
   calculateTagUsage,
   organizeTracksByDay,
+  getTotalWeekly,
 } from '@/lib/utils/date';
 import { useSearchParams } from 'next/navigation';
 import WeeklyBarChart from './charts/WeeklyBarChart';
@@ -39,7 +39,7 @@ const WeeklyChart = () => {
     return <div>No data for this week</div>;
 
   const weekly = calculateWeekly(start, timeTracks);
-  const totalWeekly = calculateTotalWeekly(weekly);
+  const totalWeekly = getTotalWeekly(weekly);
   const tagUsage = calculateTagUsage(timeTracks);
   const dailyTracks = organizeTracksByDay(timeTracks);
 
