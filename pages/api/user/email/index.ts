@@ -1,12 +1,22 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { transporter } from '@/lib/utils/email-config';
+import { transporter } from '@/email/email-config';
+import { emailContent } from '@/email/email-content';
 
 const user = process.env.EMAIL;
+const baseUrl = process.env.NEXTAUTH_URL;
+
+const receiver = 'shahbazov.msh@gmail.com';
 const mailOptions = {
   from: user,
-  to: 'shahbazov.msh@gmail.com',
-  subject: 'Test',
-  text: 'Hello world!',
+  to: receiver,
+  subject: 'Weekly reports from TimeTracker',
+  html: emailContent(
+    'Murad Shahbazov',
+    '03.08.2023',
+    '10.08.2023',
+    '1h',
+    baseUrl + '/dashboard/reports'
+  ),
 };
 
 export default async function handler(
