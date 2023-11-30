@@ -2,7 +2,7 @@ import React, { useRef, useState, FormEvent } from 'react';
 import Stopwatch from './Stopwatch';
 import { toast } from 'sonner';
 import TagSelect from './TagSelect';
-import { sendTimeTrack, TimeTrackRecording } from '@/lib/utils/api-actions';
+import { sendTimeTrack, TimeTrackRecording } from '@/lib/utils/services';
 
 import { isSameDay, endOfDay, startOfDay, differenceInHours } from 'date-fns';
 

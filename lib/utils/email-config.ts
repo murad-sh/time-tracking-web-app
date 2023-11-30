@@ -1,4 +1,4 @@
-const nodemailer = require('nodemailer');
+import nodemailer from 'nodemailer';
 
 const user = process.env.EMAIL;
 const pass = process.env.EMAIL_PASSWORD;
@@ -10,10 +10,3 @@ export const transporter = nodemailer.createTransport({
     pass,
   },
 });
-
-export const mailOptions = {
-  from: user,
-  to: 'shahbazov.msh@gmail.com',
-  subject: 'Test',
-  text: 'Hello world!',
-};

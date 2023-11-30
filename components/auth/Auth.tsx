@@ -8,7 +8,7 @@ import {
   loginSchema,
   LoginSchemaType,
 } from '@/lib/validations/auth';
-import { createUser } from '@/lib/utils/api-actions';
+import { createUser } from '@/lib/utils/services';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/router';
 import { AxiosError } from 'axios';

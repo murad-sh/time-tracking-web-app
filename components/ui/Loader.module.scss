@@ -1,0 +1,8 @@
+@import '@/styles/animations';
+
+.spinner {
+  margin-right: 0.5rem;
+  height: 1rem;
+  width: 1rem;
+  animation: spin 1s linear infinite;
+}
