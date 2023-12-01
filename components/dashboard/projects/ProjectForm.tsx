@@ -3,43 +3,72 @@ import { projectSchema, ProjectSchemaType } from '@/lib/validations/project';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import PrimaryButton from '@/components/ui/PrimaryButton';
-import { createProject } from '@/lib/utils/services';
+import { createProject, editProject } from '@/lib/utils/services';
 import { toast } from 'sonner';
 import { useProjects } from '@/hooks/use-api-hooks';
 import styles from '../SharedStyles.module.scss';
+import { IProject } from '@/models/project';
 
 interface ProjectFormProps {
   afterSave: () => void;
+  operationType: 'create' | 'edit';
+  initialProject?: IProject;
 }
 
-const ProjectForm = ({ afterSave }: ProjectFormProps) => {
+const ProjectForm = ({
+  afterSave,
+  operationType,
+  initialProject,
+}: ProjectFormProps) => {
   const { projects, mutate } = useProjects();
 
   const {
     register,
     handleSubmit,
     setError,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<ProjectSchemaType>({
     resolver: zodResolver(projectSchema),
     mode: 'all',
+    defaultValues:
+      operationType === 'edit'
+        ? { projectTitle: initialProject?.projectTitle }
+        : { projectTitle: '' },
   });
 
   async function onSubmit(enteredData: ProjectSchemaType) {
     const { projectTitle } = enteredData;
-    // TODO: add validation for project title existence
-    // if (projects?.includes(tag)) {
-    //   setError('tag', {
-    //     type: 'manual',
-    //     message: 'Tag already exists',
-    //   });
-    //   return;
-    // }
+    if (
+      operationType === 'edit' &&
+      projectTitle === initialProject?.projectTitle
+    ) {
+      afterSave();
+      return;
+    }
+
+    if (
+      projects.some(
+        (project: IProject) => project.projectTitle === projectTitle
+      )
+    ) {
+      setError('projectTitle', {
+        type: 'manual',
+        message: 'A project with this title already exists.',
+      });
+      return;
+    }
+
     try {
-      console.log(projectTitle);
-      await createProject({ projectTitle });
-      toast.success('Project saved successfully');
+      if (operationType === 'create') {
+        await createProject({ projectTitle });
+        toast.success('Project saved successfully');
+      } else {
+        await editProject(initialProject!._id!.toString(), projectTitle);
+        toast.success('Project updated successfully');
+      }
       mutate();
+      reset();
     } catch (error) {
       toast.error('An error occurred. Please try again');
     }
@@ -62,8 +91,9 @@ const ProjectForm = ({ afterSave }: ProjectFormProps) => {
         <PrimaryButton
           type="submit"
           className={isSubmitting ? styles.submitting : ''}
+          disabled={errors.projectTitle && true}
         >
-          Create
+          {operationType === 'create' ? 'Create' : 'Update'}
         </PrimaryButton>
         {errors.root?.serverError && (
           <span className={styles.error}>

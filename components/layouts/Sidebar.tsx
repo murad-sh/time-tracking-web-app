@@ -24,7 +24,7 @@ const Sidebar = () => {
         </li>
         <li>
           <Link
-            className={activeLink === '/dashboard/reports' ? styles.active : ''}
+            className={activeLink.includes('reports') ? styles.active : ''}
             href={'/dashboard/reports'}
           >
             <span className={styles.nav}>
@@ -35,9 +35,7 @@ const Sidebar = () => {
         </li>
         <li>
           <Link
-            className={
-              activeLink === '/dashboard/projects' ? styles.active : ''
-            }
+            className={activeLink.includes('projects') ? styles.active : ''}
             href={'/dashboard/projects'}
           >
             <span className={styles.nav}>
@@ -48,7 +46,7 @@ const Sidebar = () => {
         </li>
         <li>
           <Link
-            className={activeLink === '/dashboard/tags' ? styles.active : ''}
+            className={activeLink.includes('tags') ? styles.active : ''}
             href={'/dashboard/tags'}
           >
             <span className={styles.nav}>

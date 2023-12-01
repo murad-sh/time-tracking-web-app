@@ -5,15 +5,19 @@ import { MoreVertical } from 'lucide-react';
 import { useProjects } from '@/hooks/use-api-hooks';
 import axios from 'axios';
 import { toast } from 'sonner';
+import Modal from '@/components/ui/Modal';
+import ProjectForm from './ProjectForm';
 
 import styles from '../SharedStyles.module.scss';
+import { IProject } from '@/models/project';
 
-const ProjectOperations = ({ projectId }: { projectId: string }) => {
+const ProjectOperations = ({ project }: { project: IProject }) => {
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const { mutate } = useProjects();
 
   const deleteProject = async () => {
-    const response = await axios.delete('/api/user/projects/' + projectId);
+    const response = await axios.delete('/api/user/projects/' + project._id);
     return response.data;
   };
 
@@ -27,14 +31,19 @@ const ProjectOperations = ({ projectId }: { projectId: string }) => {
     }
   };
   return (
-    <div>
+    <>
       <Dropdown>
         <Dropdown.Button className={styles.operation}>
           <MoreVertical />
         </Dropdown.Button>
         <Dropdown.Menu sideOffset={5} align="end">
           <Dropdown.MenuItem asChild>
-            <button className={styles.edit}>Edit</button>
+            <button
+              className={styles.edit}
+              onClick={() => setShowEditModal(true)}
+            >
+              Edit
+            </button>
           </Dropdown.MenuItem>
           <Dropdown.Separator className={styles.separator} />
           <Dropdown.MenuItem asChild>
@@ -55,7 +64,16 @@ const ProjectOperations = ({ projectId }: { projectId: string }) => {
           onAction={deleteProjectHandler}
         />
       </AlertDialog>
-    </div>
+      <Modal open={showEditModal} onOpenChange={setShowEditModal}>
+        <Modal.Content title="Edit project">
+          <ProjectForm
+            operationType="edit"
+            initialProject={project}
+            afterSave={() => setShowEditModal(false)}
+          />
+        </Modal.Content>
+      </Modal>
+    </>
   );
 };
 

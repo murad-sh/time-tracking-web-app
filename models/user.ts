@@ -13,6 +13,7 @@ export interface IUser {
   addTimeTrack: (timeTrack: ITimeTrack) => Promise<void>;
   deleteTimeTrack: (trackId: string) => Promise<void>;
   addProject: (project: IProject) => Promise<void>;
+  updateProject: (projectId: string, newTitle: string) => Promise<void>;
   deleteProject: (projectId: string) => Promise<void>;
   addTag: (tag: string) => Promise<void>;
   updateTag: (tag: string, newTag: string) => Promise<void>;
@@ -55,6 +56,25 @@ userSchema.methods.addProject = async function (project: IProject) {
 
   this.projects.push(newProject._id);
   await this.save();
+};
+
+userSchema.methods.updateProject = async function (
+  projectId: string,
+  newTitle: string
+) {
+  const project = await Project.findOne({ _id: projectId, userId: this._id });
+  if (!project) {
+    throw new Error('Project not found or not associated with the user.');
+  }
+  const existingTitle = await Project.findOne({
+    projectTitle: newTitle,
+  });
+  if (existingTitle) {
+    throw new Error('A project with this title already exists.');
+  }
+
+  project.projectTitle = newTitle;
+  await project.save();
 };
 
 userSchema.methods.deleteProject = async function (projectId: string) {

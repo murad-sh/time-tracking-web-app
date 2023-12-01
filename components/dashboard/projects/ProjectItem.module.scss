@@ -6,10 +6,28 @@
   justify-content: space-between;
   align-items: center;
 
-  h2 {
-    font-size: 1.6rem;
-    color: $color-text-primary-dark;
-    font-weight: 600;
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    justify-content: left;
+
+    a {
+      font-size: 1.6rem;
+      color: $color-text-primary-dark;
+      font-weight: 600;
+      text-decoration: none;
+      transition: text-decoration ease;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    p {
+      font-size: 1.4rem;
+      color: $color-text-primary-light;
+    }
   }
 }
 
@@ -24,8 +42,18 @@
 
 .container {
   padding: 1.5rem;
+  height: 8rem;
 }
 
 .skeleton {
-  height: 2rem;
+  &__title {
+    height: 2rem;
+    width: 90%;
+    margin-bottom: 1rem;
+  }
+
+  &__date {
+    height: 1.6rem;
+    width: 40%;
+  }
 }

@@ -35,11 +35,7 @@ const TagForm = ({ afterSave, operationType, initialTag }: TagFormProps) => {
       afterSave();
       return;
     }
-    if (
-      (operationType === 'create' ||
-        (operationType === 'edit' && tag !== initialTag)) &&
-      tags?.includes(tag)
-    ) {
+    if (tags?.includes(tag)) {
       setError('tag', {
         type: 'manual',
         message: 'Tag already exists',
@@ -51,7 +47,7 @@ const TagForm = ({ afterSave, operationType, initialTag }: TagFormProps) => {
       if (operationType === 'create') {
         await createTag(tag);
         toast.success('Tag created successfully');
-      } else if (operationType === 'edit') {
+      } else {
         await editTag(initialTag as string, tag);
         toast.success('Tag updated successfully');
       }

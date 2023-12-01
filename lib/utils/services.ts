@@ -31,6 +31,13 @@ export async function editTag(oldTag: string, newTag: string) {
   return response.data;
 }
 
+export async function editProject(projectId: string, newTitle: string) {
+  const response = await axios.patch(`/api/user/projects/${projectId}`, {
+    projectTitle: newTitle,
+  });
+  return response.data;
+}
+
 export async function createProject(project: IProject) {
   const response = await axios.post('/api/user/projects', {
     projectTitle: project.projectTitle,

@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { getCurrentUser } from '@/lib/auth/session';
 import { connectToDB } from '@/lib/utils/db';
 import User from '@/models/user';
+import { projectSchema } from '@/lib/validations/project';
 
 type Data = {
   message: string;
@@ -33,7 +34,14 @@ export default async function handler(
       await user.deleteProject(projectId as string);
       res.status(204).end();
     } else {
-      // TODO: Add EDIT functionality
+      const validatedData = projectSchema.safeParse(req.body);
+      if (!validatedData.success) {
+        res.status(422).json({ message: 'Validation error' });
+        return;
+      }
+      const { projectTitle } = validatedData.data;
+      await user.updateProject(projectId as string, projectTitle);
+      res.status(204).end();
     }
   } catch (error) {
     res.status(500).json({ message: 'Internal Server Message' });

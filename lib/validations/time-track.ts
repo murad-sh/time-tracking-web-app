@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { objectIdValidation } from './helpers';
 
 export const timeTrackSchema = z.object({
-  title: z.string().trim().min(1, 'Title is required'),
+  title: z.string().trim().min(1, 'Title is required').max(128),
   start: z.coerce.date(),
   end: z.coerce.date(),
   projectId: objectIdValidation.optional(),

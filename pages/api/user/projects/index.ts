@@ -32,7 +32,6 @@ export default async function handler(
       res.status(200).json(projects);
     } else if (req.method === 'POST') {
       const validatedData = projectSchema.safeParse(req.body);
-      console.log(req.body);
       if (!validatedData.success) {
         res.status(422).json({ message: validatedData.error.message });
         return;

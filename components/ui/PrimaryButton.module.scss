@@ -19,4 +19,11 @@
     color: $color-primary;
     border-color: $color-primary;
   }
+
+  &:disabled {
+    background-color: darken($color-primary, 10%);
+    color: $color-background;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
 }
