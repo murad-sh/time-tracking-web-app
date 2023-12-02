@@ -1,4 +1,4 @@
-import React, { HtmlHTMLAttributes } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import styles from './PrimaryButton.module.scss';
 
