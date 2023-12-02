@@ -2,17 +2,19 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { getCurrentUser } from '@/lib/auth/session';
 import { connectToDB } from '@/lib/utils/db';
 import User from '@/models/user';
+import Project from '@/models/project';
+import TimeTrack from '@/models/time-track';
 import { projectSchema } from '@/lib/validations/project';
-
-type Data = {
-  message: string;
-};
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse
 ) {
-  if (req.method !== 'DELETE' && req.method !== 'PATCH') {
+  if (
+    req.method !== 'GET' &&
+    req.method !== 'DELETE' &&
+    req.method !== 'PATCH'
+  ) {
     return res.status(405).json({ message: 'Method not allowed' });
   }
 
@@ -30,7 +32,23 @@ export default async function handler(
       });
 
     const { projectId } = req.query;
-    if (req.method === 'DELETE') {
+
+    if (req.method === 'GET') {
+      const project = await Project.findById(projectId);
+      if (!project) {
+        return res.status(404).json({ message: 'Project not found' });
+      }
+      const timeTracks = await TimeTrack.find({
+        projectId: projectId,
+      }).select('title start end');
+
+      const projectWithTimeTracks = {
+        ...project.toObject(),
+        timeTracks: timeTracks,
+      };
+
+      res.status(200).json(projectWithTimeTracks);
+    } else if (req.method === 'DELETE') {
       await user.deleteProject(projectId as string);
       res.status(204).end();
     } else {

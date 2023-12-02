@@ -36,3 +36,13 @@ export function useProjects() {
     mutate,
   };
 }
+
+export function useProject(projectId: string) {
+  const { data, error, isLoading } = useSWR(`/api/user/projects/${projectId}`);
+
+  return {
+    project: data,
+    isLoading,
+    error,
+  };
+}
