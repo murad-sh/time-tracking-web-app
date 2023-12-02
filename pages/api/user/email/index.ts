@@ -31,12 +31,21 @@ export default async function handler(
       return res
         .status(409)
         .json({ message: 'Report already exists for this date range' });
+
     const users = await getWeeklyData(startDate, endDate);
-    const emailsToSend = users
-      .filter((user) => user.timeTracks.length > 0)
-      .map((user) =>
-        createEmail(user.name, user.email, user.timeTracks, startDate, endDate)
-      );
+    let emailsToSend = [];
+    for (const user of users) {
+      if (user.timeTracks.length > 0)
+        emailsToSend.push(
+          createEmail(
+            user.name,
+            user.email,
+            user.timeTracks,
+            startDate,
+            endDate
+          )
+        );
+    }
 
     for (const email of emailsToSend) {
       await transporter.sendMail(email);
