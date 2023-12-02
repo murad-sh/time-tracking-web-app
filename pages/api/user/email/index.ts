@@ -20,6 +20,7 @@ export default async function handler(
 ) {
   try {
     if (!isTodaySunday()) return res.status(403).json('Forbidden');
+
     const { startDate, endDate } = calcWeekRange();
     await connectToDB();
     const existingReport = await EmailReport.findOne({
@@ -28,9 +29,7 @@ export default async function handler(
     });
 
     if (existingReport)
-      return res
-        .status(409)
-        .json({ message: 'Report already exists for this date range' });
+      return res.status(409).json('Report already exists for this date range');
 
     const users = await getWeeklyData(startDate, endDate);
     let emailsToSend = [];
