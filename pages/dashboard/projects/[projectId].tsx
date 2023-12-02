@@ -10,5 +10,4 @@ const ProjectPage: NextPageWithLayout = () => {
 ProjectPage.getLayout = function getLayout(page: ReactElement) {
   return <DashboardLayout>{page}</DashboardLayout>;
 };
-
 export default ProjectPage;

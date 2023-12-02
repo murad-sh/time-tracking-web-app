@@ -8,6 +8,7 @@ import {
   addDays,
   startOfDay,
   endOfDay,
+  getDay,
 } from 'date-fns';
 
 export const calcWeekRange = (weekOffset = 0) => {
@@ -156,4 +157,9 @@ export const getTodayStartEnd = () => {
     start: startOfToday,
     end: endOfToday,
   };
+};
+
+export const isTodaySunday = () => {
+  const today = new Date();
+  return getDay(today) === 0;
 };
