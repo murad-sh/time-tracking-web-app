@@ -163,3 +163,6 @@ export const isTodaySunday = () => {
   const today = new Date();
   return getDay(today) === 0;
 };
+
+export const getDuration = (start: Date, end: Date) =>
+  secondsToTimeStr(differenceInSeconds(end, start));
