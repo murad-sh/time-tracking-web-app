@@ -4,23 +4,35 @@ import TagForm from './tags/TagForm';
 import ProjectForm from './projects/ProjectForm';
 import PrimaryButton from '@/components/ui/PrimaryButton';
 import { PlusIcon } from 'lucide-react';
-import styles from './AddItem.module.scss';
+import styles from './SharedStyles.module.scss';
 
-const AddItem = ({ itemType }: { itemType: 'tag' | 'project' }) => {
+const AddItem = ({
+  itemType,
+  btnText,
+}: {
+  itemType: 'tag' | 'project';
+  btnText?: string;
+}) => {
   const [open, setOpen] = useState(false);
-
   const closeModal = () => setOpen(false);
+  const title = `Add new ${itemType}`;
+  const defaultButtonText = (
+    <>
+      <PlusIcon />
+      {itemType === 'tag' ? 'New tag' : 'New project'}
+    </>
+  );
+  const buttonText = btnText || defaultButtonText;
 
   return (
     <div>
       <Modal open={open} onOpenChange={setOpen}>
         <Modal.Button asChild>
           <PrimaryButton className={styles.modal__btn}>
-            <PlusIcon />
-            {itemType === 'tag' ? 'New tag' : 'New project'}
+            {buttonText}
           </PrimaryButton>
         </Modal.Button>
-        <Modal.Content title="Add new tag">
+        <Modal.Content title={title} className={styles.modal}>
           {itemType === 'tag' ? (
             <TagForm operationType="create" afterSave={closeModal} />
           ) : (

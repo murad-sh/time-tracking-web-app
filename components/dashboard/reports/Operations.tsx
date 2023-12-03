@@ -3,14 +3,14 @@ import Dropdown from '@/components/ui/Dropdown';
 import AlertDialog from '@/components/ui/AlertDialog';
 import { MoreVertical } from 'lucide-react';
 import { useWeeklyTracks } from '@/hooks/use-api-hooks';
-import axios from 'axios';
+import { deleteTimeTrack } from '@/lib/utils/services';
 import { toast } from 'sonner';
 import Modal from '@/components/ui/Modal';
 import { ITimeTrack } from '@/models/time-track';
-import styles from '../SharedStyles.module.scss';
 import EditForm from './EditForm';
 import { useSearchParams } from 'next/navigation';
 import { calculateWeekRange } from '@/lib/utils/date';
+import styles from '../SharedStyles.module.scss';
 
 const Operations = ({ timeTrack }: { timeTrack: ITimeTrack }) => {
   const { startDate: currentStart, endDate: currentEnd } = calculateWeekRange();
@@ -21,16 +21,9 @@ const Operations = ({ timeTrack }: { timeTrack: ITimeTrack }) => {
   const [showEditModal, setShowEditModal] = useState(false);
   const { mutate } = useWeeklyTracks(start, end);
 
-  const deleteTimeTrack = async () => {
-    const response = await axios.delete(
-      '/api/user/time-tracks/' + timeTrack._id
-    );
-    return response.data;
-  };
-
   const deleteTimeTrackHandler = async () => {
     try {
-      await deleteTimeTrack();
+      await deleteTimeTrack(timeTrack._id.toString());
       mutate();
       toast.success('Time Track deleted successfully');
     } catch (error) {
@@ -66,13 +59,13 @@ const Operations = ({ timeTrack }: { timeTrack: ITimeTrack }) => {
       <AlertDialog open={showDeleteAlert} setOpen={setShowDeleteAlert}>
         <AlertDialog.Content
           title="Are you sure you want to delete this time track?"
-          description="This action cannot be undone."
+          description="This action can&#39;t be undone."
           action="Delete time track"
           onAction={deleteTimeTrackHandler}
         />
       </AlertDialog>
       <Modal open={showEditModal} onOpenChange={setShowEditModal}>
-        <Modal.Content title="Edit title">
+        <Modal.Content title="Edit title" className={styles.modal}>
           <EditForm
             initialTrack={timeTrack}
             afterSave={() => {

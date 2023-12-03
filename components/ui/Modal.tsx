@@ -23,13 +23,19 @@ interface ModalContentProps {
   title: string;
   description?: string;
   children: React.ReactNode;
+  className?: string;
 }
 
-function ModalContent({ title, description, children }: ModalContentProps) {
+function ModalContent({
+  title,
+  description,
+  children,
+  className,
+}: ModalContentProps) {
   return (
     <RadixDialog.Portal>
       <RadixDialog.Overlay className={styles.overlay}>
-        <RadixDialog.Content className={styles.content}>
+        <RadixDialog.Content className={`${styles.content} ${className}`}>
           <div className={styles.container}>
             <RadixDialog.Title className={styles.title}>
               {title}

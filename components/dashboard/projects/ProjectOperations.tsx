@@ -3,27 +3,21 @@ import Dropdown from '@/components/ui/Dropdown';
 import AlertDialog from '@/components/ui/AlertDialog';
 import { MoreVertical } from 'lucide-react';
 import { useProjects } from '@/hooks/use-api-hooks';
-import axios from 'axios';
+import { deleteProject } from '@/lib/utils/services';
 import { toast } from 'sonner';
 import Modal from '@/components/ui/Modal';
 import ProjectForm from './ProjectForm';
-
-import styles from '../SharedStyles.module.scss';
 import { IProject } from '@/models/project';
+import styles from '../SharedStyles.module.scss';
 
 const ProjectOperations = ({ project }: { project: IProject }) => {
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const { mutate } = useProjects();
 
-  const deleteProject = async () => {
-    const response = await axios.delete('/api/user/projects/' + project._id);
-    return response.data;
-  };
-
   const deleteProjectHandler = async () => {
     try {
-      await deleteProject();
+      await deleteProject(project._id!.toString());
       mutate();
       toast.success('Tag deleted successfully');
     } catch (error) {
@@ -59,13 +53,13 @@ const ProjectOperations = ({ project }: { project: IProject }) => {
       <AlertDialog open={showDeleteAlert} setOpen={setShowDeleteAlert}>
         <AlertDialog.Content
           title="Are you sure you want to delete this project?"
-          description="This action cannot be undone."
+          description="This action can&#39;t be undone."
           action="Delete project"
           onAction={deleteProjectHandler}
         />
       </AlertDialog>
       <Modal open={showEditModal} onOpenChange={setShowEditModal}>
-        <Modal.Content title="Edit project">
+        <Modal.Content title="Edit project" className={styles.modal}>
           <ProjectForm
             operationType="edit"
             initialProject={project}

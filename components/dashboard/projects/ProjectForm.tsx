@@ -6,8 +6,9 @@ import PrimaryButton from '@/components/ui/PrimaryButton';
 import { createProject, editProject } from '@/lib/utils/services';
 import { toast } from 'sonner';
 import { useProjects } from '@/hooks/use-api-hooks';
-import styles from '../SharedStyles.module.scss';
 import { IProject } from '@/models/project';
+import styles from '../SharedStyles.module.scss';
+import Loader from '@/components/ui/Loader';
 
 interface ProjectFormProps {
   afterSave: () => void;
@@ -88,12 +89,14 @@ const ProjectForm = ({
         <p className={styles.error}>{`${errors.projectTitle.message}`}</p>
       )}
       <div className={styles.action}>
-        <PrimaryButton
-          type="submit"
-          className={isSubmitting ? styles.submitting : ''}
-          disabled={errors.projectTitle && true}
-        >
-          {operationType === 'create' ? 'Create' : 'Update'}
+        <PrimaryButton type="submit" disabled={isSubmitting}>
+          {isSubmitting ? (
+            <Loader />
+          ) : operationType === 'create' ? (
+            'Create'
+          ) : (
+            'Update'
+          )}
         </PrimaryButton>
         {errors.root?.serverError && (
           <span className={styles.error}>

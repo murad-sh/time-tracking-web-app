@@ -5,9 +5,8 @@ import Modal from '@/components/ui/Modal';
 import TagForm from './TagForm';
 import { MoreVertical } from 'lucide-react';
 import { useTags } from '@/hooks/use-api-hooks';
-import axios from 'axios';
+import { deleteTag } from '@/lib/utils/services';
 import { toast } from 'sonner';
-
 import styles from '../SharedStyles.module.scss';
 
 const TagOperations = ({ tag }: { tag: string }) => {
@@ -15,14 +14,9 @@ const TagOperations = ({ tag }: { tag: string }) => {
   const [showEditModal, setShowEditModal] = useState(false);
   const { mutate } = useTags();
 
-  const deleteTag = async () => {
-    const response = await axios.delete('/api/user/tags/' + tag);
-    return response.data;
-  };
-
   const deleteTagHandler = async () => {
     try {
-      await deleteTag();
+      await deleteTag(tag);
       mutate();
       toast.success('Tag deleted successfully');
     } catch (error) {
@@ -58,13 +52,13 @@ const TagOperations = ({ tag }: { tag: string }) => {
       <AlertDialog open={showDeleteAlert} setOpen={setShowDeleteAlert}>
         <AlertDialog.Content
           title="Are you sure you want to delete this tag?"
-          description="This action cannot be undone."
+          description="This action can&#39;t be undone."
           action="Delete tag"
           onAction={deleteTagHandler}
         />
       </AlertDialog>
       <Modal open={showEditModal} onOpenChange={setShowEditModal}>
-        <Modal.Content title="Edit tag">
+        <Modal.Content title="Edit tag" className={styles.modal}>
           <TagForm
             operationType="edit"
             initialTag={tag}

@@ -1,26 +1,22 @@
 import React from 'react';
 import TagItem from './TagItem';
 import { useTags } from '@/hooks/use-api-hooks';
+import ErrorMessage from '@/components/ui/ErrorMessage';
 import styles from '../SharedStyles.module.scss';
+import EmptyPlaceholder from '../EmptyPlaceholder';
 
 const TagList = () => {
   const { tags, isLoading, error } = useTags();
 
-  // TODO : Add proper error ui
-  if (error) return <div>failed to load</div>;
-
   if (isLoading) return <TagItem.Skeleton />;
-
-  // TODO : Add ui for no tags cases
-  if (tags.length === 0) {
-    return <h2>No Tags Added Yet.</h2>;
-  }
+  if (error) return <ErrorMessage />;
+  if (tags.length === 0) return <EmptyPlaceholder type="tag" />;
 
   return (
     <ul className={styles.list}>
       {tags.map((tag: string) => (
         <li className={styles.item} key={tag}>
-          <TagItem tag={tag}></TagItem>
+          <TagItem tag={tag} />
         </li>
       ))}
     </ul>

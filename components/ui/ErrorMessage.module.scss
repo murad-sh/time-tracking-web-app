@@ -1,0 +1,46 @@
+@import '@/styles/variables';
+
+.error {
+  font-size: 2.2rem;
+  color: $color-error;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  height: 40rem;
+  align-items: center;
+  border: 1px solid $color-skeleton;
+  border-radius: 6px;
+  span {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    svg {
+      height: 3.5rem;
+      width: 3.5rem;
+    }
+  }
+
+  .btn__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+
+    button {
+      font-size: 1.8rem;
+      padding: 0.8rem 1.6rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color ease;
+      margin-left: 0.8rem;
+      background-color: $color-error;
+      color: white;
+      border-color: transparent;
+
+      &:hover {
+        background-color: #9a1b1b;
+      }
+    }
+  }
+}

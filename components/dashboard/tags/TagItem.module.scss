@@ -24,8 +24,12 @@
 
 .container {
   padding: 1.5rem;
+  height: 6.8rem;
+  display: flex;
+  align-items: center;
 }
 
 .skeleton {
-  height: 3.5rem;
+  height: 2.4rem;
+  width: 90%;
 }

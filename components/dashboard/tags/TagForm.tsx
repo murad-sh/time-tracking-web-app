@@ -7,6 +7,7 @@ import { createTag, editTag } from '@/lib/utils/services';
 import { toast } from 'sonner';
 import { useTags } from '@/hooks/use-api-hooks';
 import styles from '../SharedStyles.module.scss';
+import Loader from '@/components/ui/Loader';
 
 interface TagFormProps {
   afterSave: () => void;
@@ -66,11 +67,14 @@ const TagForm = ({ afterSave, operationType, initialTag }: TagFormProps) => {
       </div>
       {errors.tag && <p className={styles.error}>{`${errors.tag.message}`}</p>}
       <div className={styles.action}>
-        <PrimaryButton
-          type="submit"
-          className={isSubmitting ? styles.submitting : ''}
-        >
-          {operationType === 'create' ? 'Create' : 'Update'}
+        <PrimaryButton type="submit" disabled={isSubmitting}>
+          {isSubmitting ? (
+            <Loader />
+          ) : operationType === 'create' ? (
+            'Create'
+          ) : (
+            'Update'
+          )}
         </PrimaryButton>
         {errors.root?.serverError && (
           <span className={styles.error}>

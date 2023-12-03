@@ -2,20 +2,16 @@ import React from 'react';
 import ProjectItem from './ProjectItem';
 import { useProjects } from '@/hooks/use-api-hooks';
 import { IProject } from '@/models/project';
+import ErrorMessage from '@/components/ui/ErrorMessage';
+import EmptyPlaceholder from '../EmptyPlaceholder';
 import styles from '../SharedStyles.module.scss';
 
 const ProjectList = () => {
   const { projects, isLoading, error } = useProjects();
 
-  // TODO : Add proper error ui
-  if (error) return <div>failed to load</div>;
-
   if (isLoading) return <ProjectItem.Skeleton />;
-
-  // TODO : Add proper ui
-  if (projects.length === 0) {
-    return <h2>No Projects Added Yet.</h2>;
-  }
+  if (error) return <ErrorMessage />;
+  if (projects.length === 0) return <EmptyPlaceholder type="project" />;
 
   return (
     <div>
