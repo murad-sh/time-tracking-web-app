@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import WeeklyData from './WeeklyData';
 import Link from 'next/link';
-import { calcWeekRange } from '@/lib/utils/date';
+import { calculateWeekRange } from '@/lib/utils/date';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 
 const Weekly = () => {
   const baseUrl = '/dashboard/reports';
   const [offset, setOffset] = useState(0);
-  const prevWeekDates = calcWeekRange(offset - 1);
-  const nextWeekDates = calcWeekRange(offset + 1);
+  const prevWeekDates = calculateWeekRange(offset - 1);
+  const nextWeekDates = calculateWeekRange(offset + 1);
 
   return (
     <div>

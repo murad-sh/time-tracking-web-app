@@ -11,7 +11,7 @@ import {
   getDay,
 } from 'date-fns';
 
-export const calcWeekRange = (weekOffset = 0) => {
+export const calculateWeekRange = (weekOffset = 0) => {
   let date = new Date();
   date = addWeeks(date, weekOffset);
   const startDate = startOfWeek(date, { weekStartsOn: 1 }).toLocaleDateString();

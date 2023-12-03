@@ -11,6 +11,7 @@ export interface IUser {
   projects: mongoose.Schema.Types.ObjectId[];
   tags: string[];
   addTimeTrack: (timeTrack: ITimeTrack) => Promise<void>;
+  updateTimeTrack: (trackId: string, newTitle: string) => Promise<void>;
   deleteTimeTrack: (trackId: string) => Promise<void>;
   addProject: (project: IProject) => Promise<void>;
   updateProject: (projectId: string, newTitle: string) => Promise<void>;
@@ -36,6 +37,18 @@ userSchema.methods.addTimeTrack = async function (timeTrack: ITimeTrack) {
   });
   this.timeTracks.push(newTimeTrack._id);
   await this.save();
+};
+
+userSchema.methods.updateTimeTrack = async function (
+  trackId: string,
+  newTitle: string
+) {
+  const result = await TimeTrack.findOne({ _id: trackId, userId: this._id });
+  if (!result) {
+    throw new Error('Time track not found or does not belong to the user');
+  }
+  result.title = newTitle;
+  await result.save();
 };
 
 userSchema.methods.deleteTimeTrack = async function (trackId: string) {

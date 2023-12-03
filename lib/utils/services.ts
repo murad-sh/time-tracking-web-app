@@ -2,8 +2,6 @@ import { IProject } from '@/models/project';
 import axios from 'axios';
 import { timeTrackSchema } from '../validations/time-track';
 
-export const tagsUrlEndpoint = '/api/tags';
-
 export async function createUser(
   name: string,
   email: string,
@@ -60,5 +58,12 @@ export async function sendTimeTrack(timeTrackData: TimeTrackRecording) {
     '/api/user/time-tracks/',
     validatedData.data
   );
+  return response.data;
+}
+
+export async function editTimeTrack(trackId: string, newTitle: string) {
+  const response = await axios.patch(`/api/user/time-tracks/${trackId}`, {
+    newTitle,
+  });
   return response.data;
 }

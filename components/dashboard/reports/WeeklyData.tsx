@@ -1,8 +1,8 @@
 import React from 'react';
-import { useTimeTracks } from '@/hooks/use-api-hooks';
+import { useWeeklyTracks } from '@/hooks/use-api-hooks';
 import {
   calculateWeekly,
-  calcWeekRange,
+  calculateWeekRange,
   calculateTagUsage,
   organizeTracksByDay,
   getTotalWeekly,
@@ -13,7 +13,7 @@ import WeeklyPieChart from './charts/WeeklyPieChart';
 import TimeTrackList from './TimeTrackList';
 
 const WeeklyChart = () => {
-  const { startDate: currentStart, endDate: currentEnd } = calcWeekRange();
+  const { startDate: currentStart, endDate: currentEnd } = calculateWeekRange();
   const searchParams = useSearchParams();
   const start = (searchParams.get('start') || currentStart) as string;
   const end = (searchParams.get('end') || currentEnd) as string;
@@ -22,7 +22,7 @@ const WeeklyChart = () => {
     timeTracks,
     isLoading,
     error: apiFetchError,
-  } = useTimeTracks(start, end);
+  } = useWeeklyTracks(start, end);
 
   // TODO: Add skeleton for loading state
   if (isLoading) {

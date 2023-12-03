@@ -13,6 +13,7 @@ import ProjectSelect from './ProjectSelect';
 import SendDummyDataButton from './DummyDataTest';
 import { ITimeTrack } from '@/models/time-track';
 import CurrentTracks from './CurrentTracks';
+import { useTodayTracks } from '@/hooks/use-api-hooks';
 
 const AddTimeTrack = () => {
   const [btnStop, setBtnStop] = useState(false);
@@ -21,6 +22,7 @@ const AddTimeTrack = () => {
   const [timer, setTimer] = useState(false);
   const [tag, setTag] = useState('');
   const [project, setProject] = useState('');
+  const { mutate } = useTodayTracks();
   const MAX_DURATION = 48;
 
   const startTimer = () => {
@@ -67,6 +69,7 @@ const AddTimeTrack = () => {
       for (const track of tracks) {
         await sendTimeTrack(track);
       }
+      mutate();
       toast.success('Time track recorded successfully!');
     } catch (error) {
       toast.error(

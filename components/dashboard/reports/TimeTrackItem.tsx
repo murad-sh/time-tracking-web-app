@@ -2,6 +2,7 @@ import React from 'react';
 import { ITimeTrack } from '@/models/time-track';
 import styles from './TimeTrackItem.module.scss';
 import { getDuration } from '@/lib/utils/date';
+import Operations from './Operations';
 
 interface Props {
   timeTrack: ITimeTrack;
@@ -21,6 +22,9 @@ const TimeTrackItem = ({ timeTrack }: Props) => {
           Duration:
           {getDuration(new Date(timeTrack.start), new Date(timeTrack.end))}
         </span>
+      </div>
+      <div>
+        <Operations timeTrack={timeTrack} />
       </div>
     </div>
   );

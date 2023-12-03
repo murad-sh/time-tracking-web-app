@@ -1,13 +1,11 @@
 import React from 'react';
-import { useTimeTracks } from '@/hooks/use-api-hooks';
-import { getTodayStartEnd, calculateTotalDuration } from '@/lib/utils/date';
+import { useTodayTracks } from '@/hooks/use-api-hooks';
+import { calculateTotalDuration } from '@/lib/utils/date';
+import { ITimeTrack } from '@/models/time-track';
+import { getDuration } from '@/lib/utils/date';
 
 const CurrentTracks = () => {
-  const { start, end } = getTodayStartEnd();
-  const { timeTracks, mutate, isLoading, error } = useTimeTracks(
-    start.toISOString(),
-    end.toISOString()
-  );
+  const { timeTracks, isLoading, error } = useTodayTracks();
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -19,7 +17,21 @@ const CurrentTracks = () => {
 
   const totalDaily = calculateTotalDuration(timeTracks);
 
-  return <div>Total for today : {totalDaily}</div>;
+  return (
+    <>
+      <div>Total for today : {totalDaily}</div>
+      <div>
+        <ul>
+          {timeTracks.map((track: ITimeTrack) => (
+            <li key={track._id.toString()}>
+              <p>{track.title}</p>
+              <p>{getDuration(new Date(track.start), new Date(track.end))}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </>
+  );
 };
 
 export default CurrentTracks;
