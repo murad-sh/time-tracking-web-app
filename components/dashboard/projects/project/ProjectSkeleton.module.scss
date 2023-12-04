@@ -1,0 +1,44 @@
+@import '@/styles/variables';
+
+.skeleton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 3.5rem;
+}
+
+.title {
+  width: 30%;
+  height: 3.5rem;
+}
+
+.total {
+  width: 38%;
+  height: 2rem;
+}
+
+.divider {
+  border-radius: 0.6rem;
+  border: 1px solid $color-skeleton;
+  & > * + * {
+    border-top: 1px solid $color-skeleton;
+  }
+}
+
+.container {
+  padding: 2rem;
+  height: 6.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.skeleton__title {
+  height: 2.5rem;
+  width: 25%;
+}
+.skeleton__duration {
+  height: 2.5rem;
+  width: 17%;
+}

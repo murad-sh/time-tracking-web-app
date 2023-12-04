@@ -1,0 +1,50 @@
+@import '@/styles/variables';
+
+.title {
+  color: $color-text-primary-dark;
+  font-size: 3.5rem;
+}
+
+.total {
+  font-size: 2rem;
+  color: $color-text-primary-light;
+  span {
+    color: $color-text-primary-dark;
+    margin-left: 0.5rem;
+    font-weight: 500;
+  }
+}
+
+.list {
+  margin-top: 3.5rem;
+  font-size: 1.6rem;
+  list-style: none;
+  text-align: left;
+  color: $color-text-primary-dark;
+  border-radius: 0.6rem;
+  border: 1px solid $color-skeleton;
+  & > * + * {
+    border-top: 1px solid $color-skeleton;
+  }
+
+  li {
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    p {
+      font-weight: 600;
+    }
+    span {
+      color: $color-text-primary-light;
+    }
+    .duration {
+      color: $color-text-primary-dark;
+      padding: 0.5rem 1rem;
+      margin-left: 1rem;
+      border: 1px solid transparent;
+      background-color: $color-skeleton;
+      border-radius: 100px;
+      font-weight: 500;
+    }
+  }
+}

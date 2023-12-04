@@ -19,7 +19,7 @@ const ProjectOperations = ({ project }: { project: IProject }) => {
     try {
       await deleteProject(project._id!.toString());
       mutate();
-      toast.success('Tag deleted successfully');
+      toast.success('Project deleted successfully');
     } catch (error) {
       toast.error('An error occurred');
     }

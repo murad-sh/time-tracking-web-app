@@ -1,14 +1,20 @@
 import React from 'react';
-import styles from './Layout.module.scss';
 import Link from 'next/link';
+import { ChevronLeftIcon } from 'lucide-react';
+import styles from './Layout.module.scss';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      <nav>
-        <Link href="/dashboard/projects">Back</Link>
+      <nav className={styles.container}>
+        <Link href="/dashboard/projects" className={styles.link}>
+          <span className={styles.icon}>
+            <ChevronLeftIcon />
+          </span>
+          Back
+        </Link>
       </nav>
-      <div>{children}</div>
+      <div className={styles.content}>{children}</div>
     </>
   );
 };
