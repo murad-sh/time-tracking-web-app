@@ -3,10 +3,13 @@ import styles from './Sidebar.module.scss';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ClockIcon, BarChart3Icon, FileTextIcon, TagIcon } from 'lucide-react';
+import { secondsToTimeStr } from '@/lib/utils/date';
+import { useTimerContext } from '@/hooks/use-store-hooks';
 
 const Sidebar = () => {
   const router = useRouter();
   const activeLink = router.pathname;
+  const { timer, time } = useTimerContext();
 
   return (
     <nav className={styles.sidebar}>
@@ -18,7 +21,7 @@ const Sidebar = () => {
           >
             <span className={styles.nav}>
               <ClockIcon />
-              Timer
+              {timer ? secondsToTimeStr(time) : 'Timer'}
             </span>
           </Link>
         </li>

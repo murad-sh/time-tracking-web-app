@@ -1,4 +1,4 @@
-import React, { useRef, useState, FormEvent } from 'react';
+import React, { FormEvent } from 'react';
 import Stopwatch from './Stopwatch';
 import { toast } from 'sonner';
 import TagSelect from './TagSelect';
@@ -10,47 +10,42 @@ import styles from './AddTimeTrack.module.scss';
 // !TEST ALL
 import { Play, PlayCircle, Pause, PauseCircle } from 'lucide-react';
 import ProjectSelect from './ProjectSelect';
-import SendDummyDataButton from './DummyDataTest';
-import { ITimeTrack } from '@/models/time-track';
+
 import CurrentTracks from './CurrentTracks';
 import { useTodayTracks } from '@/hooks/use-api-hooks';
+import { useCurrentTimeTrack, useTimerContext } from '@/hooks/use-store-hooks';
 
 const AddTimeTrack = () => {
-  const [btnStop, setBtnStop] = useState(false);
-  const [startTime, setStartTime] = useState<Date | null>(null);
-  const titleRef = useRef<HTMLInputElement>(null);
-  const [timer, setTimer] = useState(false);
-  const [tag, setTag] = useState('');
-  const [project, setProject] = useState('');
   const { mutate } = useTodayTracks();
+  const timerContext = useTimerContext();
+  const currentTrack = useCurrentTimeTrack();
   const MAX_DURATION = 48;
 
   const startTimer = () => {
-    setStartTime(new Date());
-    setBtnStop(true);
-    setTimer(true);
+    timerContext.setTimer(true);
+    currentTrack.setStartTime(new Date());
   };
 
   const createTimeTrack = (startDate: Date, endDate: Date) => {
     let requestData: TimeTrackRecording = {
-      title: titleRef.current!.value,
+      title: currentTrack.title.trim() || '(no description)',
       start: startDate,
       end: endDate,
     };
-    if (tag) {
-      requestData = { ...requestData, tag: tag };
+    if (currentTrack.tag) {
+      requestData = { ...requestData, tag: currentTrack.tag };
     }
-    if (project) {
-      requestData = { ...requestData, projectId: project };
+    if (currentTrack.projectId) {
+      requestData = { ...requestData, projectId: currentTrack.projectId };
     }
     return requestData;
   };
 
   async function sendTrack(event: FormEvent) {
     event.preventDefault();
-    let startDate = startTime || new Date();
+    let startDate = currentTrack.startTime || new Date();
     const endDate = new Date();
-    setTimer(false);
+    timerContext.setTimer(false);
     if (differenceInHours(endDate, startDate) > MAX_DURATION) {
       toast.error(
         `Recording failed: The maximum allowed duration of ${MAX_DURATION} hours has been exceeded.`
@@ -80,32 +75,32 @@ const AddTimeTrack = () => {
   }
 
   const resetForm = () => {
-    setBtnStop(false);
-    setTag('');
-    setProject('');
-    setStartTime(null);
-    titleRef.current!.value = '';
+    currentTrack.setTitle('');
+    currentTrack.setTag('');
+    currentTrack.setProjectId('');
+    currentTrack.setStartTime(null);
   };
 
   return (
     <div>
-      <Stopwatch timer={timer} />
+      <Stopwatch />
       <form onSubmit={sendTrack}>
         <input
           name="title"
           type="text"
           placeholder="title"
-          ref={titleRef}
+          value={currentTrack.title}
+          onChange={(event) => currentTrack.setTitle(event.target.value)}
         ></input>
 
-        {!btnStop && (
+        {!timerContext.timer && (
           <button onClick={startTimer} type="button">
             <span>
               <Play />
             </span>
           </button>
         )}
-        {btnStop && (
+        {timerContext.timer && (
           <button type="submit">
             <span>
               <Pause />
@@ -114,10 +109,12 @@ const AddTimeTrack = () => {
         )}
       </form>
       <div>
-        <TagSelect tag={tag} setTag={setTag} />
-        <ProjectSelect projectId={project} setProjectId={setProject} />
+        <TagSelect tag={currentTrack.tag} setTag={currentTrack.setTag} />
+        <ProjectSelect
+          projectId={currentTrack.projectId}
+          setProjectId={currentTrack.setProjectId}
+        />
       </div>
-      {/* <SendDummyDataButton /> */}
       <div>
         <CurrentTracks />
       </div>

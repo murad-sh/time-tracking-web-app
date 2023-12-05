@@ -10,7 +10,7 @@ export const timeTrackSchema = z.object({
 });
 
 export const timeTrackUpdateSchema = z.object({
-  newTitle: z.string().trim().min(1).max(128),
+  newTitle: z.string().trim().min(1, 'Title is required').max(128),
 });
 
 export type TimeTrackSchemaType = z.infer<typeof timeTrackSchema>;

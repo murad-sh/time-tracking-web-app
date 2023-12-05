@@ -3,7 +3,6 @@ import { ITimeTrack } from '@/models/time-track';
 import { getSession } from 'next-auth/react';
 import mongoose from 'mongoose';
 import type { GetServerSideProps } from 'next';
-import { getUserTimeTracks } from '@/lib/utils/db';
 import type { NextPageWithLayout } from '../_app';
 import type { ReactElement } from 'react';
 import DashboardLayout from '@/components/layouts/DashboardLayout';
