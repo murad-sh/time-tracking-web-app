@@ -5,14 +5,21 @@ import { SWRConfig } from 'swr';
 import { Toaster } from 'sonner';
 import axios from 'axios';
 import styles from './DashboardLayout.module.scss';
+import Head from 'next/head';
+import { useTimerContext } from '@/hooks/use-store-hooks';
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
 const DashboardLayout = ({ children }: LayoutProps) => {
+  const { timer, documentTitle } = useTimerContext();
+
   return (
     <>
+      <Head>
+        <title>{timer ? documentTitle : 'Time Tracker'}</title>
+      </Head>
       <Header isSticky={true} />
       <div className={styles.container}>
         <aside>
