@@ -13,12 +13,12 @@ import ProjectSelect from './ProjectSelect';
 
 import CurrentTracks from './CurrentTracks';
 import { useTodayTracks } from '@/hooks/use-api-hooks';
-import { useCurrentTimeTrack, useTimerContext } from '@/hooks/use-store-hooks';
+import { useTimerContext, useTimeTrackContext } from '@/hooks/use-store-hooks';
 
 const AddTimeTrack = () => {
   const { mutate } = useTodayTracks();
   const timerContext = useTimerContext();
-  const currentTrack = useCurrentTimeTrack();
+  const currentTrack = useTimeTrackContext();
   const MAX_DURATION = 48;
 
   const startTimer = () => {

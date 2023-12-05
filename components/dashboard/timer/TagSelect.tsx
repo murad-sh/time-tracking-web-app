@@ -14,7 +14,8 @@ const TagSelect = ({ tag, setTag }: TagSelectProps) => {
   const { tags } = useTags();
 
   const selectTag = (selectedTag: string) => {
-    setTag(selectedTag.trim());
+    const tag = tags.includes(selectedTag);
+    return tag ? selectTag : setTag('');
   };
 
   return (

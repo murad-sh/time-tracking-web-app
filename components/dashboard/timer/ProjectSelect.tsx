@@ -18,9 +18,13 @@ const ProjectSelect = ({ projectId, setProjectId }: ProjectSelectProps) => {
     setProjectId(selectedProject.trim());
   };
 
-  const getSelectedProject = (projectId: string) =>
-    projects.find((project: IProject) => project._id!.toString() === projectId)!
-      .projectTitle;
+  const getSelectedProject = (projectId: string) => {
+    const project = projects.find(
+      (project: IProject) => project._id?.toString() === projectId
+    );
+
+    return project ? project.projectTitle : setProjectId('');
+  };
 
   return (
     <Select value={projectId} onValueChange={selectProject}>
