@@ -1,0 +1,111 @@
+@import '@/styles/variables';
+
+.container {
+  h3 {
+    color: $color-text-primary-dark;
+    font-size: 2.2rem;
+  }
+  p {
+    color: $color-text-primary-light;
+    font-size: 1.6rem;
+  }
+}
+
+.list {
+  margin-top: 1.5rem;
+  font-size: 1.6rem;
+  list-style: none;
+  text-align: left;
+  border-radius: 0.6rem;
+  border: 1px solid $color-skeleton;
+  margin-bottom: 2.5rem;
+  & > * + * {
+    border-top: 1px solid $color-skeleton;
+  }
+
+  li {
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+
+    .content {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      align-items: center;
+
+      span {
+        font-weight: 500;
+      }
+    }
+
+    .control {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .duration {
+      color: $color-text-primary-dark;
+      font-variant-numeric: tabular-nums;
+      padding: 0.5rem 1rem;
+      margin-left: 1rem;
+      border: 1px solid transparent;
+      background-color: $color-primary;
+      color: #fff;
+      border-radius: 100px;
+      font-weight: 500;
+    }
+    .tag {
+      color: $color-text-primary-dark;
+      font-variant-numeric: tabular-nums;
+      padding: 0.5rem 1rem;
+      margin-left: 1rem;
+      border: 1px solid transparent;
+      background-color: $color-skeleton;
+      border-radius: 100px;
+      font-weight: 500;
+    }
+  }
+}
+
+// Skeleton Styles
+.header {
+  width: 30%;
+  height: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+.description {
+  width: 25%;
+  height: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.divider {
+  border-radius: 0.6rem;
+  border: 1px solid $color-skeleton;
+  & > * + * {
+    border-top: 1px solid $color-skeleton;
+  }
+  margin-bottom: 5rem;
+}
+
+.item {
+  padding: 2rem;
+  height: 7.86rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.left {
+  height: 3rem;
+  width: 30%;
+}
+
+.right {
+  height: 3rem;
+  width: 16%;
+}

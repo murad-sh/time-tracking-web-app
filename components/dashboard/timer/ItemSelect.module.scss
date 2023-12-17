@@ -4,3 +4,26 @@
 .separator {
   @include menu-separator;
 }
+
+.select {
+  color: $color-text-primary-dark;
+  font-weight: 500;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $color-background;
+  padding: 0.75rem;
+  cursor: pointer;
+  transition: background-color ease;
+}
+
+.select:hover,
+.active {
+  background-color: $color-skeleton;
+}
+
+.label {
+  margin-bottom: 1rem;
+}

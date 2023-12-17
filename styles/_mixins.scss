@@ -33,10 +33,11 @@
 }
 
 @mixin form-error {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   color: $color-error-light;
   margin-top: 0.8rem;
   text-align: left;
+  font-weight: 500;
 }
 
 @mixin btn-disabled {
@@ -48,8 +49,9 @@
 @mixin overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(black, 0.6);
   z-index: 100;
+  background: rgba($color-background, 0.8);
+  backdrop-filter: blur(4px);
 }
 
 @mixin dialog-content {
@@ -65,8 +67,8 @@
 }
 
 @mixin dropdown-menu-item {
-  font-size: 1.4rem;
-  padding: 0.5rem 1rem;
+  font-size: 1.6rem;
+  padding: 0.8rem 1rem;
   display: block;
   width: 100%;
   border: none;
@@ -82,9 +84,8 @@
 
 @mixin menu-content {
   border: 1px solid $color-skeleton;
-  padding: 0.6rem;
+  padding: 1rem;
   font-size: 1.4rem;
-  width: 12rem;
   border-radius: 6px;
   z-index: 50;
   background-color: $color-background;

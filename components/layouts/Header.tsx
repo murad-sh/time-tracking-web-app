@@ -13,6 +13,7 @@ interface HeaderProps {
 const Header = (props: HeaderProps) => {
   const { status } = useSession();
   const router = useRouter();
+  const activeNav = router.pathname;
 
   async function logoutHandler() {
     await signOut({ redirect: false });
@@ -29,7 +30,12 @@ const Header = (props: HeaderProps) => {
           <ul className={styles.list}>
             {status === 'unauthenticated' && (
               <li className={styles.item}>
-                <SecondaryButton href={'/login'}>Login</SecondaryButton>
+                <SecondaryButton
+                  isActive={activeNav === '/login'}
+                  href={'/login'}
+                >
+                  Login
+                </SecondaryButton>
               </li>
             )}
             {status === 'unauthenticated' && (
@@ -39,7 +45,12 @@ const Header = (props: HeaderProps) => {
             )}
             {status === 'authenticated' && (
               <li className={styles.item}>
-                <SecondaryButton href={'/dashboard'}>Dashboard</SecondaryButton>
+                <SecondaryButton
+                  isActive={activeNav === '/dashboard'}
+                  href={'/dashboard'}
+                >
+                  Dashboard
+                </SecondaryButton>
               </li>
             )}
             {status === 'authenticated' && (

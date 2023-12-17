@@ -2,7 +2,7 @@ import { useProject } from '@/hooks/use-api-hooks';
 import { useRouter } from 'next/router';
 import React from 'react';
 import Layout from './Layout';
-import { calculateTotalDuration, getDuration } from '@/lib/utils/date';
+import { calculateTotalDuration, getTrackDuration } from '@/lib/utils/date';
 import { ITimeTrack } from '@/models/time-track';
 import ErrorMessage from '@/components/ui/ErrorMessage';
 import ProjectSkeleton from './ProjectSkeleton';
@@ -43,7 +43,7 @@ const Project = () => {
             <span>
               Duration:
               <span className={styles.duration}>
-                {getDuration(new Date(track.start), new Date(track.end))}
+                {getTrackDuration(new Date(track.start), new Date(track.end))}
               </span>
             </span>
           </li>

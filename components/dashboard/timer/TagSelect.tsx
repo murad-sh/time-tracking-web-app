@@ -2,7 +2,6 @@ import React from 'react';
 import Select from '@/components/ui/Select';
 import { useTags } from '@/hooks/use-api-hooks';
 import { TagIcon } from 'lucide-react';
-
 import styles from './ItemSelect.module.scss';
 
 interface TagSelectProps {
@@ -12,25 +11,25 @@ interface TagSelectProps {
 
 const TagSelect = ({ tag, setTag }: TagSelectProps) => {
   const { tags } = useTags();
+  const tagClass = `${styles.select} ${tag && styles.active}`;
 
   const selectTag = (selectedTag: string) => {
-    const tag = tags.includes(selectedTag);
-    return tag ? selectTag : setTag('');
+    const isTagExists = tags.includes(selectedTag);
+    return isTagExists ? setTag(selectedTag) : setTag('');
   };
 
   return (
     <Select value={tag} onValueChange={selectTag}>
       <Select.Button asChild>
-        <button className={styles.tagButton}>
+        <button className={tagClass} aria-label="Choose tag">
           <TagIcon />
-          {tag || 'Select Tag'}
         </button>
       </Select.Button>
       <Select.Content position="popper" sideOffset={5}>
         {tags && tags.length === 0 ? (
-          <Select.Label>No tags</Select.Label>
+          <Select.Label className={styles.label}>No tags</Select.Label>
         ) : (
-          <Select.Label>Choose tag</Select.Label>
+          <Select.Label className={styles.label}>Choose tag</Select.Label>
         )}
         {tag && (
           <>

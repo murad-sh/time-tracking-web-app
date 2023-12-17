@@ -9,6 +9,7 @@ interface ButtonProps {
   className?: string;
   type?: React.ButtonHTMLAttributes<HTMLButtonElement>['type'];
   disabled?: React.ButtonHTMLAttributes<HTMLButtonElement>['disabled'];
+  ariaLabel?: string;
 }
 
 const PrimaryButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -20,6 +21,7 @@ const PrimaryButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
         <Link
           className={`${styles.primary} ${props.className}`}
           href={props.href}
+          aria-label={props.ariaLabel}
         >
           {props.children}
         </Link>
@@ -33,6 +35,7 @@ const PrimaryButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
         type={buttonType}
         ref={ref}
         disabled={props.disabled}
+        aria-label={props.ariaLabel}
       >
         {props.children}
       </button>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { secondsToTimeStr } from '@/lib/utils/date';
+import { formatDuration } from '@/lib/utils/date';
 import { TooltipProps } from 'recharts';
 import styles from './CustomTooltip.module.scss';
 
@@ -12,7 +12,7 @@ const CustomTooltip = ({
   chartType,
 }: TooltipProps<number, string> & CustomProps) => {
   if (active && payload && payload.length) {
-    const formattedDuration = secondsToTimeStr(payload[0].value as number);
+    const formattedDuration = formatDuration(payload[0].value as number);
     const date = payload[0].payload.date;
     const tag = payload[0].payload.name;
     return (

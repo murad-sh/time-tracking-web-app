@@ -9,11 +9,7 @@ import {
   YAxis,
   CartesianGrid,
 } from 'recharts';
-import {
-  secondsToTimeStr,
-  WeeklyDataType,
-  secondsToHMS,
-} from '@/lib/utils/date';
+import { formatDuration, WeeklyDataType, secondsToHMS } from '@/lib/utils/date';
 import CustomTooltip from './CustomTooltip';
 
 const WeeklyBarChart = ({ weekly }: { weekly: WeeklyDataType[] }) => {
@@ -29,7 +25,7 @@ const WeeklyBarChart = ({ weekly }: { weekly: WeeklyDataType[] }) => {
 
   const formatLabel = (val: number) => {
     if (!val) return '';
-    return secondsToTimeStr(val);
+    return formatDuration(val);
   };
 
   return (

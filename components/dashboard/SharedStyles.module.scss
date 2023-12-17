@@ -9,6 +9,7 @@
 
   border-radius: 0.6rem;
   border: 1px solid $color-skeleton;
+  margin-bottom: 2.5rem;
   & > * + * {
     border-top: 1px solid $color-skeleton;
   }

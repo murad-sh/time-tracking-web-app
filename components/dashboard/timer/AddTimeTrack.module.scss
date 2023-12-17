@@ -1,17 +1,61 @@
 @import '@/styles/variables';
 @import '@/styles/mixins';
 
-.separator {
-  height: 1px;
-  background-color: $color-skeleton;
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
 }
 
-.edit {
-  @include dropdown-menu-item;
+.stopwatch {
+  font-size: 1rem;
   color: $color-text-primary-dark;
+  margin-top: 1.5rem;
 }
 
-.delete {
-  @include dropdown-menu-item;
-  color: $color-error-light;
+.control {
+  display: flex;
+  gap: 1.4rem;
+
+  input {
+    flex: 1;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.6rem;
+    border: 1px solid $color-skeleton;
+    border-radius: 6px;
+    color: $color-text-primary-dark;
+
+    &:focus {
+      outline: none;
+      border-color: $color-primary;
+    }
+  }
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.75rem;
+  height: 5rem;
+  width: 5rem;
+}
+
+// .separator {
+//   height: 1px;
+//   background-color: $color-skeleton;
+// }
+
+// .edit {
+//   @include dropdown-menu-item;
+//   color: $color-text-primary-dark;
+// }
+
+// .delete {
+//   @include dropdown-menu-item;
+//   color: $color-error-light;
+// }
+
+.tracks {
+  margin-left: 5rem;
 }

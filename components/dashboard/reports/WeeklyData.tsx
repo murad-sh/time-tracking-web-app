@@ -1,11 +1,11 @@
 import React from 'react';
 import { useWeeklyTracks } from '@/hooks/use-api-hooks';
 import {
-  calculateWeekly,
-  calculateWeekRange,
-  calculateTagUsage,
-  organizeTracksByDay,
-  getTotalWeekly,
+  aggregateWeeklyTimeTracks,
+  getISOWeekDateRange,
+  aggregateTagTimeUsage,
+  groupTracksByDayOfWeek,
+  formatTotalWeeklyDuration,
 } from '@/lib/utils/date';
 import { useSearchParams } from 'next/navigation';
 import WeeklyBarChart from './charts/WeeklyBarChart';
@@ -13,7 +13,8 @@ import WeeklyPieChart from './charts/WeeklyPieChart';
 import TimeTrackList from './TimeTrackList';
 
 const WeeklyChart = () => {
-  const { startDate: currentStart, endDate: currentEnd } = calculateWeekRange();
+  const { startDate: currentStart, endDate: currentEnd } =
+    getISOWeekDateRange();
   const searchParams = useSearchParams();
   const start = (searchParams.get('start') || currentStart) as string;
   const end = (searchParams.get('end') || currentEnd) as string;
@@ -38,10 +39,10 @@ const WeeklyChart = () => {
   if (timeTracks && timeTracks.length === 0)
     return <div>No data for this week</div>;
 
-  const weekly = calculateWeekly(start, timeTracks);
-  const totalWeekly = getTotalWeekly(weekly);
-  const tagUsage = calculateTagUsage(timeTracks);
-  const dailyTracks = organizeTracksByDay(timeTracks);
+  const weekly = aggregateWeeklyTimeTracks(start, timeTracks);
+  const totalWeekly = formatTotalWeeklyDuration(weekly);
+  const tagUsage = aggregateTagTimeUsage(timeTracks);
+  const dailyTracks = groupTracksByDayOfWeek(timeTracks);
 
   return (
     <div>

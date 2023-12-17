@@ -2,29 +2,37 @@ import React, { useState } from 'react';
 import Dropdown from '@/components/ui/Dropdown';
 import AlertDialog from '@/components/ui/AlertDialog';
 import { MoreVertical } from 'lucide-react';
-import { useWeeklyTracks } from '@/hooks/use-api-hooks';
+import { useTodayTracks, useWeeklyTracks } from '@/hooks/use-api-hooks';
 import { deleteTimeTrack } from '@/lib/utils/services';
 import { toast } from 'sonner';
 import Modal from '@/components/ui/Modal';
 import { ITimeTrack } from '@/models/time-track';
-import EditForm from './EditForm';
+import EditForm from './reports/EditForm';
 import { useSearchParams } from 'next/navigation';
-import { calculateWeekRange } from '@/lib/utils/date';
-import styles from '../SharedStyles.module.scss';
+import { getISOWeekDateRange } from '@/lib/utils/date';
+import styles from './SharedStyles.module.scss';
 
-const Operations = ({ timeTrack }: { timeTrack: ITimeTrack }) => {
-  const { startDate: currentStart, endDate: currentEnd } = calculateWeekRange();
+const TrackOperations = ({
+  timeTrack,
+  dateType,
+}: {
+  timeTrack: ITimeTrack;
+  dateType: 'weekly' | 'daily';
+}) => {
+  const { startDate: currentStart, endDate: currentEnd } =
+    getISOWeekDateRange();
   const searchParams = useSearchParams();
   const start = (searchParams.get('start') || currentStart) as string;
   const end = (searchParams.get('end') || currentEnd) as string;
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const { mutate } = useWeeklyTracks(start, end);
+  const { mutate: mutateToday } = useTodayTracks();
 
   const deleteTimeTrackHandler = async () => {
     try {
       await deleteTimeTrack(timeTrack._id.toString());
-      mutate();
+      dateType === 'weekly' ? mutate() : mutateToday();
       toast.success('Time Track deleted successfully');
     } catch (error) {
       toast.error('An error occurred');
@@ -70,7 +78,7 @@ const Operations = ({ timeTrack }: { timeTrack: ITimeTrack }) => {
             initialTrack={timeTrack}
             afterSave={() => {
               setShowEditModal(false);
-              mutate();
+              dateType === 'weekly' ? mutate() : mutateToday();
             }}
           />
         </Modal.Content>
@@ -79,4 +87,4 @@ const Operations = ({ timeTrack }: { timeTrack: ITimeTrack }) => {
   );
 };
 
-export default Operations;
+export default TrackOperations;

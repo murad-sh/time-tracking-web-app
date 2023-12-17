@@ -23,6 +23,7 @@
   color: $color-text-primary-dark;
   border-radius: 0.6rem;
   border: 1px solid $color-skeleton;
+  margin-bottom: 2.5rem;
   & > * + * {
     border-top: 1px solid $color-skeleton;
   }
@@ -39,6 +40,7 @@
     }
     .duration {
       color: $color-text-primary-dark;
+      font-variant-numeric: tabular-nums;
       padding: 0.5rem 1rem;
       margin-left: 1rem;
       border: 1px solid transparent;

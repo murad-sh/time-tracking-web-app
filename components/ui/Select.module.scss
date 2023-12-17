@@ -9,8 +9,10 @@
   @include dropdown-menu-item;
   display: flex;
   align-items: center;
-  gap: 0.8rem;
+  gap: 0.9rem;
   font-weight: 500;
+  font-size: 1.4rem;
+  padding-left: 1.5rem;
 
   .item__icon {
     display: flex;

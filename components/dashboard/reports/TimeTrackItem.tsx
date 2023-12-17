@@ -1,8 +1,8 @@
 import React from 'react';
 import { ITimeTrack } from '@/models/time-track';
 import styles from './TimeTrackItem.module.scss';
-import { getDuration } from '@/lib/utils/date';
-import Operations from './Operations';
+import { getTrackDuration } from '@/lib/utils/date';
+import TrackOperations from '../TrackOperations';
 
 interface Props {
   timeTrack: ITimeTrack;
@@ -20,11 +20,11 @@ const TimeTrackItem = ({ timeTrack }: Props) => {
       <div className={styles.duration}>
         <span>
           Duration:
-          {getDuration(new Date(timeTrack.start), new Date(timeTrack.end))}
+          {getTrackDuration(new Date(timeTrack.start), new Date(timeTrack.end))}
         </span>
       </div>
       <div>
-        <Operations timeTrack={timeTrack} />
+        <TrackOperations timeTrack={timeTrack} dateType="weekly" />
       </div>
     </div>
   );

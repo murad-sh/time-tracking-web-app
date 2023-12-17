@@ -14,6 +14,8 @@ interface ProjectSelectProps {
 const ProjectSelect = ({ projectId, setProjectId }: ProjectSelectProps) => {
   const { projects } = useProjects();
 
+  const selectBtnClass = `${styles.select} ${projectId && styles.active}`;
+
   const selectProject = (selectedProject: string) => {
     setProjectId(selectedProject.trim());
   };
@@ -29,16 +31,15 @@ const ProjectSelect = ({ projectId, setProjectId }: ProjectSelectProps) => {
   return (
     <Select value={projectId} onValueChange={selectProject}>
       <Select.Button asChild>
-        <button className={styles.tagButton}>
-          <FileTextIcon />
-          {projectId ? getSelectedProject(projectId) : 'Select Project'}
+        <button className={selectBtnClass} aria-label="Choose project">
+          {projectId ? getSelectedProject(projectId) : <FileTextIcon />}
         </button>
       </Select.Button>
       <Select.Content position="popper" sideOffset={5}>
         {projects && projects.length === 0 ? (
-          <Select.Label>No projects</Select.Label>
+          <Select.Label className={styles.label}>No projects</Select.Label>
         ) : (
-          <Select.Label>Choose project</Select.Label>
+          <Select.Label className={styles.label}>Choose project</Select.Label>
         )}
         {projectId && (
           <>

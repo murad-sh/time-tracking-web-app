@@ -6,13 +6,16 @@ interface ButtonProps {
   href: string;
   children: ReactNode;
   className?: string;
+  isActive?: boolean;
 }
 
 const SecondaryButton = (props: ButtonProps) => {
   return (
     <Link
       href={props.href}
-      className={`${styles.secondary} ${props.className}`}
+      className={`${styles.secondary} ${props.isActive && styles.active} ${
+        props.className
+      }`}
     >
       {props.children}
     </Link>
