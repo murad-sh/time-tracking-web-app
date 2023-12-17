@@ -1,0 +1,57 @@
+@import '@/styles/variables';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 3.2rem;
+
+  h1 {
+    font-size: 3.6rem;
+    margin-bottom: 2rem;
+    color: $color-text-primary-dark;
+  }
+}
+
+.controller {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.switch {
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: $color-text-primary-dark;
+  background-color: transparent;
+  padding: 1rem 2rem;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  font-weight: 500;
+  display: inline-flex;
+  gap: 0.5rem;
+  text-decoration: none;
+  transition: all ease;
+
+  &:first-of-type {
+    margin-right: 1rem;
+  }
+
+  .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    svg {
+      height: 2rem;
+      width: 2rem;
+    }
+  }
+
+  &:hover {
+    background-color: $color-skeleton;
+  }
+}
+
+.active {
+  background-color: $color-skeleton;
+}

@@ -1,0 +1,47 @@
+@import '@/styles/variables';
+
+.navigation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  border: 1px solid $color-skeleton;
+  border-radius: 6px;
+  padding: 0.5rem;
+}
+
+.link {
+  font-size: 1.6rem;
+  color: $color-text-primary-dark;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  font-weight: 500;
+  display: inline-flex;
+  gap: 0.5rem;
+  text-decoration: none;
+  transition: all ease;
+
+  &:hover {
+    background-color: $color-skeleton;
+  }
+}
+
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  svg {
+    height: 1.8rem;
+    width: 1.8rem;
+  }
+}
+
+.current {
+  font-size: 1.4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  min-width: 13.6rem;
+}

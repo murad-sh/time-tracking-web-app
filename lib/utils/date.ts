@@ -9,6 +9,7 @@ import {
   startOfDay,
   endOfDay,
   getDay,
+  parseISO,
 } from 'date-fns';
 
 export const getISOWeekDateRange = (weekOffset = 0) => {
@@ -147,6 +148,9 @@ export const formatDate = (input: string | number): string => {
   const date = new Date(input);
   return format(date, 'MMMM d, yyyy');
 };
+
+export const formatDateToDayMonth = (isoString: string) =>
+  format(parseISO(isoString), 'dd MMM');
 
 export type DailyTracksType = {
   day: string;

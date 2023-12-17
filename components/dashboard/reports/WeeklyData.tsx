@@ -2,36 +2,27 @@ import React from 'react';
 import { useWeeklyTracks } from '@/hooks/use-api-hooks';
 import {
   aggregateWeeklyTimeTracks,
-  getISOWeekDateRange,
   aggregateTagTimeUsage,
   groupTracksByDayOfWeek,
   formatTotalWeeklyDuration,
 } from '@/lib/utils/date';
-import { useSearchParams } from 'next/navigation';
 import WeeklyBarChart from './charts/WeeklyBarChart';
 import WeeklyPieChart from './charts/WeeklyPieChart';
 import TimeTrackList from './TimeTrackList';
+import { useWeeklySettings } from '@/hooks/use-weekly-settings';
+import styles from './WeeklyData.module.scss';
 
-const WeeklyChart = () => {
-  const { startDate: currentStart, endDate: currentEnd } =
-    getISOWeekDateRange();
-  const searchParams = useSearchParams();
-  const start = (searchParams.get('start') || currentStart) as string;
-  const end = (searchParams.get('end') || currentEnd) as string;
-
-  const {
-    timeTracks,
-    isLoading,
-    error: apiFetchError,
-  } = useWeeklyTracks(start, end);
+const WeeklyData = () => {
+  const { start, end, view } = useWeeklySettings();
+  const { timeTracks, isLoading, error } = useWeeklyTracks(start, end);
 
   // TODO: Add skeleton for loading state
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  // TODO : Add api error handling
-  if (apiFetchError) {
+  // TODO : Add  error handling
+  if (error) {
     return <div>Something went wrong.Try to refresh page</div>;
   }
 
@@ -45,20 +36,21 @@ const WeeklyChart = () => {
   const dailyTracks = groupTracksByDayOfWeek(timeTracks);
 
   return (
-    <div>
-      <div>
-        <p>Total time this week: {totalWeekly}</p>
-        <WeeklyBarChart weekly={weekly} />
-      </div>
-      <div>
-        <h2>Tag usage :</h2>
-        <WeeklyPieChart tagUsage={tagUsage} />
-      </div>
-      <div>
+    <div className={styles.container}>
+      <h2>
+        Weekly Total Time: <span>{totalWeekly}</span>
+      </h2>
+
+      {view === 'charts' ? (
+        <div className={styles.charts}>
+          <WeeklyBarChart weekly={weekly} />
+          <WeeklyPieChart tagUsage={tagUsage} />
+        </div>
+      ) : (
         <TimeTrackList dailyTracks={dailyTracks} />
-      </div>
+      )}
     </div>
   );
 };
 
-export default WeeklyChart;
+export default WeeklyData;
