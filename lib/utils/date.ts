@@ -11,15 +11,18 @@ import {
   getDay,
 } from 'date-fns';
 
-export const calculateWeekRange = (weekOffset = 0) => {
+export const getISOWeekDateRange = (weekOffset = 0) => {
   let date = new Date();
   date = addWeeks(date, weekOffset);
-  const startDate = startOfWeek(date, { weekStartsOn: 1 }).toLocaleDateString();
-  const endDate = endOfWeek(date, { weekStartsOn: 1 }).toLocaleDateString();
+  const startDate = startOfWeek(date, { weekStartsOn: 1 }).toISOString();
+  const endDate = endOfWeek(date, { weekStartsOn: 1 }).toISOString();
   return { startDate, endDate };
 };
 
-export const calculateWeekly = (start: string, timeTracks: ITimeTrack[]) => {
+export const aggregateWeeklyTimeTracks = (
+  start: string,
+  timeTracks: ITimeTrack[]
+) => {
   const weekStart = new Date(start);
   const daysOfWeek = [
     'Monday',
@@ -62,7 +65,7 @@ type TagTimeType = {
   };
 };
 
-export const calculateTagUsage = (timeTracks: ITimeTrack[]) => {
+export const aggregateTagTimeUsage = (timeTracks: ITimeTrack[]) => {
   let tagTime: TagTimeType = {};
 
   timeTracks.forEach((track) => {
@@ -86,13 +89,13 @@ export type WeeklyDataType = {
   date: string;
 };
 
-export const calculateTotalWeekly = (weekData: WeeklyDataType[]): number => {
+export const sumWeeklyDurations = (weekData: WeeklyDataType[]): number => {
   return weekData.reduce((total, dayData) => total + dayData.duration, 0);
 };
 
-export const getTotalWeekly = (weekData: WeeklyDataType[]) => {
-  const total = calculateTotalWeekly(weekData);
-  return secondsToTimeStr(total);
+export const formatTotalWeeklyDuration = (weekData: WeeklyDataType[]) => {
+  const total = sumWeeklyDurations(weekData);
+  return formatDuration(total);
 };
 
 export const calculateTotalDuration = (timeTracks: ITimeTrack[]) => {
@@ -101,7 +104,7 @@ export const calculateTotalDuration = (timeTracks: ITimeTrack[]) => {
       total + differenceInSeconds(new Date(track.end), new Date(track.start)),
     0
   );
-  return secondsToTimeStr(total);
+  return formatDurationWithUnits(total);
 };
 
 export const secondsToHMS = (timeInSeconds: number) => {
@@ -112,20 +115,25 @@ export const secondsToHMS = (timeInSeconds: number) => {
   return { hours, minutes, seconds };
 };
 
-export const secondsToTimeStr = (timeInSeconds: number) => {
+export const formatDuration = (timeInSeconds: number) => {
   const { hours, minutes, seconds } = secondsToHMS(timeInSeconds);
-  return [hours, minutes, seconds]
-    .map((val) => val.toString().padStart(2, '0'))
-    .join(':');
+  const formattedHours =
+    hours >= 100 ? hours.toString() : hours.toString().padStart(2, '0');
+  const formattedMinutes = minutes.toString().padStart(2, '0');
+  const formattedSeconds = seconds.toString().padStart(2, '0');
+
+  return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
 };
 
-export const toTimeStr = (timeInSeconds: number) => {
+export const formatDurationWithUnits = (timeInSeconds: number) => {
   const { hours, minutes, seconds } = secondsToHMS(timeInSeconds);
 
   if (hours > 0) {
-    return `${hours.toString().padStart(2, '0')}:${minutes
+    const formattedHours =
+      hours >= 100 ? hours.toString() : hours.toString().padStart(2, '0');
+    return `${formattedHours}:${minutes.toString().padStart(2, '0')}:${seconds
       .toString()
-      .padStart(2, '0')}:${seconds.toString().padStart(2, '0')} hours`;
+      .padStart(2, '0')} hours`;
   } else if (minutes > 0) {
     return `${minutes.toString().padStart(2, '0')}:${seconds
       .toString()
@@ -145,7 +153,7 @@ export type DailyTracksType = {
   records: ITimeTrack[];
 };
 
-export const organizeTracksByDay = (
+export const groupTracksByDayOfWeek = (
   timeTracks: ITimeTrack[]
 ): DailyTracksType[] => {
   const dayMap: Record<string, ITimeTrack[]> = {};
@@ -164,14 +172,14 @@ export const organizeTracksByDay = (
   }));
 };
 
-export const getTodayStartEnd = () => {
+export const getTodayStartEndISO = () => {
   const now = new Date();
   const startOfToday = startOfDay(now);
   const endOfToday = endOfDay(now);
 
   return {
-    start: startOfToday,
-    end: endOfToday,
+    start: startOfToday.toISOString(),
+    end: endOfToday.toISOString(),
   };
 };
 
@@ -180,5 +188,5 @@ export const isTodaySunday = () => {
   return getDay(today) === 0;
 };
 
-export const getDuration = (start: Date, end: Date) =>
-  secondsToTimeStr(differenceInSeconds(end, start));
+export const getTrackDuration = (start: Date, end: Date) =>
+  formatDuration(differenceInSeconds(end, start));

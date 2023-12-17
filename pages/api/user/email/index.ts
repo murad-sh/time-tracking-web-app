@@ -3,7 +3,7 @@ import { transporter } from '@/email/email-config';
 import { emailContent } from '@/email/email-content';
 import {
   calculateTotalDuration,
-  calculateWeekRange,
+  getISOWeekDateRange,
   isTodaySunday,
 } from '@/lib/utils/date';
 import { connectToDB } from '@/lib/utils/db';
@@ -21,7 +21,7 @@ export default async function handler(
   try {
     if (!isTodaySunday()) return res.status(403).json('Forbidden');
 
-    const { startDate, endDate } = calculateWeekRange();
+    const { startDate, endDate } = getISOWeekDateRange();
     await connectToDB();
     const existingReport = await EmailReport.findOne({
       startDate,
