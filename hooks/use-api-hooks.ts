@@ -1,4 +1,4 @@
-import { getTodayStartEnd } from '@/lib/utils/date';
+import { getTodayStartEndISO } from '@/lib/utils/date';
 import useSWR from 'swr';
 
 export function useTags() {
@@ -37,7 +37,7 @@ export function useWeeklyTracks(startDate: string, endDate: string) {
 }
 
 export function useTodayTracks() {
-  const { start, end } = getTodayStartEnd();
+  const { start, end } = getTodayStartEndISO();
   const apiUrl = timeTracksApi + `?startDate=${start}&endDate=${end}`;
   const { data, error, isLoading, mutate } = useSWR(apiUrl);
   return {

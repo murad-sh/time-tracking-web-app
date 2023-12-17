@@ -19,10 +19,8 @@ export function useTimer() {
 
       return () => {
         clearInterval(intervalId!);
+        setTime(0);
       };
-    } else {
-      clearInterval(intervalId);
-      setTime(0);
     }
   }, [timer]);
 

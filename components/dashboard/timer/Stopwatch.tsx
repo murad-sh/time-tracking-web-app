@@ -1,16 +1,12 @@
 import React from 'react';
-import { secondsToTimeStr } from '@/lib/utils/date';
+import { formatDuration } from '@/lib/utils/date';
 import { useTimerContext } from '@/hooks/use-store-hooks';
 
 const Stopwatch = () => {
   const { time } = useTimerContext();
-  const value = secondsToTimeStr(time);
+  const value = formatDuration(time);
 
-  return (
-    <div>
-      <h1>{value}</h1>
-    </div>
-  );
+  return <h2>{value}</h2>;
 };
 
 export default Stopwatch;
