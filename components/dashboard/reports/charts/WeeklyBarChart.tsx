@@ -9,18 +9,16 @@ import {
   YAxis,
   CartesianGrid,
 } from 'recharts';
-import { formatDuration, WeeklyDataType, secondsToHMS } from '@/lib/utils/date';
+import { formatDuration, WeeklyDataType } from '@/lib/utils/date';
 import CustomTooltip from './CustomTooltip';
+import { calculateScale } from '@/lib/utils/calculate';
 
 const WeeklyBarChart = ({ weekly }: { weekly: WeeklyDataType[] }) => {
   const strokeColor = '#667085';
+  const yAxisTicks = calculateScale(weekly);
 
-  const formatYAxis = (val: number) => {
-    const { hours, minutes, seconds } = secondsToHMS(val);
-    if (hours > 0) return `${hours}h`;
-    if (minutes > 0) return `${minutes}m`;
-    if (!hours && !minutes && seconds > 0) return '30s';
-    return '';
+  const formatYAxis = (tick: number) => {
+    return `${tick / 3600}h`;
   };
 
   const formatLabel = (val: number) => {
@@ -34,7 +32,7 @@ const WeeklyBarChart = ({ weekly }: { weekly: WeeklyDataType[] }) => {
         data={weekly}
         margin={{ top: 50, right: 20, left: 20, bottom: 5 }}
       >
-        <CartesianGrid vertical={false} />
+        <CartesianGrid vertical={false} stroke="#ddd" strokeOpacity={0.7} />
         <XAxis
           dataKey="day"
           stroke={strokeColor}
@@ -48,7 +46,8 @@ const WeeklyBarChart = ({ weekly }: { weekly: WeeklyDataType[] }) => {
           fontSize={12}
           tickLine={false}
           axisLine={false}
-          domain={['auto', (dataMax: number) => dataMax * 1.1]}
+          domain={[0, 'dataMax']}
+          ticks={yAxisTicks}
           tickFormatter={formatYAxis}
         />
         <Tooltip
@@ -62,6 +61,7 @@ const WeeklyBarChart = ({ weekly }: { weekly: WeeklyDataType[] }) => {
             position="top"
             fontSize={12}
             fill="#201a2d"
+            fontWeight={500}
             formatter={formatLabel}
           />
         </Bar>
