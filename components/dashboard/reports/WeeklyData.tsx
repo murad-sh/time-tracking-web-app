@@ -11,24 +11,29 @@ import WeeklyPieChart from './charts/WeeklyPieChart';
 import TimeTrackList from './TimeTrackList';
 import { useWeeklySettings } from '@/hooks/use-weekly-settings';
 import styles from './WeeklyData.module.scss';
+import ErrorMessage from '@/components/ui/ErrorMessage';
 
 const WeeklyData = () => {
   const { start, end, view } = useWeeklySettings();
   const { timeTracks, isLoading, error } = useWeeklyTracks(start, end);
 
-  // TODO: Add skeleton for loading state
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  // TODO : Add  error handling
   if (error) {
-    return <div>Something went wrong.Try to refresh page</div>;
+    return <ErrorMessage />;
   }
 
-  // TODO : Handle ui when there is no data for this week
-  if (timeTracks && timeTracks.length === 0)
-    return <div>No data for this week</div>;
+  if (timeTracks.length === 0)
+    return (
+      <div className={styles.container}>
+        <h3 className={styles.message}>No time tracks for this week</h3>
+        <p className={styles.description}>
+          There are no recorded time tracks for this week.
+        </p>
+      </div>
+    );
 
   const weekly = aggregateWeeklyTimeTracks(start, timeTracks);
   const totalWeekly = formatTotalWeeklyDuration(weekly);
@@ -43,8 +48,13 @@ const WeeklyData = () => {
 
       {view === 'charts' ? (
         <div className={styles.charts}>
-          <WeeklyBarChart weekly={weekly} />
-          <WeeklyPieChart tagUsage={tagUsage} />
+          <div className={styles.bar}>
+            <WeeklyBarChart weekly={weekly} />
+          </div>
+          <div className={styles.pie}>
+            <h3>Tag Usage:</h3>
+            <WeeklyPieChart tagUsage={tagUsage} />
+          </div>
         </div>
       ) : (
         <TimeTrackList dailyTracks={dailyTracks} />

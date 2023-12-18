@@ -10,6 +10,7 @@ import {
   endOfDay,
   getDay,
   parseISO,
+  differenceInWeeks,
 } from 'date-fns';
 
 export const getISOWeekDateRange = (weekOffset = 0) => {
@@ -18,6 +19,12 @@ export const getISOWeekDateRange = (weekOffset = 0) => {
   const startDate = startOfWeek(date, { weekStartsOn: 1 }).toISOString();
   const endDate = endOfWeek(date, { weekStartsOn: 1 }).toISOString();
   return { startDate, endDate };
+};
+
+export const calculateOffset = (start: string, currentStart: string) => {
+  const urlStart = parseISO(start);
+  const currentWeekStart = parseISO(currentStart);
+  return differenceInWeeks(urlStart, currentWeekStart);
 };
 
 export const aggregateWeeklyTimeTracks = (
@@ -96,7 +103,7 @@ export const sumWeeklyDurations = (weekData: WeeklyDataType[]): number => {
 
 export const formatTotalWeeklyDuration = (weekData: WeeklyDataType[]) => {
   const total = sumWeeklyDurations(weekData);
-  return formatDuration(total);
+  return formatDurationWithUnits(total);
 };
 
 export const calculateTotalDuration = (timeTracks: ITimeTrack[]) => {

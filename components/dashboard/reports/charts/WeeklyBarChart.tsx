@@ -27,11 +27,8 @@ const WeeklyBarChart = ({ weekly }: { weekly: WeeklyDataType[] }) => {
   };
 
   return (
-    <ResponsiveContainer width="100%" height={400}>
-      <BarChart
-        data={weekly}
-        margin={{ top: 50, right: 20, left: 20, bottom: 5 }}
-      >
+    <ResponsiveContainer width="100%" height={350}>
+      <BarChart data={weekly} margin={{ top: 40 }}>
         <CartesianGrid vertical={false} stroke="#ddd" strokeOpacity={0.7} />
         <XAxis
           dataKey="day"
@@ -55,7 +52,7 @@ const WeeklyBarChart = ({ weekly }: { weekly: WeeklyDataType[] }) => {
           cursor={{ fill: '#e2e8f0' }}
           offset={-50}
         />
-        <Bar dataKey="duration" fill="#7823b9" radius={[5, 5, 0, 0]}>
+        <Bar dataKey="duration" fill="#7823b9" radius={[6, 6, 0, 0]}>
           <LabelList
             dataKey="duration"
             position="top"

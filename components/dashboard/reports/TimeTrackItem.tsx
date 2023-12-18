@@ -10,20 +10,15 @@ interface Props {
 
 const TimeTrackItem = ({ timeTrack }: Props) => {
   return (
-    <div className={styles.track}>
-      <div className={styles.title}>
-        <span>Title: {timeTrack.title}</span>
+    <div className={styles.item}>
+      <div className={styles.content}>
+        <span>{timeTrack.title}</span>
+        <span className={styles.tag}>{timeTrack.tag || 'No tag'}</span>
       </div>
-      <div>
-        <span>Tag: {timeTrack.tag || 'No tag'}</span>
-      </div>
-      <div className={styles.duration}>
-        <span>
-          Duration:
+      <div className={styles.control}>
+        <span className={styles.duration}>
           {getTrackDuration(new Date(timeTrack.start), new Date(timeTrack.end))}
         </span>
-      </div>
-      <div>
         <TrackOperations timeTrack={timeTrack} dateType="weekly" />
       </div>
     </div>

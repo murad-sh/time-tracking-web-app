@@ -18,50 +18,51 @@ interface WeeklyPieChartProps {
   tagUsage: TagUsageItem[];
 }
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+const BASE_COLORS = ['#7823b9', '#db2777', '#2563eb', '#059669', '#eab308'];
+
+const generateColorPalette = (length: number) => {
+  const colors = [...BASE_COLORS];
+  for (let i = 5; i < length; i++) {
+    colors.push(`hsl(${(i * 360) / length}, 70%, 50%)`);
+  }
+  return colors;
+};
 
 const renderColorfulLegendText = (value: string, entry: any) => {
   const { color } = entry;
   return <span style={{ color }}>{value}</span>;
 };
 
-const generateColorPalette = (length: number) => {
-  return Array.from(
-    { length },
-    (_, i) => `hsl(${(i * 360) / length}, 70%, 50%)`
-  );
-};
-
 const WeeklyPieChart = ({ tagUsage }: WeeklyPieChartProps) => {
   const totalDuration = tagUsage.reduce((acc, item) => acc + item.total, 0);
+  const colors = generateColorPalette(tagUsage.length);
 
-  const formattedData = tagUsage.map((item) => ({
+  const formattedData = tagUsage.map((item, index) => ({
     ...item,
-    percentage: ((item.total / totalDuration) * 100).toFixed(2) + '%',
+    percentage: ((item.total / totalDuration) * 100).toFixed(2),
+    color: colors[index],
   }));
 
   return (
-    <ResponsiveContainer width="100%" height={400}>
+    <ResponsiveContainer width="50%" height={250}>
       <PieChart>
         <Pie
           dataKey="total"
-          isAnimationActive={false}
+          isAnimationActive={true}
           data={formattedData}
           cx="50%"
           cy="50%"
           outerRadius={80}
-          fill="#8884d8"
-          label={({ name, percentage }) => `${name}: ${percentage}`}
+          label={({ name, percentage }) => `${name}: ${percentage}%`}
         >
-          {formattedData.map((_, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          {formattedData.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={entry.color} />
           ))}
         </Pie>
-        <Legend formatter={renderColorfulLegendText} />
+        <Legend formatter={renderColorfulLegendText} align="center" />
         <Tooltip
           content={<CustomTooltip chartType="pie" />}
           cursor={{ fill: '#e2e8f0' }}
-          offset={-50}
         />
       </PieChart>
     </ResponsiveContainer>

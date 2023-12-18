@@ -13,7 +13,7 @@ const TimeTrackList = ({ dailyTracks }: TimeTrackListProps) => {
       {dailyTracks.map((dayInfo, index) => (
         <div key={index}>
           <h3>{dayInfo.day}</h3>
-          <ul>
+          <ul className={styles.list}>
             {dayInfo.records.map((timeTrack) => (
               <li key={timeTrack._id.toString()}>
                 <TimeTrackItem timeTrack={timeTrack} />

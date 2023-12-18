@@ -3,6 +3,7 @@
 .container {
   display: flex;
   flex-direction: column;
+  margin-bottom: 5rem;
   gap: 1rem;
 
   h2 {
@@ -21,9 +22,39 @@
 
 .charts {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  gap: 10rem;
+}
 
-  .chart {
-    max-width: 65rem;
+.bar {
+  padding: 2rem;
+  width: 80%;
+}
+
+.pie {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid $color-skeleton;
+  border-radius: 6px;
+  padding: 2rem;
+  width: 80%;
+  gap: 10rem;
+
+  h3 {
+    font-size: 2rem;
+    font-weight: 500;
   }
+}
+
+.message {
+  color: $color-text-primary-dark;
+  font-size: 2.2rem;
+  text-align: center;
+}
+
+.description {
+  color: $color-text-primary-light;
+  font-size: 1.6rem;
+  text-align: center;
 }

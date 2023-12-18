@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { formatDateToDayMonth, getISOWeekDateRange } from '@/lib/utils/date';
 import {
@@ -11,13 +11,14 @@ import styles from './WeeklyNavigation.module.scss';
 
 const WeekNavigation = () => {
   const baseUrl = '/dashboard/reports';
-  const [offset, setOffset] = useState(0);
+  const { offset, start, end, view } = useWeeklySettings();
   const prevWeekDates = getISOWeekDateRange(offset - 1);
   const nextWeekDates = getISOWeekDateRange(offset + 1);
-  const { view, currentStart, start, end } = useWeeklySettings();
   const week =
-    currentStart === start
+    offset === 0
       ? 'This week'
+      : offset === -1
+      ? 'Last week'
       : `${formatDateToDayMonth(start)} - ${formatDateToDayMonth(end)}`;
 
   return (
@@ -28,7 +29,6 @@ const WeekNavigation = () => {
           baseUrl +
           `?start=${prevWeekDates.startDate}&end=${prevWeekDates.endDate}&view=${view}`
         }
-        onClick={() => setOffset((prevState) => prevState - 1)}
         aria-label="Previous week"
       >
         <ChevronLeftIcon />
@@ -45,7 +45,6 @@ const WeekNavigation = () => {
           baseUrl +
           `?start=${nextWeekDates.startDate}&end=${nextWeekDates.endDate}&view=${view}`
         }
-        onClick={() => setOffset((prevState) => prevState + 1)}
         aria-label="Next week"
       >
         <ChevronRightIcon />
