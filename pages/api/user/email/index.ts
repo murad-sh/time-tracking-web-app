@@ -83,8 +83,8 @@ const createEmail = (
   const totalDuration = calculateTotalDuration(timeTracks);
   const content = emailContent(
     username,
-    startDate,
-    endDate,
+    new Date(startDate).toLocaleDateString(),
+    new Date(endDate).toLocaleDateString(),
     totalDuration,
     baseUrl + `?start=${startDate}&end=${endDate}`
   );
