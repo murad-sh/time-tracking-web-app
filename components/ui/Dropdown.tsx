@@ -36,3 +36,4 @@ Dropdown.Button = RadixDropdownMenu.Trigger;
 Dropdown.Menu = DropdownMenu;
 Dropdown.MenuItem = RadixDropdownMenu.Item;
 Dropdown.Separator = RadixDropdownMenu.Separator;
+Dropdown.Label = RadixDropdownMenu.Label;

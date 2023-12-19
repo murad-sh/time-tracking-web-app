@@ -5,13 +5,14 @@ import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import PrimaryButton from '../ui/PrimaryButton';
 import SecondaryButton from '../ui/SecondaryButton';
+import UserNav from './UserNav';
 
 interface HeaderProps {
   isSticky?: boolean;
 }
 
 const Header = (props: HeaderProps) => {
-  const { status } = useSession();
+  const { status, data } = useSession();
   const router = useRouter();
   const activeNav = router.pathname;
 
@@ -43,19 +44,18 @@ const Header = (props: HeaderProps) => {
                 <PrimaryButton href={'/sign-up'}>Get Started</PrimaryButton>
               </li>
             )}
-            {status === 'authenticated' && (
+            {status === 'authenticated' && activeNav === '/' && (
               <li className={styles.item}>
-                <SecondaryButton
-                  isActive={activeNav === '/dashboard'}
-                  href={'/dashboard'}
-                >
-                  Dashboard
-                </SecondaryButton>
+                <SecondaryButton href={'/dashboard'}>Dashboard</SecondaryButton>
               </li>
             )}
             {status === 'authenticated' && (
               <li className={styles.item}>
-                <PrimaryButton onClick={logoutHandler}>Logout</PrimaryButton>
+                <UserNav
+                  username={data.user.name!}
+                  email={data.user.email!}
+                  action={logoutHandler}
+                />
               </li>
             )}
           </ul>
