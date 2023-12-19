@@ -53,8 +53,64 @@
   text-align: center;
 }
 
-.description {
+.info {
   color: $color-text-primary-light;
   font-size: 1.6rem;
   text-align: center;
+}
+
+// Skeleton Styles
+.header {
+  width: 28%;
+  height: 3.2rem;
+  margin-bottom: 2rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.content {
+  margin-top: 5rem;
+  margin-left: 5rem;
+}
+
+.day {
+  width: 20%;
+  height: 2.8rem;
+  margin-bottom: 2rem;
+}
+
+.divider {
+  border-radius: 0.6rem;
+  border: 1px solid $color-skeleton;
+  & > * + * {
+    border-top: 1px solid $color-skeleton;
+  }
+  margin-bottom: 5rem;
+}
+
+.item {
+  padding: 2rem;
+  height: 7.86rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.left {
+  height: 3rem;
+  width: 30%;
+}
+
+.right {
+  height: 3rem;
+  width: 16%;
+}
+
+.chart-skeleton {
+  margin-left: 4rem;
+}
+
+.box {
+  height: 35rem;
+  width: 100%;
 }

@@ -12,13 +12,14 @@ import TimeTrackList from './TimeTrackList';
 import { useWeeklySettings } from '@/hooks/use-weekly-settings';
 import styles from './WeeklyData.module.scss';
 import ErrorMessage from '@/components/ui/ErrorMessage';
+import Skeleton from '@/components/ui/Skeleton';
 
 const WeeklyData = () => {
   const { start, end, view } = useWeeklySettings();
   const { timeTracks, isLoading, error } = useWeeklyTracks(start, end);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return view === 'charts' ? <ChartSkeleton /> : <ListSkeleton />;
   }
 
   if (error) {
@@ -29,7 +30,7 @@ const WeeklyData = () => {
     return (
       <div className={styles.container}>
         <h3 className={styles.message}>No time tracks for this week</h3>
-        <p className={styles.description}>
+        <p className={styles.info}>
           There are no recorded time tracks for this week.
         </p>
       </div>
@@ -64,3 +65,39 @@ const WeeklyData = () => {
 };
 
 export default WeeklyData;
+
+const ListSkeleton = () => {
+  return (
+    <div>
+      <Skeleton className={styles.header} />
+      <div className={styles.content}>
+        {[...Array(3)].map((_, dayIndex) => (
+          <div key={dayIndex}>
+            <Skeleton className={styles.day} />
+            <div className={styles.divider}>
+              {[...Array(2)].map((_, itemIndex) => (
+                <div key={itemIndex} className={styles.item}>
+                  <Skeleton className={styles.left} />
+                  <Skeleton className={styles.right} />
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const ChartSkeleton = () => {
+  return (
+    <div>
+      <Skeleton className={styles.header} />
+      <div className={styles.bar}>
+        <div className={styles['chart-skeleton']}>
+          <Skeleton className={styles.box} />
+        </div>
+      </div>
+    </div>
+  );
+};
