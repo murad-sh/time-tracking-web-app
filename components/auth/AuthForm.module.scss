@@ -5,6 +5,11 @@
   margin-bottom: 2.5rem;
   @include form-label;
   @include form-input;
+
+  .error {
+    @include form-error;
+    text-align: left;
+  }
 }
 
 .actions {
@@ -29,10 +34,6 @@
       color: $color-primary-dark;
     }
   }
-}
-
-.error {
-  @include form-error;
 }
 
 .disabled {

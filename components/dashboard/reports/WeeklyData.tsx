@@ -13,6 +13,7 @@ import { useWeeklySettings } from '@/hooks/use-weekly-settings';
 import styles from './WeeklyData.module.scss';
 import ErrorMessage from '@/components/ui/ErrorMessage';
 import Skeleton from '@/components/ui/Skeleton';
+import Loader from '@/components/ui/Loader';
 
 const WeeklyData = () => {
   const { start, end, view } = useWeeklySettings();
@@ -95,7 +96,9 @@ const ChartSkeleton = () => {
       <Skeleton className={styles.header} />
       <div className={styles.bar}>
         <div className={styles['chart-skeleton']}>
-          <Skeleton className={styles.box} />
+          <Skeleton className={styles.box}>
+            <Loader className={styles.spinner} />
+          </Skeleton>
         </div>
       </div>
     </div>
