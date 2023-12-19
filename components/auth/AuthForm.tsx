@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import styles from './AuthForm.module.scss';
 import PrimaryButton from '../ui/PrimaryButton';
+import Loader from '../ui/Loader';
 
 interface FormProps {
   isLogin: boolean;
@@ -76,18 +77,14 @@ const AuthForm = ({
         </div>
       )}
       <div className={styles.actions}>
-        <PrimaryButton
-          className={isSubmitting ? styles.disabled : ''}
-          type="submit"
-        >
-          {!isLogin ? 'Create Account' : 'Login'}
+        <PrimaryButton disabled={isSubmitting} type="submit">
+          {isSubmitting ? <Loader /> : !isLogin ? 'Create Account' : 'Login'}
         </PrimaryButton>
-
         <Link className={styles.toggle} href={!isLogin ? '/login' : '/sign-up'}>
           {!isLogin ? 'Login with existing account' : 'Create new account'}
         </Link>
         {errors.root?.serverError && (
-          <span className={styles.error}>
+          <span className={styles.server}>
             {errors.root.serverError.message}
           </span>
         )}

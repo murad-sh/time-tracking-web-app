@@ -12,6 +12,14 @@
   }
 }
 
+.server {
+  font-size: 1.3rem;
+  color: $color-error-light;
+  text-align: center;
+  font-weight: 500;
+  margin-top: 2rem;
+}
+
 .actions {
   display: flex;
   flex-direction: column;
