@@ -18,7 +18,7 @@ const HeroSection = () => {
             </p>
           </div>
           <div>
-            <PrimaryButton href="/sign-up">
+            <PrimaryButton href="/sign-up" className={styles.btn}>
               Get started with TimeTracker
             </PrimaryButton>
           </div>

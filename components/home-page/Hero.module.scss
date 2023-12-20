@@ -35,3 +35,51 @@
     box-shadow: 0 1rem 4rem rgba(black, 0.3);
   }
 }
+
+// $md === 768px
+@media screen and (max-width: $md) {
+  .container {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .text {
+    h1 {
+      font-size: 4rem;
+    }
+  }
+}
+
+// $sm === 640px
+@media screen and (max-width: $sm) {
+  .container {
+    margin: 4rem auto;
+    padding: 0 8%;
+  }
+
+  .text {
+    gap: 2rem;
+
+    h1 {
+      font-size: 3.8rem;
+    }
+
+    p {
+      font-size: 1.6rem;
+      line-height: 2.4rem;
+    }
+  }
+
+  .image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      width: 80%;
+      height: 80%;
+    }
+  }
+}

@@ -20,3 +20,17 @@ body {
 h1 {
   line-height: 1.2;
 }
+
+// $md === 768px
+@media screen and (max-width: $md) {
+  html {
+    font-size: 56.25%; // 1rem = 9px
+  }
+}
+
+// $sm === 640px
+@media screen and (max-width: $sm) {
+  html {
+    font-size: 50%; // 1rem = 8px
+  }
+}
