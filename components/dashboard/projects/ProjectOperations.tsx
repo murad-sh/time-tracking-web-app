@@ -27,7 +27,7 @@ const ProjectOperations = ({ project }: { project: IProject }) => {
   return (
     <>
       <Dropdown>
-        <Dropdown.Button className={styles.operation}>
+        <Dropdown.Button className={styles.operation} aria-label="Operations">
           <MoreVertical />
         </Dropdown.Button>
         <Dropdown.Menu sideOffset={5} align="end">
