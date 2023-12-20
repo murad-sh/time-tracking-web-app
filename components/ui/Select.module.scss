@@ -3,6 +3,7 @@
 
 .content {
   @include menu-content;
+  padding: 0.4rem;
 }
 
 .item {
@@ -12,8 +13,6 @@
   gap: 0.9rem;
   font-weight: 500;
   font-size: 1.4rem;
-  padding-left: 1.5rem;
-
   .item__icon {
     display: flex;
     align-items: center;

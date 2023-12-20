@@ -3,7 +3,6 @@ import Select from '@/components/ui/Select';
 import { useProjects } from '@/hooks/use-api-hooks';
 import { FileTextIcon } from 'lucide-react';
 import { IProject } from '@/models/project';
-
 import styles from './ItemSelect.module.scss';
 
 interface ProjectSelectProps {
