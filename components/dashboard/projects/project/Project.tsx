@@ -32,25 +32,46 @@ const Project = () => {
   return (
     <Layout>
       <h2 className={styles.title}>{project.projectTitle}</h2>
-      <p className={styles.total}>
-        Total time spent on this project:
-        <span>{calculateTotalDuration(project.timeTracks)}</span>
-      </p>
-      <ul className={styles.list}>
-        {project.timeTracks.map((track: ITimeTrack) => (
-          <li key={track._id.toString()}>
-            <p className={styles.description}>{track.title}</p>
-            <span>
-              Duration:
-              <span className={styles.duration}>
-                {getTrackDuration(new Date(track.start), new Date(track.end))}
-              </span>
-            </span>
-          </li>
-        ))}
-      </ul>
+      {project.timeTracks.length === 0 ? (
+        <EmptyProject />
+      ) : (
+        <>
+          <p className={styles.total}>
+            Total time spent on this project:
+            <span>{calculateTotalDuration(project.timeTracks)}</span>
+          </p>
+          <ul className={styles.list}>
+            {project.timeTracks.map((track: ITimeTrack) => (
+              <li key={track._id.toString()}>
+                <p className={styles.description}>{track.title}</p>
+                <span>
+                  Duration:
+                  <span className={styles.duration}>
+                    {getTrackDuration(
+                      new Date(track.start),
+                      new Date(track.end)
+                    )}
+                  </span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
     </Layout>
   );
 };
 
 export default Project;
+
+const EmptyProject = () => {
+  return (
+    <div className={styles.empty}>
+      <h3>No Time Tracks Recorded</h3>
+      <p>
+        Start tracking your time by selecting this project when recording your
+        activities to see details here.
+      </p>
+    </div>
+  );
+};

@@ -19,13 +19,11 @@
 
 .separator {
   @include menu-separator;
-  height: 0.5px;
-  margin-top: 0.6rem;
-  margin-left: 0.6rem;
 }
 
 .menu {
   width: 20rem;
+  padding: 0;
 
   .label {
     font-weight: normal;
@@ -34,9 +32,10 @@
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
+      padding: 1rem;
 
       .username {
-        font-size: 1.5rem;
+        font-size: 1.6rem;
         line-height: normal;
         color: $color-text-primary-dark;
         font-weight: 500;
@@ -45,8 +44,7 @@
       .email {
         font-size: 1.2rem;
         line-height: normal;
-        color: $color-text-primary-light;
-        color: #292d35;
+        color: #334155;
       }
     }
   }
@@ -54,9 +52,9 @@
 
 .item {
   cursor: pointer;
-  margin-top: 1rem;
-  padding: 0.7rem 1rem;
+  padding: 0.5rem 1rem;
   border-radius: 6px;
+  margin: 0.4rem;
 
   &:hover {
     background-color: $color-skeleton;

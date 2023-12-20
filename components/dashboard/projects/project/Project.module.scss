@@ -50,3 +50,17 @@
     }
   }
 }
+
+.empty {
+  h3 {
+    font-size: 2rem;
+    color: $color-text-primary-dark;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-size: 1.6rem;
+    color: $color-text-primary-light;
+  }
+}

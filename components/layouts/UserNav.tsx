@@ -1,5 +1,5 @@
 import React from 'react';
-import { User2 } from 'lucide-react';
+import { User } from 'lucide-react';
 import Dropdown from '../ui/Dropdown';
 import styles from './UserNav.module.scss';
 
@@ -14,10 +14,15 @@ const UserNav = ({
 }) => {
   return (
     <Dropdown>
-      <Dropdown.Button className={styles.btn}>
-        <User2 />
+      <Dropdown.Button className={styles.btn} aria-label="Profile">
+        <User />
       </Dropdown.Button>
-      <Dropdown.Menu className={styles.menu} align="end" forceMount>
+      <Dropdown.Menu
+        className={styles.menu}
+        align="end"
+        forceMount
+        sideOffset={3}
+      >
         <Dropdown.Label className={styles.label}>
           <div className={styles.content}>
             <p className={styles.username}>{username}</p>
