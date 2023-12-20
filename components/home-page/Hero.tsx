@@ -30,7 +30,7 @@ const HeroSection = () => {
             width={1024}
             height={1024}
             priority
-          ></Image>
+          />
         </div>
       </div>
     </section>

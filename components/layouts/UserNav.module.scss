@@ -51,14 +51,8 @@
 }
 
 .item {
-  cursor: pointer;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  margin: 0.4rem;
-  color: $color-text-primary-dark;
-  text-decoration: none;
-  display: flex;
-  font-weight: 500;
+  @include dropdown-menu-item;
+  font-size: 1.4rem;
 
   &:hover {
     background-color: $color-skeleton;

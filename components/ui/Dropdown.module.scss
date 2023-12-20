@@ -3,4 +3,6 @@
 
 .content {
   @include menu-content;
+  width: 10rem;
+  // padding: 1rem;
 }

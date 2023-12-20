@@ -30,22 +30,18 @@ const TagOperations = ({ tag }: { tag: string }) => {
           <MoreVertical />
         </Dropdown.Button>
         <Dropdown.Menu sideOffset={5} align="end">
-          <Dropdown.MenuItem asChild>
-            <button
-              className={styles.edit}
-              onClick={() => setShowEditModal(true)}
-            >
-              Edit
-            </button>
+          <Dropdown.MenuItem
+            className={styles.edit}
+            onClick={() => setShowEditModal(true)}
+          >
+            Edit
           </Dropdown.MenuItem>
           <Dropdown.Separator className={styles.separator} />
-          <Dropdown.MenuItem asChild>
-            <button
-              className={styles.delete}
-              onClick={() => setShowDeleteAlert(true)}
-            >
-              Delete
-            </button>
+          <Dropdown.MenuItem
+            className={styles.delete}
+            onClick={() => setShowDeleteAlert(true)}
+          >
+            Delete
           </Dropdown.MenuItem>
         </Dropdown.Menu>
       </Dropdown>
