@@ -6,7 +6,7 @@ const Stopwatch = () => {
   const { time } = useTimerContext();
   const value = formatDuration(time);
 
-  return <h2>{value}</h2>;
+  return <h2 style={{ fontVariantNumeric: 'tabular-nums' }}>{value}</h2>;
 };
 
 export default Stopwatch;

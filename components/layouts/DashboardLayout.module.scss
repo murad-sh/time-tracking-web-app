@@ -1,3 +1,5 @@
+@import '@/styles/variables';
+
 .container {
   width: 100%;
   max-width: 140rem;
@@ -8,4 +10,19 @@
   flex-grow: 1;
   gap: 4.8rem;
   grid-template-columns: 19rem 1fr;
+}
+
+// $md === 768px
+@media screen and (max-width: $md) {
+  .container {
+    display: block !important;
+  }
+}
+
+// $sm === 640px
+@media screen and (max-width: $sm) {
+  .container {
+    margin-top: 2.5rem;
+    padding: 0 3.2rem !important;
+  }
 }

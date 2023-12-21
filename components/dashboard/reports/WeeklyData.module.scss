@@ -125,3 +125,16 @@
   width: 8rem !important;
   color: $color-text-primary-light !important;
 }
+
+// $sm === 640px
+@media screen and (max-width: $sm) {
+  .bar {
+    padding: 0.5rem;
+    width: 100%;
+    max-width: 600px;
+  }
+
+  .pie {
+    display: none;
+  }
+}

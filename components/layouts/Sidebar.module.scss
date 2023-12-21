@@ -46,3 +46,10 @@
     width: 1.6rem;
   }
 }
+
+// $md === 768px
+@media screen and (max-width: $md) {
+  .sidebar {
+    display: none;
+  }
+}

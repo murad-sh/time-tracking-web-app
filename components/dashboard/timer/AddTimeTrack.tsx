@@ -87,35 +87,38 @@ const AddTimeTrack = () => {
           placeholder="What are you working on?"
           value={currentTrack.title}
           onChange={(event) => currentTrack.setTitle(event.target.value)}
+          className={styles['form-input']}
         />
-        <ProjectSelect
-          projectId={currentTrack.projectId}
-          setProjectId={currentTrack.setProjectId}
-        />
-        <TagSelect tag={currentTrack.tag} setTag={currentTrack.setTag} />
-        <div className={styles.stopwatch}>
-          <Stopwatch />
-        </div>
+        <div className={styles.settings}>
+          <ProjectSelect
+            projectId={currentTrack.projectId}
+            setProjectId={currentTrack.setProjectId}
+          />
+          <TagSelect tag={currentTrack.tag} setTag={currentTrack.setTag} />
+          <div className={styles.stopwatch}>
+            <Stopwatch />
+          </div>
 
-        {!timerContext.timer && (
-          <PrimaryButton
-            onClick={startTimer}
-            type="button"
-            className={styles.btn}
-            ariaLabel="Start timer"
-          >
-            <PlayIcon />
-          </PrimaryButton>
-        )}
-        {timerContext.timer && (
-          <PrimaryButton
-            type="submit"
-            className={styles.btn}
-            ariaLabel="Stop timer"
-          >
-            <PauseIcon />
-          </PrimaryButton>
-        )}
+          {!timerContext.timer && (
+            <PrimaryButton
+              onClick={startTimer}
+              type="button"
+              className={styles.btn}
+              ariaLabel="Start timer"
+            >
+              <PlayIcon />
+            </PrimaryButton>
+          )}
+          {timerContext.timer && (
+            <PrimaryButton
+              type="submit"
+              className={styles.btn}
+              ariaLabel="Stop timer"
+            >
+              <PauseIcon />
+            </PrimaryButton>
+          )}
+        </div>
       </form>
 
       <div className={styles.tracks}>

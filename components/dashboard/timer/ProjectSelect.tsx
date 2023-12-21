@@ -31,7 +31,7 @@ const ProjectSelect = ({ projectId, setProjectId }: ProjectSelectProps) => {
     <Select value={projectId} onValueChange={selectProject}>
       <Select.Button asChild>
         <button className={selectBtnClass} aria-label="Choose project">
-          {projectId ? getSelectedProject(projectId) : <FileTextIcon />}
+          <FileTextIcon />
         </button>
       </Select.Button>
       <Select.Content position="popper" sideOffset={5}>
