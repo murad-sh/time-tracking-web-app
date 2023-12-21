@@ -17,6 +17,10 @@ const Layout = (props: Props) => {
             ? documentTitle
             : 'Time Tracker: Versatile Time Tracking Software for Everyone'}
         </title>
+        <meta
+          name="description"
+          content="Discover efficient time management with our advanced time-tracking software. Create and organize projects with customizable tags, effortlessly record track durations, and gain insights with detailed weekly reports. Plus, receive comprehensive email summaries every Sunday. Perfect for professionals seeking to optimize productivity."
+        />
       </Head>
       <Header />
       <main>{props.children}</main>
