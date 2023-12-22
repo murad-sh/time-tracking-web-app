@@ -1,0 +1,18 @@
+@import '@/styles/variables';
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+  text-align: center;
+  color: $color-text-primary-dark;
+
+  h1 {
+    font-size: 4.5rem;
+  }
+
+  p {
+    font-size: 3rem;
+  }
+}

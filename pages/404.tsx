@@ -1,7 +1,12 @@
+import NotFound from '@/components/ui/NotFound';
 import React from 'react';
 
 const NotFoundPage = () => {
-  return <h1>NotFoundPage</h1>;
+  return (
+    <section>
+      <NotFound />
+    </section>
+  );
 };
 
 export default NotFoundPage;
