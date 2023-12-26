@@ -4,7 +4,7 @@ import { emailContent } from '@/email/email-content';
 import {
   calculateTotalDuration,
   getISOWeekDateRange,
-  isTodaySunday,
+  isTodayMonday,
 } from '@/lib/utils/date';
 import { connectToDB } from '@/lib/utils/db';
 import User from '@/models/user';
@@ -19,9 +19,9 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    if (!isTodaySunday()) return res.status(403).json('Forbidden');
+    if (!isTodayMonday()) return res.status(403).json('Forbidden');
 
-    const { startDate, endDate } = getISOWeekDateRange();
+    const { startDate, endDate } = getISOWeekDateRange(-1);
     await connectToDB();
     const existingReport = await EmailReport.findOne({
       startDate,

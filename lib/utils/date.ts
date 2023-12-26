@@ -194,9 +194,9 @@ export const getTodayStartEndISO = () => {
   };
 };
 
-export const isTodaySunday = () => {
+export const isTodayMonday = () => {
   const today = new Date();
-  return getDay(today) === 0;
+  return getDay(today) === 1;
 };
 
 export const getTrackDuration = (start: Date, end: Date) =>
