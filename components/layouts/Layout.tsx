@@ -1,7 +1,9 @@
-import React, { Fragment, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import Header from './Header';
 import Head from 'next/head';
 import { useTimerContext } from '@/hooks/use-store-hooks';
+import { Footer } from './Footer';
+import styles from './Layout.module.scss';
 
 interface Props {
   children: ReactNode;
@@ -10,7 +12,7 @@ interface Props {
 const Layout = (props: Props) => {
   const { timer, documentTitle } = useTimerContext();
   return (
-    <Fragment>
+    <div className={styles.main}>
       <Head>
         <title>
           {timer
@@ -24,7 +26,8 @@ const Layout = (props: Props) => {
       </Head>
       <Header />
       <main>{props.children}</main>
-    </Fragment>
+      <Footer />
+    </div>
   );
 };
 

@@ -4,9 +4,10 @@ import Sidebar from './Sidebar';
 import { SWRConfig } from 'swr';
 import { Toaster } from 'sonner';
 import axios from 'axios';
-import styles from './DashboardLayout.module.scss';
+import styles from './Layout.module.scss';
 import Head from 'next/head';
 import { useTimerContext } from '@/hooks/use-store-hooks';
+import { Footer } from './Footer';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -16,7 +17,7 @@ const DashboardLayout = ({ children }: LayoutProps) => {
   const { timer, documentTitle } = useTimerContext();
 
   return (
-    <>
+    <div className={styles.main}>
       <Head>
         <title>{timer ? documentTitle : 'Time Tracker'}</title>
       </Head>
@@ -34,7 +35,8 @@ const DashboardLayout = ({ children }: LayoutProps) => {
         </SWRConfig>
         <Toaster richColors />
       </div>
-    </>
+      <Footer />
+    </div>
   );
 };
 

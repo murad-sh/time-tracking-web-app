@@ -1,17 +1,14 @@
 import React from 'react';
-import Link from 'next/link';
 import styles from './Footer.module.scss';
 
-const Footer = () => {
+export function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer>
-      <div className={styles.container}>
-        <div className={styles.legal}>
-          <p>&copy; 2023 by Murad Shahbazov. All rights reserved.</p>
-        </div>
+    <footer className={styles.footer}>
+      <div className={styles.content}>
+        &copy; {currentYear} by Murad Shahbazov. All rights reserved.
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}
