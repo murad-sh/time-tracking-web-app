@@ -30,7 +30,7 @@ const Header = (props: HeaderProps) => {
         <nav>
           <ul className={styles.list}>
             {activeNav === '/' && (
-              <li>
+              <li className={styles.item}>
                 <SecondaryButton href="#features">Features</SecondaryButton>
               </li>
             )}
