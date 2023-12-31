@@ -23,7 +23,7 @@ const Features = () => {
         <div className={styles.content}>
           <div className={styles.card}>
             <ClockIcon />
-            <h4>Track Your Activity</h4>
+            <h3>Track Your Activity</h3>
             <p>
               Log and monitor your daily tasks in real-time for enhanced focus
               and efficiency.
@@ -31,7 +31,7 @@ const Features = () => {
           </div>
           <div className={styles.card}>
             <BarChart3Icon />
-            <h4>Weekly Reports</h4>
+            <h3>Weekly Reports</h3>
             <p>
               Access insightful weekly reports for a comprehensive view of your
               progress and goals.
@@ -39,7 +39,7 @@ const Features = () => {
           </div>
           <div className={styles.card}>
             <FileTextIcon />
-            <h4>Create Projects</h4>
+            <h3>Create Projects</h3>
             <p>
               Manage your workflow efficiently by organizing tasks into
               structured projects.
@@ -47,7 +47,7 @@ const Features = () => {
           </div>
           <div className={styles.card}>
             <MonitorIcon />
-            <h4>Monitor Projects</h4>
+            <h3>Monitor Projects</h3>
             <p>
               Track time spent on projects for enhanced planning and effective
               management.
@@ -55,7 +55,7 @@ const Features = () => {
           </div>
           <div className={styles.card}>
             <TagIcon />
-            <h4>Custom Tags</h4>
+            <h3>Custom Tags</h3>
             <p>
               Utilize customizable tags to categorize and streamline your time
               tracking and organization.
@@ -63,7 +63,7 @@ const Features = () => {
           </div>
           <div className={styles.card}>
             <MailIcon />
-            <h4>Email Summaries</h4>
+            <h3>Email Summaries</h3>
             <p>
               Receive email reports with detailed time tracking statistics and
               productivity insights.

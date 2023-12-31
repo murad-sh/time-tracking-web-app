@@ -2,7 +2,6 @@ import React from 'react';
 import Image from 'next/image';
 import styles from './Hero.module.scss';
 import PrimaryButton from '../ui/PrimaryButton';
-
 const HeroSection = () => {
   return (
     <section>
