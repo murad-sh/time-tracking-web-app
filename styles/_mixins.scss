@@ -16,8 +16,8 @@
     }
 
     &:focus {
-      outline-style: none;
-      outline-color: $color-primary-light-2;
+      outline-style: hidden;
+      outline-color: $color-primary-light-1;
     }
   }
 }
