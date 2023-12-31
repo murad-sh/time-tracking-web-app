@@ -29,6 +29,11 @@ const Header = (props: HeaderProps) => {
         </Link>
         <nav>
           <ul className={styles.list}>
+            {activeNav === '/' && (
+              <li>
+                <SecondaryButton href="#features">Features</SecondaryButton>
+              </li>
+            )}
             {status === 'unauthenticated' && (
               <li className={styles.item}>
                 <SecondaryButton

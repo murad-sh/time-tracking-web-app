@@ -1,0 +1,102 @@
+@import '@/styles/variables';
+
+.container {
+  background-color: #fff;
+  padding: 8rem 10%;
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem;
+
+  svg {
+    height: 3.6rem !important;
+    width: 3.6rem !important;
+  }
+
+  h2 {
+    text-align: center;
+    color: $color-text-primary-dark;
+    font-size: 5rem;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    color: $color-text-primary-light;
+    font-size: 1.8rem;
+    text-align: center;
+  }
+}
+
+.content {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  border: 1px solid $color-skeleton;
+  padding: 2.4rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: scale ease 0.3s;
+
+  svg {
+    color: $color-primary;
+  }
+
+  h4 {
+    font-size: 1.6rem;
+    margin-top: 0.5rem;
+  }
+
+  p {
+    font-size: 1.4rem;
+    margin-top: 0.8rem;
+    text-align: left;
+  }
+
+  &:hover {
+    scale: 0.95;
+  }
+}
+
+// $sm === 640px
+@media screen and (max-width: $sm) {
+  .layout {
+    svg {
+      height: 2.4rem !important;
+      width: 2.4rem !important;
+    }
+
+    h2 {
+      font-size: 3.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+    }
+  }
+  .content {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+
+    h4 {
+      font-size: 1.2rem;
+      margin-top: 0.3rem;
+    }
+
+    p {
+      font-size: 1rem;
+      margin-top: 0.5rem;
+    }
+  }
+}

@@ -4,6 +4,7 @@ import Head from 'next/head';
 import { useTimerContext } from '@/hooks/use-store-hooks';
 import { Footer } from './Footer';
 import styles from './Layout.module.scss';
+import { usePathname } from 'next/navigation';
 
 interface Props {
   children: ReactNode;
@@ -11,6 +12,8 @@ interface Props {
 
 const Layout = (props: Props) => {
   const { timer, documentTitle } = useTimerContext();
+  const pathName = usePathname();
+
   return (
     <div className={styles.main}>
       <Head>
@@ -26,7 +29,7 @@ const Layout = (props: Props) => {
       </Head>
       <Header />
       <main>{props.children}</main>
-      <Footer />
+      <Footer homePage={pathName === '/'} />
     </div>
   );
 };

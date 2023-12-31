@@ -3,10 +3,11 @@
 .container {
   display: flex;
   gap: 6rem;
-  margin: 7rem auto;
+  margin: 0 auto;
   padding: 0 10%;
   align-items: center;
   justify-content: center;
+  min-height: calc(100vh - 8rem);
 }
 
 .text {
