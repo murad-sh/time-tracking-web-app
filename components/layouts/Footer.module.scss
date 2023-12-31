@@ -10,6 +10,12 @@
   .content {
     font-size: 1.4rem;
     color: $color-text-primary-dark;
+
+    a {
+      color: $color-text-primary-dark;
+      text-underline-offset: 4px;
+      font-weight: 500;
+    }
   }
 }
 
