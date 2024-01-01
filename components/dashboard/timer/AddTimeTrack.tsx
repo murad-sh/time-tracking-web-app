@@ -4,7 +4,7 @@ import { toast } from 'sonner';
 import TagSelect from './TagSelect';
 import { sendTimeTrack, TimeTrackRecording } from '@/lib/utils/services';
 import { PlayIcon, PauseIcon } from 'lucide-react';
-import { isSameDay, endOfDay, startOfDay, differenceInHours } from 'date-fns';
+import { endOfDay, startOfDay, differenceInHours, isSameDay } from 'date-fns';
 import ProjectSelect from './ProjectSelect';
 import CurrentTracks from './CurrentTracks';
 import { useTodayTracks } from '@/hooks/use-api-hooks';
@@ -17,11 +17,6 @@ const AddTimeTrack = () => {
   const timerContext = useTimerContext();
   const currentTrack = useTimeTrackContext();
   const MAX_DURATION = 24;
-
-  const startTimer = () => {
-    timerContext.setTimer(true);
-    currentTrack.setStartTime(new Date());
-  };
 
   const createTimeTrack = (startDate: Date, endDate: Date) => {
     let requestData: TimeTrackRecording = {
@@ -38,11 +33,17 @@ const AddTimeTrack = () => {
     return requestData;
   };
 
-  async function submitHandler(event: FormEvent) {
+  const startTimer = () => {
+    timerContext.setTimer(true);
+    currentTrack.setStartTime(new Date());
+  };
+
+  const submitHandler = async (event: FormEvent) => {
     event.preventDefault();
     let startDate = currentTrack.startTime || new Date();
     const endDate = new Date();
     timerContext.setTimer(false);
+
     if (differenceInHours(endDate, startDate) > MAX_DURATION) {
       toast.error(
         `Recording failed: The maximum allowed duration of ${MAX_DURATION} hours has been exceeded.`
@@ -50,13 +51,17 @@ const AddTimeTrack = () => {
       resetForm();
       return;
     }
-    let tracks: TimeTrackRecording[] = [];
+
+    let tracks = [];
     if (!isSameDay(startDate, endDate)) {
-      const end = endOfDay(startDate);
-      tracks.push(createTimeTrack(startDate, end));
-      startDate = startOfDay(end);
+      const endOfLocalDay = endOfDay(startDate);
+      const startOfNextLocalDay = startOfDay(endDate);
+
+      tracks.push(createTimeTrack(startDate, endOfLocalDay));
+      startDate = startOfNextLocalDay;
     }
     tracks.push(createTimeTrack(startDate, endDate));
+
     try {
       for (const track of tracks) {
         await sendTimeTrack(track);
@@ -69,7 +74,7 @@ const AddTimeTrack = () => {
       );
     }
     resetForm();
-  }
+  };
 
   const resetForm = () => {
     currentTrack.setTitle('');

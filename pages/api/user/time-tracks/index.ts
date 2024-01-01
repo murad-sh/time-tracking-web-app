@@ -4,7 +4,6 @@ import User from '@/models/user';
 import { connectToDB } from '@/lib/utils/db';
 import { getCurrentUser } from '@/lib/auth/session';
 import TimeTrack, { ITimeTrack } from '@/models/time-track';
-import { endOfDay } from 'date-fns';
 
 type Data = {
   message: string;
@@ -34,8 +33,8 @@ export default async function handler(
       if (startDate && endDate) {
         query = {
           ...query,
-          start: { $gte: new Date(startDate as string) },
-          end: { $lte: endOfDay(new Date(endDate as string)) },
+          start: { $gte: startDate },
+          end: { $lte: endDate },
         };
       }
 
