@@ -16,7 +16,7 @@ const AddTimeTrack = () => {
   const { mutate } = useTodayTracks();
   const timerContext = useTimerContext();
   const currentTrack = useTimeTrackContext();
-  const MAX_DURATION = 48;
+  const MAX_DURATION = 24;
 
   const startTimer = () => {
     timerContext.setTimer(true);
@@ -26,8 +26,8 @@ const AddTimeTrack = () => {
   const createTimeTrack = (startDate: Date, endDate: Date) => {
     let requestData: TimeTrackRecording = {
       title: currentTrack.title.trim() || '(no description)',
-      start: startDate,
-      end: endDate,
+      start: startDate.toISOString(),
+      end: endDate.toISOString(),
     };
     if (currentTrack.tag) {
       requestData = { ...requestData, tag: currentTrack.tag };

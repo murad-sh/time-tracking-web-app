@@ -58,8 +58,8 @@ export async function deleteProject(projectId: string) {
 
 export type TimeTrackRecording = {
   title: string;
-  start: Date;
-  end: Date;
+  start: string;
+  end: string;
   tag?: string;
   projectId?: string;
 };
