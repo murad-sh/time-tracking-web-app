@@ -9,7 +9,6 @@ import {
 import { connectToDB } from '@/lib/utils/db';
 import User from '@/models/user';
 import EmailReport from '@/models/email-report';
-import { endOfDay } from 'date-fns';
 
 const provider = process.env.EMAIL;
 const baseUrl = process.env.NEXTAUTH_URL + '/dashboard/reports';
@@ -67,8 +66,8 @@ const getWeeklyData = (startDate: string, endDate: string) => {
     .populate({
       path: 'timeTracks',
       match: {
-        start: { $gte: new Date(startDate) },
-        end: { $lte: endOfDay(new Date(endDate)) },
+        start: { $gte: startDate },
+        end: { $lte: endDate },
       },
     });
 };
